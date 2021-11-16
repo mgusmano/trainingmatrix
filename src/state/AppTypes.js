@@ -1,0 +1,8 @@
+
+export const SET_GROUPID = 'SET_GROUPID';
+export const SET_OPERATORS = 'SET_OPERATORS';
+export const SET_SKILLS = 'SET_SKILLS';
+export const SET_CERTIFICATIONS = 'SET_CERTIFICATIONS';
+export const SET_GROUPS = 'SET_GROUPS';
+export const SET_LEGEND = 'SET_LEGEND';
+export const SET_MULTIPLIER = 'SET_MULTIPLIER';

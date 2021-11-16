@@ -1,0 +1,533 @@
+import * as types from './MatrixTypes';
+import axios from "axios";
+
+export const setAll = async (dispatch, payload) => {
+
+  const callAll = async (dispatch,payload2) => {
+    var groupID = payload2.groupID
+    var multiplier = payload2.multiplier
+
+    var data = await getData(groupID)
+    var skills = data.skills
+    var operators = data.operators
+    var certificationsInit = data.certifications
+
+    //console.log(skills)
+
+    //var certifications
+    //if (first === true) {
+      var certifications = createCertifications(skills, operators, certificationsInit)
+    //}
+    //else {
+    //  certifications = certificationsInit
+    //}
+
+    calcTotals(certifications, dispatch)
+
+    var bySkill = []
+    var byOperator = []
+
+    if (skills.length !== 0 && operators.length !== 0) {
+      bySkill = doBySkill(operators,skills,certifications)
+      byOperator = doByOperator(operators,skills,certifications)
+    }
+
+    //if (first === true) {
+      var sLen = skills.length
+      var oLen = operators.length
+      setInit({sLen,oLen,multiplier})
+    //}
+
+    var payload = {
+      bySkill: bySkill,
+      byOperator: byOperator,
+      operators: operators,
+      skills: skills,
+      certifications: certifications
+    }
+    dispatch({type: types.SET_GROUPID, payload: payload2.groupID});
+    dispatch({type: types.SET_ALL, payload: payload});
+    dispatch({type: types.SET_ACTIVE, payload: false});
+  }
+
+  const getData = async (groupID) => {
+    const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
+    //const localRoot = 'http://localhost:3005';
+    const localRoot = 'https://my-json-server.typicode.com/mgusmano/toshibaserver';
+
+    const auth = {auth:{username:'skillnet',password:'demo'}};
+
+    // const skillsResult = await axios(`data/trainingmatrix/data/${groupID}/skills.json`);
+    // const operatorsResult = await axios(`data/trainingmatrix/data/${groupID}/operators.json`);
+    // const certificationsResult = await axios(`data/trainingmatrix/data/${groupID}/certifications.json`);
+
+    const skillsResult = await axios(`${localRoot}/skills?groupID=${groupID}`);
+    //const operatorsResult = await axios(`${localRoot}/operators?groupID=${groupID}`);
+    const certificationsResult = await axios(`${localRoot}/certifications?groupID=${groupID}`);
+
+    //const skillsResult = await axios(`${apiRoot}/PortalGroupSkills?partnerid=448&groupid=${groupID}`,auth);
+      // console.log('portalGroupSkillsResult')
+      // console.log(portalGroupSkillsResult)
+      // console.log(JSON.parse(portalGroupSkillsResult.data))
+    const operatorsResult = await axios(`${apiRoot}/PortalGroupOperators?groupid=${groupID}`,auth);
+      // console.log('portalGroupOperatorsResult')
+      // console.log(portalGroupOperatorsResult)
+
+    //just for the webAPI data while it is broken
+    var operatorsResultdata = []
+    operatorsResult.data.map((operator,i) => {
+      var o = {}
+      o.operatorID = operator.operatorID;
+      o.operatorName = operator.operatorName;
+      o.groupID = groupID;
+      o.picture = "AaronCariaga.jpg";
+      o.goal = 4;
+      operatorsResultdata.push(o)
+
+      return null
+    })
+
+    //console.log(operatorsResult.data)
+    //console.log(operatorsResultdata)
+    var r = {
+      skills: skillsResult.data,
+      operators: operatorsResultdata,
+      certifications: certificationsResult.data
+    }
+    console.log(r)
+
+    return r
+  }
+
+  const createCertifications = (skills, operators, certificationsData) => {
+    var certificationsDataCreated = []
+    var certID = 0
+
+    for (let s = 0; s < skills.length; s++) {
+      for (let o = 0; o < operators.length; o++) {
+        certID++
+        certificationsDataCreated.push({
+          "id": certID,
+          "row":s,
+          "col":o,
+          "skill":skills[s],
+          "operator":operators[o],
+          "skillID": skills[s].skillID,
+          "operatorID": operators[o].operatorID,
+          "currcertID": 0,
+          "meta": {
+            "type":"solid",
+            "currcertID": 0,
+            "certification":"notapplicable",
+            "strokecolor":"black",
+            "letter":"",
+            "start":"",
+            "certstate": "disabled"
+          },
+          "data": []
+        })
+      }
+    }
+
+    for (let o = 0; o < certificationsData.length; o++) {
+      var found = certificationsDataCreated.find(element => {
+        var c;
+        if (element.skillID === certificationsData[o].skillID && element.operatorID === certificationsData[o].operatorID) {
+          c = certificationsData[o]
+        }
+        return c
+      });
+      //console.log(found)
+      found.meta = certificationsData[o].meta
+      found.data = certificationsData[o].data
+    }
+    return certificationsDataCreated;
+
+  }
+
+  const calcTotals = (certificationsDataCreated, dispatch) => {
+    var rowsArray = []
+    var currentRow = -1;
+    var rowCount = -1;
+
+    var colsArray = []
+    var currentCol = -1;
+    var colCount = -1;
+
+    var certByRow = Array.from(certificationsDataCreated);
+    certByRow.sort(function (x, y) {
+      var n = x.row - y.row;
+      if (n !== 0) {
+          return n;
+      }
+      return x.col - y.col;
+    });
+
+    for (let i = 0; i < certByRow.length; i++) {
+      if (certByRow[i].row > currentRow) {
+        currentRow = certByRow[i].row
+        rowCount = rowsArray.push([certByRow[i].skill.goal,0,0,0])
+      }
+      switch(certByRow[i].meta.currcertID) {
+        case 3:
+        case 4:
+        case 5:
+          rowsArray[rowCount-1][1] = rowsArray[rowCount-1][1] + 1;
+          break;
+        default:
+          break;
+      }
+      rowsArray[rowCount-1][3] = rowsArray[rowCount-1][0] - rowsArray[rowCount-1][1];
+      rowsArray[rowCount-1][2] = rowsArray[rowCount-1][1] / rowsArray[rowCount-1][0];
+    }
+
+    var certByCol = Array.from(certificationsDataCreated);
+    certByCol.sort(function (x, y) {
+      var n = x.col - y.col;
+      if (n !== 0) {
+          return n;
+      }
+      return x.row - y.row;
+    });
+
+    for (let i = 0; i < certByCol.length; i++) {
+      if (certByCol[i].col > currentCol) {
+        currentCol = certByCol[i].col
+        colCount = colsArray.push([certByCol[i].operator.goal,0,0,0])
+      }
+      switch(certByCol[i].meta.currcertID) {
+        case 3:
+        case 4:
+        case 5:
+          colsArray[colCount-1][1] = colsArray[colCount-1][1] + 1;
+          break;
+        default:
+          break;
+      }
+      colsArray[colCount-1][3] = colsArray[colCount-1][0] - colsArray[colCount-1][1];
+      colsArray[colCount-1][2] = colsArray[colCount-1][1] / colsArray[colCount-1][0];
+    }
+
+    dispatch({type: types.SET_ROWSARRAY, payload: rowsArray});
+    var transpose = m => m[0].map((x,i) => m.map(x => x[i]))
+    var colsArraytransposed = transpose(colsArray)
+    dispatch({type: types.SET_COLSARRAY, payload: colsArraytransposed});
+  }
+
+  const doBySkill = (operators, skills, certifications) => {
+    var bySkill = []
+    skills.map((skill,s) => {
+      var o = {}
+      o = skill
+      o.meta = skill
+      o.data = []
+      const filteredcertifications = certifications.filter(item => item.skillID === skill.skillID);
+      filteredcertifications.map((fc,i) => {
+        var operator  = operators.find(item => item.operatorID === fc.operatorID);
+        o.data[i] = {};
+        o.data[i].certificationID = fc.id
+        o.data[i].operator = operator
+        o.data[i].skill = skill
+        o.data[i].meta = fc.meta
+        o.data[i].data = fc.data
+        return null
+      })
+      bySkill.push(o)
+      return null
+    })
+    return bySkill
+  }
+
+  const doByOperator = (operators, skills, certifications) => {
+    var byOperator = []
+    operators.map((operator,o) => {
+      o = operator
+      o.meta = operator
+      o.data = []
+      const filteredcertifications = certifications.filter(item => item.operatorID === operator.operatorID);
+      filteredcertifications.map((fc,i) => {
+        var skill  = skills.find(item => item.skillID === fc.skillID);
+        o.data[i] = {};
+        o.data[i].certificationID = fc.id
+        o.data[i].operator = operator
+        o.data[i].skill = skill
+        o.data[i].meta = fc.meta
+        o.data[i].data = fc.data
+        return null
+      })
+      byOperator.push(o)
+      return null
+    })
+    return byOperator
+  }
+
+  const setInit = (o) => {
+    var x = o.oLen
+    var y = o.sLen
+    const multiplier = o.multiplier;
+    const topHeight = 0;
+    const fontsize = 3;
+    const bandX = 5;
+    const bandY = 5;
+    var col1 = 45;
+    var col1a = 5;
+    var col2 = bandX * x;
+    var col3 =(bandX*4);
+    var row1 = 45;
+    var row2 = (bandY * y)+0;
+    var row3 = bandX*4;
+
+    var d2= {
+      multiplier: multiplier,
+      topHeight: topHeight,
+      fontsize: fontsize,
+      bandX: bandX,
+      bandY: bandY,
+      col1: col1,
+      col1a: col1a,
+      col2: col2,
+      col3: col3,
+      row1: row1,
+      row2Orig: row2,
+      row2: row2,
+      row3: row3,
+    }
+    dispatch({type: types.SET_ORIGINAL, payload: d2});
+
+    var d = {
+      multiplier: multiplier,
+      topHeight: topHeight*multiplier,
+      fontsize: fontsize*multiplier,
+      bandX: bandX*multiplier,
+      bandY: bandY*multiplier,
+      col1: col1*multiplier,
+      col1a: col1a*multiplier,
+      col2: col2*multiplier,
+      col3: col3*multiplier,
+      row1: row1*multiplier,
+      row2Orig: row2*multiplier,
+      row2: row2*multiplier,
+      row3: row3*multiplier,
+    }
+    dispatch({type: types.SET_DIMENSIONS, payload: d});
+  }
+
+  callAll(dispatch, payload)
+}
+
+export const doDBCert = async (payload) => {
+  //const localRoot = 'http://localhost:3005'
+  const localRoot = 'https://my-json-server.typicode.com/mgusmano/toshibaserver';
+  var headers = {headers: {'content-type': 'application/json'}};
+  var p = {
+    "skillID": parseInt(payload.skillID),
+    "operatorID": parseInt(payload.operatorID),
+    "groupID": payload.groupID,
+    "meta": {
+      "type": "solid",
+      "currcertID": payload.currcertID,
+      "letter": "",
+      "start": "8/3/2021"
+    },
+    "data": []
+  }
+  //console.log('updateCert: ' + JSON.stringify(p))
+  console.log('updateCert: ')
+  console.log(p)
+  var id = (payload.skillID*10)+payload.operatorID
+
+  try {
+    await axios.put(`${localRoot}/certifications/${id}`,p,headers);
+    //`${localRoot}/certifications?skillID=${payload.skillID}&operatorID=${payload.operatorID}&groupID=${payload.groupID}`
+    //await axios.put(`${localRoot}/certifications`,p,headers);
+    console.log('update successful')
+  }
+  catch(error) {
+    //console.dir(error)
+    try {
+      //p.id = id
+      await axios.post(`${localRoot}/certifications`,p,headers);
+      console.log('add successful')
+      console.log(p)
+    }
+    catch(error) {
+      //console.log('second error')
+      console.dir(error)
+    }
+  }
+
+}
+
+export const updateCert = async (dispatch, payload) => {
+  doDBCert(payload);
+  //dispatch({type: types.UPDATE_CERT, payload: payload});
+  setAll(dispatch,{
+    'first':true,
+    //'operatorsData':payload.operators,
+    //'skillsData':payload.skills,
+    //'certificationsData':payload.certifications,
+    'groupID': payload.groupID,
+    'multiplier': payload.multiplier
+  })
+}
+
+export const updateSkillGoal = (dispatch, payload) => {
+  var newSkills = payload.skills.slice();
+  const lastSkillIndex = newSkills.findIndex(
+    (skill) => skill.id === payload.id
+  )
+  var oldSkill = payload.skills[lastSkillIndex]
+  if (lastSkillIndex !== -1) {
+    newSkills[lastSkillIndex] = {
+      "id": oldSkill.id,
+      "groupID": oldSkill.groupID,
+      "skillName": oldSkill.skillName,
+      "goal": parseInt(payload.goal)
+    }
+  }
+  var j = {'skillID':payload.id,'goal':parseInt(payload.goal)}
+  console.log('updateSkillGoal: ' + JSON.stringify(j))
+  //console.log(newSkills)
+  dispatch({type: types.UPDATE_SKILLGOAL, payload: {skills:newSkills}});
+  setAll(dispatch,{
+    'first':true,
+    'skillsData':newSkills,
+    'operatorsData':payload.operators,
+    'certificationsData':payload.certifications,
+    'multiplier': payload.multiplier
+  })
+
+  // API.graphql(graphqlOperation(updateSkill, { input: payload } ))
+  // .then(() => {
+  //   dispatch({type: types.UPDATE_SKILLGOAL, payload: payload});
+  //   setAll(dispatch,false)
+  // })
+}
+
+export const updateOperatorGoal = async (dispatch,payload) => {
+
+  var j = {'operatorID':payload.id,'goal':parseInt(payload.goal)}
+  console.log('updateOperatorGoal: ' + JSON.stringify(j))
+
+  var groupID = 1
+  const operatorsResult = await axios(`data/trainingmatrix/data/${groupID}/operators.json`);
+  var newOperators = operatorsResult.data;
+
+  // const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api/';
+  // const updateOperatorGoalResult = await axios.post(
+  //   apiRoot + 'UpdateOperatorGoal?partnerid=448',
+  //   {'operatorID':payload.id,'goal':parseInt(payload.goal)},
+  //   {auth:{username:'skillnet',password:'demo'}}
+  // );
+  // var newOperators = updateOperatorGoalResult.data;
+
+  // var newOperators = payload.operators.slice();
+  // const lastOperatorIndex = newOperators.findIndex(
+  //   (operator) => operator.id === payload.id
+  // )
+  // var oldOperator = payload.operators[lastOperatorIndex]
+  // if (lastOperatorIndex !== -1) {
+  //   newOperators[lastOperatorIndex] = {
+  //     "id": oldOperator.id,
+  //     "groupID": oldOperator.groupID,
+  //     "operatorName": oldOperator.operatorName,
+  //     "picture": oldOperator.picture,
+  //     "goal": parseInt(payload.goal)
+  //   }
+  // }
+  // //console.log(newOperators)
+  // dispatch({type: types.UPDATE_OPERATORGOAL, payload: {operators:newOperators}});
+
+  setAll(dispatch,{
+    'first':true,
+    'skillsData':payload.skills,
+    'operatorsData':newOperators,
+    'certificationsData':payload.certifications,
+    'multiplier': payload.multiplier
+  })
+
+  // API.graphql(graphqlOperation(updateOperator, { input: payload } ))
+  // .then(() => {
+  //   dispatch({type: types.UPDATE_OPERATORGOAL, payload: payload});
+  //   setAll(dispatch,false)
+  // })
+}
+
+export const setGroupID = (dispatch, payload) => {
+  dispatch({type: types.SET_GROUPID, payload: payload});
+}
+export const setRowsArray = (dispatch, payload) => {
+  dispatch({type: types.SET_ROWSARRAY, payload: payload});
+}
+export const setColsArray = (dispatch, payload) => {
+  dispatch({type: types.SET_COLSARRAY, payload: payload});
+}
+export const showTopDialog = (dispatch, payload) => {
+  dispatch({type: types.SET_SHOWTOPDIALOG, payload: payload});
+}
+export const setTop = (dispatch, payload) => {
+  dispatch({type: types.SET_TOP, payload: payload});
+}
+export const setMain = (dispatch, payload) => {
+  dispatch({type: types.SET_MAIN, payload: payload});
+}
+export const showSkillDialog = (dispatch, payload) => {
+  dispatch({type: types.SET_SHOWSKILLDIALOG, payload: payload});
+}
+export const showOperatorDialog = (dispatch, payload) => {
+  dispatch({type: types.SET_SHOWOPERATORDIALOG, payload: payload});
+}
+export const showMainDialog = (dispatch, payload) => {
+  dispatch({type: types.SET_SHOWMAINDIALOG, payload: payload});
+}
+export const showSecondaryDialog = (dispatch, payload) => {
+  dispatch({type: types.SET_SHOWSECONDARYDIALOG, payload: payload});
+}
+export const setCellData = (dispatch, payload) => {
+  dispatch({type: types.SET_CELLDATA, payload: payload});
+}
+export const setUserName = (dispatch, payload) => {
+  dispatch({type: types.SET_USERNAME, payload: payload});
+}
+export const setActive = (dispatch, payload) => {
+  dispatch({type: types.SET_ACTIVE, payload: payload});
+}
+export const setAuthenticatedUser = (dispatch, payload) => {
+  dispatch({type: types.SET_AUTHENTICATEDUSER, payload: payload});
+}
+export const setRightTotals = (dispatch, payload) => {
+  dispatch({type: types.SET_RIGHTTOTALS, payload: payload});
+}
+export const setBottomTotals = (dispatch, payload) => {
+  dispatch({type: types.SET_BOTTOMTOTALS, payload: payload});
+}
+export const setCurrentCertification = (dispatch, payload) => {
+  dispatch({type: types.SET_CURRENT_CERTIFICATION, payload: payload});
+}
+export const setOperators = (dispatch, payload) => {
+  dispatch({type: types.SET_OPERATORS, payload: payload});
+}
+export const setSkills = (dispatch, payload) => {
+  dispatch({type: types.SET_SKILLS, payload: payload});
+}
+export const setCertifications = (dispatch, payload) => {
+  dispatch({type: types.SET_CERTIFICATIONS, payload: payload});
+}
+export const setBySkill = (dispatch, payload) => {
+  dispatch({type: types.SET_BYSKILL, payload: payload});
+}
+export const setByOperator = (dispatch, payload) => {
+  dispatch({type: types.SET_BYOPERATOR, payload: payload});
+}
+export const setSpecific = (dispatch, payload) => {
+  dispatch({type: types.SET_SPECIFIC, payload: payload});
+}
+export const setDimensions = (dispatch, payload) => {
+  dispatch({type: types.SET_DIMENSIONS, payload: payload});
+}
+export const setOriginal = (dispatch, payload) => {
+  dispatch({type: types.SET_ORIGINAL, payload: payload});
+}
+export const toggleLegend = (dispatch, payload) => {
+  dispatch({type: types.TOGGLE_LEGEND, payload: payload});
+}
