@@ -8,21 +8,19 @@ export const setAll = async (dispatch, payload) => {
     var multiplier = payload2.multiplier
 
     var data = await getData(groupID)
+
     var skills = data.skills
     var operators = data.operators
     var certificationsInit = data.certifications
 
-    //console.log(skills)
+    var certifications = createCertifications(skills, operators, certificationsInit)
 
-    //var certifications
-    //if (first === true) {
-      var certifications = createCertifications(skills, operators, certificationsInit)
-    //}
-    //else {
-    //  certifications = certificationsInit
-    //}
+    var totals = calcTotals(certifications, dispatch)
 
-    calcTotals(certifications, dispatch)
+    dispatch({type: types.SET_ROWSARRAY, payload: totals.rowsArray});
+    var transpose = m => m[0].map((x,i) => m.map(x => x[i]))
+    var colsArraytransposed = transpose(totals.colsArray)
+    dispatch({type: types.SET_COLSARRAY, payload: colsArraytransposed});
 
     var bySkill = []
     var byOperator = []
@@ -32,11 +30,9 @@ export const setAll = async (dispatch, payload) => {
       byOperator = doByOperator(operators,skills,certifications)
     }
 
-    //if (first === true) {
-      var sLen = skills.length
-      var oLen = operators.length
-      setInit({sLen,oLen,multiplier})
-    //}
+    var sLen = skills.length
+    var oLen = operators.length
+    setInit({sLen,oLen,multiplier})
 
     var payload = {
       bySkill: bySkill,
@@ -208,10 +204,10 @@ export const setAll = async (dispatch, payload) => {
       colsArray[colCount-1][2] = colsArray[colCount-1][1] / colsArray[colCount-1][0];
     }
 
-    dispatch({type: types.SET_ROWSARRAY, payload: rowsArray});
-    var transpose = m => m[0].map((x,i) => m.map(x => x[i]))
-    var colsArraytransposed = transpose(colsArray)
-    dispatch({type: types.SET_COLSARRAY, payload: colsArraytransposed});
+    return {
+      rowsArray,
+      colsArray
+    }
   }
 
   const doBySkill = (operators, skills, certifications) => {
@@ -379,7 +375,7 @@ export const updateSkillGoal = (dispatch, payload) => {
   var oldSkill = payload.skills[lastSkillIndex]
   if (lastSkillIndex !== -1) {
     newSkills[lastSkillIndex] = {
-      "id": oldSkill.id,
+      "skillID": oldSkill.skillID,
       "groupID": oldSkill.groupID,
       "skillName": oldSkill.skillName,
       "goal": parseInt(payload.goal)
@@ -390,10 +386,11 @@ export const updateSkillGoal = (dispatch, payload) => {
   //console.log(newSkills)
   dispatch({type: types.UPDATE_SKILLGOAL, payload: {skills:newSkills}});
   setAll(dispatch,{
-    'first':true,
-    'skillsData':newSkills,
-    'operatorsData':payload.operators,
-    'certificationsData':payload.certifications,
+    //'first':true,
+    //'skillsData':newSkills,
+    //'operatorsData':payload.operators,
+    //'certificationsData':payload.certifications,
+    'groupID': oldSkill.groupID,
     'multiplier': payload.multiplier
   })
 

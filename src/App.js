@@ -74,10 +74,13 @@ export const App = (props) => {
   return (
     <div style={{display:'flex',flexDirection:'column',height:'100%',width:'100%'}}>
       <div style={{position:'fixed',zIndex:'10000',width:'100%',background:'white'}}>
-        <div style={{height:'50px'}}><img style={{margin:'10px',width:'150px'}} src="toshiba.png" alt="Toshiba"/></div>
+        <div style={{height:'60px',display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+          <div><img style={{margin:'10px',width:'150px'}} src="Logo.57fd82aa.png" alt="Toshiba"/></div>
+          <div><img style={{margin:'10px',borderRadius:'50%',width: 40,height:40}} src="data/trainingmatrix/pictures/AaronCariaga.jpg" alt="Toshiba"/></div>
+        </div>
         <Toolstrip/>
       </div>
-      <div style={{marginTop:'90px',flex:'1'}}>
+      <div style={{marginTop:'100px',flex:'1'}}>
         {appState.groups === null &&
           <div style={{marginTop:'90px',marginLeft:'60px',fontSize:'45px'}}>Matrix is Loading...</div>
         }
