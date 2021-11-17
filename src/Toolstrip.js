@@ -39,7 +39,7 @@ export const Toolstrip = (props) => {
           {appState.groups !== null &&
             appState.groups.map((group,i) => {
               var selected = ''
-              if (group.groupID === 34751) {
+              if (group.groupID === 34750) {
                 selected = 'selected'
               }
               return <option selected={selected} key={i} value={group.groupID}>{group.groupID}-{group.groupName}</option>
@@ -55,7 +55,7 @@ export const Toolstrip = (props) => {
       <div style={{display:'flex',flexDirection:'row'}}>
         <button style={{margin:'7px 0 7px 1px',}} onClick={()=>{ appState.setLegend(!appState.legend)}}>Toggle Legend</button>
 
-        <div style={{margin:'13px 0 7px 10px',color:'black',fontSize:'12px'}}>v2021-11-17-a</div>
+        <div style={{margin:'13px 0 7px 10px',color:'black',fontSize:'12px'}}>v2021-11-17-b</div>
       </div>
     </div>
   )

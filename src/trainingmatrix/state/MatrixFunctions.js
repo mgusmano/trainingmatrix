@@ -19,8 +19,13 @@ export const setAll = async (dispatch, payload) => {
 
     dispatch({type: types.SET_ROWSARRAY, payload: totals.rowsArray});
     var transpose = m => m[0].map((x,i) => m.map(x => x[i]))
-    var colsArraytransposed = transpose(totals.colsArray)
-    dispatch({type: types.SET_COLSARRAY, payload: colsArraytransposed});
+    if (totals.colsArray.length > 0) {
+      var colsArraytransposed = transpose(totals.colsArray)
+      dispatch({type: types.SET_COLSARRAY, payload: colsArraytransposed});
+    }
+    else {
+      dispatch({type: types.SET_COLSARRAY, payload: []});
+    }
 
     var bySkill = []
     var byOperator = []
@@ -50,7 +55,6 @@ export const setAll = async (dispatch, payload) => {
     const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
     //const localRoot = 'http://localhost:3005';
     const localRoot = 'https://my-json-server.typicode.com/mgusmano/toshibaserver';
-
     const auth = {auth:{username:'skillnet',password:'demo'}};
 
     // const skillsResult = await axios(`data/trainingmatrix/data/${groupID}/skills.json`);
@@ -61,37 +65,38 @@ export const setAll = async (dispatch, payload) => {
     //const operatorsResult = await axios(`${localRoot}/operators?groupID=${groupID}`);
     const certificationsResult = await axios(`${localRoot}/certifications?groupID=${groupID}`);
 
-    //const skillsResult = await axios(`${apiRoot}/PortalGroupSkills?partnerid=448&groupid=${groupID}`,auth);
-      // console.log('portalGroupSkillsResult')
-      // console.log(portalGroupSkillsResult)
-      // console.log(JSON.parse(portalGroupSkillsResult.data))
-    const operatorsResult = await axios(`${apiRoot}/PortalGroupOperators?groupid=${groupID}`,auth);
-      // console.log('portalGroupOperatorsResult')
-      // console.log(portalGroupOperatorsResult)
+    const skillsUrl = `${apiRoot}/PortalGroupSkillsOnly?groupid=${groupID}`
+    //console.log(skillsUrl)
+    const skills2Result = await axios(skillsUrl,auth);
+    const operators2Result = await axios(`${apiRoot}/PortalGroupOperators?groupid=${groupID}`,auth);
+    const certifications2Result = await axios(`${apiRoot}/PortalCertificationsRating?groupid=${groupID}`,auth);
 
-    //just for the webAPI data while it is broken
-    var operatorsResultdata = []
-    operatorsResult.data.map((operator,i) => {
-      var o = {}
-      o.operatorID = operator.operatorID;
-      o.operatorName = operator.operatorName;
-      o.groupID = groupID;
-      o.picture = "AaronCariaga.jpg";
-      o.goal = 4;
-      operatorsResultdata.push(o)
+    //console.log(skills2Result)
+    //console.log(certifications2Result)
 
-      return null
-    })
+    // //just for the webAPI data while it is broken
+    // var operatorsResultdata = []
+    // operatorsResult.data.map((operator,i) => {
+    //   var o = {}
+    //   o.operatorID = operator.operatorID;
+    //   o.operatorName = operator.operatorName;
+    //   o.groupID = groupID;
+    //   o.picture = "AaronCariaga.jpg";
+    //   o.goal = 4;
+    //   operatorsResultdata.push(o)
 
-    //console.log(operatorsResult.data)
-    //console.log(operatorsResultdata)
+    //   return null
+    // })
+
+    // //just for the webAPI data while it is broken
+    const skills3Resultdata = skills2Result.data.slice(0, 19);
+
     var r = {
-      skills: skillsResult.data,
-      operators: operatorsResultdata,
+      //skills: skills2Result.data,
+      skills: skills3Resultdata,
+      operators: operators2Result.data,
       certifications: certificationsResult.data
     }
-    console.log(r)
-
     return r
   }
 
@@ -124,6 +129,7 @@ export const setAll = async (dispatch, payload) => {
         })
       }
     }
+    console.log(certificationsDataCreated)
 
     for (let o = 0; o < certificationsData.length; o++) {
       var found = certificationsDataCreated.find(element => {
@@ -177,6 +183,7 @@ export const setAll = async (dispatch, payload) => {
       rowsArray[rowCount-1][2] = rowsArray[rowCount-1][1] / rowsArray[rowCount-1][0];
     }
 
+    console.log(certificationsDataCreated)
     var certByCol = Array.from(certificationsDataCreated);
     certByCol.sort(function (x, y) {
       var n = x.col - y.col;
@@ -203,6 +210,8 @@ export const setAll = async (dispatch, payload) => {
       colsArray[colCount-1][3] = colsArray[colCount-1][0] - colsArray[colCount-1][1];
       colsArray[colCount-1][2] = colsArray[colCount-1][1] / colsArray[colCount-1][0];
     }
+
+    console.log(colsArray)
 
     return {
       rowsArray,
@@ -312,8 +321,16 @@ export const setAll = async (dispatch, payload) => {
 }
 
 export const doDBCert = async (payload) => {
-  //const localRoot = 'http://localhost:3005'
+  const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
+  //const localRoot = 'http://localhost:3005';
   const localRoot = 'https://my-json-server.typicode.com/mgusmano/toshibaserver';
+  const auth = {auth:{username:'skillnet',password:'demo'}};
+
+  var url = `${apiRoot}/PortalGroupUpdateOperatorCertification?skillID=${payload.skillID}&operatorID=${payload.operatorID}&groupid=${payload.groupID}&currcertID=${payload.currcertID}`
+  const updateResult = await axios.post(url,auth);
+  console.log(updateResult)
+  return
+
   var headers = {headers: {'content-type': 'application/json'}};
   var p = {
     "skillID": parseInt(payload.skillID),

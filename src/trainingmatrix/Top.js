@@ -14,7 +14,7 @@ export const Top = React.memo((props) => {
   //console.log(matrixState.celldata)
 
   //var img = 'data/trainingmatrix/pictures/' + matrixState.celldata.operator.picture + ''
-  var img = 'data/trainingmatrix/pictures/' + matrixState.celldata.picture + ''
+  var img = '' + matrixState.celldata.picture + ''
 
   //var img = 'data/trainingmatrix/pictures/' + data.picture + ''
 

@@ -38,16 +38,13 @@ export const Row1Col2 = (props) => {
 
   const renderOperatorCell = (props,c,col,r,row,sTop,data,clickCellFunction) => {
     const {bandX, bandY, fontsize} = props
-
-    //xsrc={'https://examples.sencha.com/extjs/7.4.0/examples/kitchensink/resources/images/staff/'+data.id+'.jpg'}
-    //xwsrc={'data/trainingmatrix/pictures/Aaron Cariaga.JPG'}
     return (
       <g key={r+c} transform="translate(0,0)" className="header">
         <text style={{fontSize:fontsize+'px'}} alignmentBaseline="baseline" transform="translate(0,0) rotate(90)" x={bandX*1.4} y={-(bandX * c)-10} fill="black">{data.operatorName}</text>
         <foreignObject x={(bandX*c)+5} y={10} width='50px' height='50px'>
           <img
             alt="pic"
-            src={'data/trainingmatrix/pictures/' + data.picture + ''}
+            src={data.picture + ''}
             style={{borderRadius:'50%',width: bandX-10,height:bandX-10}}
           />
         </foreignObject>
