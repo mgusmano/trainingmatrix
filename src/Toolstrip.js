@@ -32,30 +32,26 @@ export const Toolstrip = (props) => {
       <div style={{display:'flex',flexDirection:'row'}}>
 
         <div style={{marginLeft:'1px',marginTop:'13px',color:'black',fontSize:'12px'}}>group:</div>
-        <select style={{width:'250px',margin:'7px'}}
+        <select value={appState.groupID} style={{width:'250px',margin:'7px'}}
           onChange={(event) => {
             appState.setGroupID(event.target.value)
           }}>
           {appState.groups !== null &&
             appState.groups.map((group,i) => {
-              var selected = ''
-              if (group.groupID === 34750) {
-                selected = 'selected'
-              }
-              return <option selected={selected} key={i} value={group.groupID}>{group.groupID}-{group.groupName}</option>
+              return <option key={i} value={group.groupID}>{group.groupID}-{group.groupName}</option>
             })
           }
         </select>
         <div style={{margin:'13px 0 7px 30px',color:'black',fontSize:'12px'}}>matrix size:</div>
         <button style={{margin:'7px 0 7px 5px',width:'60px'}} onClick={()=>{appState.setMultiplier(appState.multiplier-1)}}>smaller</button>
-        <button style={{margin:'7px 0 7px 0',width:'60px'}} onClick={()=>{appState.setMultiplier(appState.multiplier+1)}}>bigger</button>
+        <button style={{margin:'7px 0 7px 0',width:'60px'}} onClick={()=>{appState.setMultiplier(appState.multiplier+1)}}>larger</button>
         <div style={{marginLeft:'10px',marginTop:'13px',color:'black',fontSize:'12px'}}>{appState.multiplier}</div>
 
       </div>
       <div style={{display:'flex',flexDirection:'row'}}>
         <button style={{margin:'7px 0 7px 1px',}} onClick={()=>{ appState.setLegend(!appState.legend)}}>Toggle Legend</button>
 
-        <div style={{margin:'13px 0 7px 10px',color:'black',fontSize:'12px'}}>v2021-11-17-b</div>
+        <div style={{margin:'13px 0 7px 10px',color:'black',fontSize:'12px'}}>v2021-11-18-e</div>
       </div>
     </div>
   )

@@ -54,19 +54,18 @@ export const setAll = async (dispatch, payload) => {
   const getData = async (groupID) => {
     const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
     //const localRoot = 'http://localhost:3005';
-    const localRoot = 'https://my-json-server.typicode.com/mgusmano/toshibaserver';
+    //const localRoot = 'https://my-json-server.typicode.com/mgusmano/toshibaserver';
     const auth = {auth:{username:'skillnet',password:'demo'}};
 
-    // const skillsResult = await axios(`data/trainingmatrix/data/${groupID}/skills.json`);
+    //const skillsResult = await axios(`data/trainingmatrix/data/${groupID}/skills.json`);
     // const operatorsResult = await axios(`data/trainingmatrix/data/${groupID}/operators.json`);
     // const certificationsResult = await axios(`data/trainingmatrix/data/${groupID}/certifications.json`);
 
-    const skillsResult = await axios(`${localRoot}/skills?groupID=${groupID}`);
+    //const skillsResult = await axios(`${localRoot}/skills?groupID=${groupID}`);
     //const operatorsResult = await axios(`${localRoot}/operators?groupID=${groupID}`);
-    const certificationsResult = await axios(`${localRoot}/certifications?groupID=${groupID}`);
+    //const certificationsResult = await axios(`${localRoot}/certifications?groupID=${groupID}`);
 
     const skillsUrl = `${apiRoot}/PortalGroupSkillsOnly?groupid=${groupID}`
-    //console.log(skillsUrl)
     const skills2Result = await axios(skillsUrl,auth);
     const operators2Result = await axios(`${apiRoot}/PortalGroupOperators?groupid=${groupID}`,auth);
     const certifications2Result = await axios(`${apiRoot}/PortalCertificationsRating?groupid=${groupID}`,auth);
@@ -89,13 +88,12 @@ export const setAll = async (dispatch, payload) => {
     // })
 
     // //just for the webAPI data while it is broken
-    const skills3Resultdata = skills2Result.data.slice(0, 19);
+    //const skills3Resultdata = skills2Result.data.slice(0, 19);
 
     var r = {
-      //skills: skills2Result.data,
-      skills: skills3Resultdata,
+      skills: skills2Result.data,
       operators: operators2Result.data,
-      certifications: certificationsResult.data
+      certifications: certifications2Result.data
     }
     return r
   }
@@ -129,7 +127,6 @@ export const setAll = async (dispatch, payload) => {
         })
       }
     }
-    console.log(certificationsDataCreated)
 
     for (let o = 0; o < certificationsData.length; o++) {
       var found = certificationsDataCreated.find(element => {
@@ -183,7 +180,6 @@ export const setAll = async (dispatch, payload) => {
       rowsArray[rowCount-1][2] = rowsArray[rowCount-1][1] / rowsArray[rowCount-1][0];
     }
 
-    console.log(certificationsDataCreated)
     var certByCol = Array.from(certificationsDataCreated);
     certByCol.sort(function (x, y) {
       var n = x.col - y.col;
@@ -210,9 +206,6 @@ export const setAll = async (dispatch, payload) => {
       colsArray[colCount-1][3] = colsArray[colCount-1][0] - colsArray[colCount-1][1];
       colsArray[colCount-1][2] = colsArray[colCount-1][1] / colsArray[colCount-1][0];
     }
-
-    console.log(colsArray)
-
     return {
       rowsArray,
       colsArray
@@ -323,51 +316,52 @@ export const setAll = async (dispatch, payload) => {
 export const doDBCert = async (payload) => {
   const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
   //const localRoot = 'http://localhost:3005';
-  const localRoot = 'https://my-json-server.typicode.com/mgusmano/toshibaserver';
+  //const localRoot = 'https://my-json-server.typicode.com/mgusmano/toshibaserver';
   const auth = {auth:{username:'skillnet',password:'demo'}};
 
   var url = `${apiRoot}/PortalGroupUpdateOperatorCertification?skillID=${payload.skillID}&operatorID=${payload.operatorID}&groupid=${payload.groupID}&currcertID=${payload.currcertID}`
+  console.log(url)
   const updateResult = await axios.post(url,auth);
   console.log(updateResult)
   return
 
-  var headers = {headers: {'content-type': 'application/json'}};
-  var p = {
-    "skillID": parseInt(payload.skillID),
-    "operatorID": parseInt(payload.operatorID),
-    "groupID": payload.groupID,
-    "meta": {
-      "type": "solid",
-      "currcertID": payload.currcertID,
-      "letter": "",
-      "start": "8/3/2021"
-    },
-    "data": []
-  }
-  //console.log('updateCert: ' + JSON.stringify(p))
-  console.log('updateCert: ')
-  console.log(p)
-  var id = (payload.skillID*10)+payload.operatorID
+  // var headers = {headers: {'content-type': 'application/json'}};
+  // var p = {
+  //   "skillID": parseInt(payload.skillID),
+  //   "operatorID": parseInt(payload.operatorID),
+  //   "groupID": payload.groupID,
+  //   "meta": {
+  //     "type": "solid",
+  //     "currcertID": payload.currcertID,
+  //     "letter": "",
+  //     "start": "8/3/2021"
+  //   },
+  //   "data": []
+  // }
+  // //console.log('updateCert: ' + JSON.stringify(p))
+  // console.log('updateCert: ')
+  // console.log(p)
+  // var id = (payload.skillID*10)+payload.operatorID
 
-  try {
-    await axios.put(`${localRoot}/certifications/${id}`,p,headers);
-    //`${localRoot}/certifications?skillID=${payload.skillID}&operatorID=${payload.operatorID}&groupID=${payload.groupID}`
-    //await axios.put(`${localRoot}/certifications`,p,headers);
-    console.log('update successful')
-  }
-  catch(error) {
-    //console.dir(error)
-    try {
-      //p.id = id
-      await axios.post(`${localRoot}/certifications`,p,headers);
-      console.log('add successful')
-      console.log(p)
-    }
-    catch(error) {
-      //console.log('second error')
-      console.dir(error)
-    }
-  }
+  // try {
+  //   await axios.put(`${localRoot}/certifications/${id}`,p,headers);
+  //   //`${localRoot}/certifications?skillID=${payload.skillID}&operatorID=${payload.operatorID}&groupID=${payload.groupID}`
+  //   //await axios.put(`${localRoot}/certifications`,p,headers);
+  //   console.log('update successful')
+  // }
+  // catch(error) {
+  //   //console.dir(error)
+  //   try {
+  //     //p.id = id
+  //     await axios.post(`${localRoot}/certifications`,p,headers);
+  //     console.log('add successful')
+  //     console.log(p)
+  //   }
+  //   catch(error) {
+  //     //console.log('second error')
+  //     console.dir(error)
+  //   }
+  // }
 
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { MatrixProvider } from './state/MatrixProvider';
 import { useMatrixState } from './state/MatrixProvider';
 import LoadingOverlay from 'react-loading-overlay';
@@ -26,6 +26,7 @@ export const TrainingMatrix = ((props) => {
 
 const MainMatrixProvider = (props) => {
   const matrixState = useMatrixState();
+  const matrixStateRef = useRef(matrixState);
   //var certificationsData = props.props.certificationsData
   var groupID = props.props.groupID
   var multiplier = props.props.multiplier
@@ -33,8 +34,8 @@ const MainMatrixProvider = (props) => {
 
   useEffect(() => {
     if (multiplier === '') return
-    matrixState.setActive(true)
-    matrixState.setAll({
+    matrixStateRef.current.setActive(true)
+    matrixStateRef.current.setAll({
       //'first':true,
       'groupID': groupID,
       'multiplier':multiplier

@@ -9,7 +9,7 @@ export const Top = React.memo((props) => {
 
   useEffect(() => {
     setGoal(data.goal)
-  },[props])
+  },[data.goal])
 
   //console.log(matrixState.celldata)
 
@@ -47,13 +47,10 @@ export const Top = React.memo((props) => {
 
       <div  style={{flex: '1', marginLeft: '30px', overflow: 'hidden'}}>
           Goal for Certifications:<br/>
-          <input
-            type="text"
-            value={goal}
+          <input type="text" value={goal} style={{margin:'5px 0 0 10px',width:'26px',height:'15px'}}
             onChange={(event)=> {
               setGoal(event.target.value)
             }}
-            style={{marginLeft:'10px',marginTop:5,width:'26px',height:'15px'}}
           />
           <button
             onClick={(event)=> {

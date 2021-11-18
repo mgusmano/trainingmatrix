@@ -15,6 +15,7 @@ export const Operator = React.memo((props) => {
         return n;
     }
     //return x.col - y.col;
+    return null
   });
 
   const matrixState = useMatrixState();
@@ -26,7 +27,7 @@ export const Operator = React.memo((props) => {
 
   useEffect(() => {
     setGoal(data.goal)
-  },[props])
+  },[data.goal])
 
   const updateGoal = (newGoal) => {
     setGoal(newGoal)

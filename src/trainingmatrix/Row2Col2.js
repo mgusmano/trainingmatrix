@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Matrix } from './Matrix';
 import { MatrixCell } from './MatrixCell';
 import { useMatrixState } from './state/MatrixProvider';
@@ -41,7 +41,7 @@ export const Row2Col2 = (props) => {
     )
   }
 
-  const clickMainCell = useCallback((e,colid,rowid,type,data,col,r,c) => {
+  const clickMainCell = (e,colid,rowid,type,data,col,r,c) => {
     //props.cellClicked(data.certificationID)
     //console.log(data)
     data.row = r;
@@ -65,7 +65,7 @@ export const Row2Col2 = (props) => {
     matrixState.showTopDialog('block')
 
 
-  })
+  }
 
   const renderMainCell = (props,c,col,r,row,sTop,data,clickCellFunction,fontsize) => {
     //console.log(r,c)

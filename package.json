@@ -13,7 +13,7 @@
     "react-list": "^0.8.16",
     "react-loading-overlay": "^1.0.1",
     "react-rnd": "^10.3.5",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^4.0.3",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

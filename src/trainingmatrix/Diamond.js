@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import {SvgX, PathX, TextX, CircleX} from './SvgStuff';
-import { getTheColor, getTheColor2 } from './state/Util';
+import { getTheColor } from './state/Util';
 
 export const Diamond = ({meta, data, boxSize, padding}) => {
   const [solidcolor, setSolidColor] = useState(null)
@@ -23,7 +23,7 @@ export const Diamond = ({meta, data, boxSize, padding}) => {
   useEffect(() => {
     if (meta.currcertID !== undefined) {
       //var c = getTheColor(meta.certification)
-      var c = getTheColor2(meta.currcertID)
+      var c = getTheColor(meta.currcertID)
       setSolidColor(c)
     }
   },[meta])

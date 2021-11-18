@@ -8,8 +8,8 @@ import ReactList from 'react-list';
 export const Skill = React.memo((props) => {
   const {data} = props;
   const matrixState = useMatrixState();
-  const [goal, setGoal] = useState(0);
-  const [rev, setRev] = useState(0);
+  const [goal, setGoal] = useState('');
+  const [rev, setRev] = useState('');
   const [oldtarget, setOldTarget] = useState(null);
 
   var dataSort = Array.from(data.skill.data);
@@ -19,6 +19,7 @@ export const Skill = React.memo((props) => {
         return n;
     }
     //return x.col - y.col;
+    return null
   });
   //console.log(dataSort)
 
@@ -79,14 +80,13 @@ export const Skill = React.memo((props) => {
 
         <div style={{marginTop:'10px'}}>
           Goal:
-          <input
-            type="text"
-            value={goal}
+
+          <input type="text" value={goal} style={{margin:'5px 0 0 14px',width:'26px',height:'15px'}}
             onChange={(event)=> {
               setGoal(event.target.value)
             }}
-            style={{marginLeft:'10px',marginTop:5,width:'26px',height:'15px'}}
           />
+          
           <button
             onClick={(event)=> {
               matrixState.setActive(true)
@@ -113,14 +113,13 @@ export const Skill = React.memo((props) => {
 
         <div style={{marginTop:'10px'}}>
         Rev#:
-        <input
-          type="text"
-          value={rev}
+
+        <input type="text" value={rev} style={{margin:'5px 0 0 10px',width:'26px',height:'15px'}}
           onChange={(event)=> {
             setRev(event.target.value)
           }}
-          style={{marginLeft:'10px',marginTop:5,width:'26px',height:'15px'}}
         />
+
         <button
           onClick={(event)=> {
             matrixState.setActive(true)
