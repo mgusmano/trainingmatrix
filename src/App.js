@@ -36,7 +36,7 @@ export const App = (props) => {
       <div style={{position:'fixed',zIndex:'10000',width:'100%',background:'white'}}>
         <div style={{height:'60px',display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
           <div><img style={{margin:'10px',width:'150px'}} src="Logo.57fd82aa.png" alt="Toshiba"/></div>
-          <div><img style={{margin:'10px',borderRadius:'50%',width: 40,height:40}} src="data/trainingmatrix/pictures/AaronCariaga.jpg" alt="Toshiba"/></div>
+          <div><img style={{margin:'10px',borderRadius:'50%',width: 40,height:40}} src="https://azureportal.skillnet.net/UserFiles/55483/Pictures/Pic_55483_56116_Avatar.jpg" alt="Toshiba"/></div>
         </div>
         <Toolstrip/>
       </div>
