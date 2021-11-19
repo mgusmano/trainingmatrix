@@ -18,7 +18,7 @@ export const Legend = React.memo((props) => {
 
   return (
     <Rnd
-      size={{ width: '200px',  height: '320px' }}
+      size={{ width: '300px',  height: '350px' }}
       style={{zIndex: '10000'}}
       position={{ x: legendX, y: legendY }}
       onDragStop={(e, d) => {
@@ -33,66 +33,59 @@ export const Legend = React.memo((props) => {
         // });
       }}
     >
-      <div className='' style={{...styles.legend,background:'whitesmoke',width:'100%',height:'100%',zIndex:'10000'}}>
-        Floating Legend
+      <div className='' style={{...styles.legend,margin:'10px',background:'whitesmoke',width:'100%',height:'100%',zIndex:'10000'}}>
+        <div style={{margin:'0 0 0 0'}}>Floating Legend</div>
         <br/>
         <svg height="360px">
-          {/* <g key={0} transform="translate(10,20)" className='heading'>
+          <g key={0} transform="translate(10,20)" className='heading'>
             <text key={1} x="0" y="0"style={{fontSize:'12px'}}>certification:</text>
-            <text key={2} x="100" y="0"style={{fontSize:'12px'}}>valid</text>
-            <text key={3} x="160" y="0"style={{fontSize:'12px'}}>expiring</text>
-            <text key={4} x="230" y="0"style={{fontSize:'12px'}}>expired</text>
-          </g> */}
+            <text key={2} x="130" y="0"style={{fontSize:'12px'}}>valid</text>
+            <text key={3} x="170" y="0"style={{fontSize:'12px'}}>expiring</text>
+            <text key={4} x="225" y="0"style={{fontSize:'12px'}}>expired</text>
+          </g>
           {levels.map((level,l) => {
-            var y = 20+(50*l)
+            var y = 40+(50*l)
             var translateLevel = `translate(10,${y})`
-
-            // var l1 = 0,l2 = 0,l3 = 0,l4 = 0;
-            // var trainer = false;
-            // switch (l) {
-            //   case 5:
-            //     l1=1;l2=1;l3=1;l4=1;
-            //     trainer=true;
-            //     break;
-            //   case 4:
-            //     l1=1;l2=1;l3=1;l4=1;
-            //     break;
-            //   case 3:
-            //     l1=1;l2=1;l3=1;
-            //     break;
-            //   case 2:
-            //     l1=1;l2=1;
-            //     break;
-            //   case 1:
-            //     l1=1;
-            //     break;
-            //   default:
-            //     break;
-            // }
-
-
-
-
-            //                      meta={{id:i,"type":"solid","certification":levelsval[l],start:dates[i]}}
 
             return (
               <g key={l} transform={translateLevel} className='ball'>
               <text dominantBaseline="hanging" stroke="black" style={{fontSize:'16px'}}>{level}</text>
               {dates.map((d,i) => {
                 var x = 120+(70*i)
-                var translate = `translate(${x},-10)`
+                var translate = `translate(${x+10},-10)`
+                var translate2 = `translate(${x+60},-10)`
+                var translate3 = `translate(${x+110},-10)`
                 return (
-                  <g key={i} transform={translate} className='ball'>
+                  <>
+                  <g key={i+10} transform={translate} className='ball'>
                     <Diamond
                       meta={{id:i,"type":"solid","currcertID":levelsval[l],start:dates[i]}}
                       data={[]}
-                      boxSize={30} padding={15}/>
-
-                    {/* <Diamond
-                      meta={{id:i,status:'started',start:dates[i],trainer:trainer}}
-                      data={[{p:25,s:l1},{p:50,s:l2},{p:75,s:l3},{p:100,s:l4}]}
-                      boxSize={30} padding={15}/> */}
+                      boxSize={30}
+                      padding={15}
+                    />
                   </g>
+                  {l > 2 &&
+                  <g key={i+100} transform={translate2} className='ball'>
+                    <Diamond
+                      meta={{id:i,"type":"solid","currcertID":levelsval[l],letter:'!',start:dates[i]}}
+                      data={[]}
+                      boxSize={30}
+                      padding={15}
+                    />
+                  </g>
+                  }
+                  {l > 2 &&
+                  <g key={i+1000} transform={translate3} className='ball'>
+                    <Diamond
+                      meta={{id:i,"type":"solid","currcertID":levelsval[l],letter:'X',start:dates[i]}}
+                      data={[]}
+                      boxSize={30}
+                      padding={15}
+                    />
+                  </g>
+                  }
+                  </>
                 )
               })}
             </g>

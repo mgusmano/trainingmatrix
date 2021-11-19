@@ -12,6 +12,7 @@ export const MatrixProvider = (props) => {
     setGroupID: (payload) => functions.setGroupID(dispatch, payload),
     setRowsArray: (payload) => functions.setRowsArray(dispatch, payload),
     setColsArray: (payload) => functions.setColsArray(dispatch, payload),
+    setRevArray: (payload) => functions.setRevArray(dispatch, payload),
 
     showTopDialog: (payload) => functions.showTopDialog(dispatch, payload),
     setTop: (payload) => functions.setTop(dispatch, payload),
@@ -52,6 +53,7 @@ export const MatrixProvider = (props) => {
     groupID: null,
     rowsArray: null,
     colsArray: null,
+    revArray: null,
     topDialog: 'none',
     top: null,
     main: null,

@@ -75,7 +75,9 @@ const MainMatrixProvider = (props) => {
           <div className='leftrow2' style={{...styles.h,xflex:'1',height:(matrixState.dimensions.row2Orig)+'px',background:'lightgray'}}>
             <Row2Col1 data={matrixState.bySkill}/>
             {/* <Row2Col1a/> */}
-            <Row2Col1a data={[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]}/>
+            {matrixState.revArray !== null &&
+            <Row2Col1a data={matrixState.revArray}/>
+            }
             {/* <Log data={matrixState.active}/> */}
             <LoadingOverlay
               style={{width:'100%',height:'100%',zIndex:'10'}}

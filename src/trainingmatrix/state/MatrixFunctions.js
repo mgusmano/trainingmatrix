@@ -27,6 +27,8 @@ export const setAll = async (dispatch, payload) => {
       dispatch({type: types.SET_COLSARRAY, payload: []});
     }
 
+    dispatch({type: types.SET_REVARRAY, payload: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]});
+
     var bySkill = []
     var byOperator = []
 
@@ -469,6 +471,9 @@ export const setRowsArray = (dispatch, payload) => {
 }
 export const setColsArray = (dispatch, payload) => {
   dispatch({type: types.SET_COLSARRAY, payload: payload});
+}
+export const setRevArray = (dispatch, payload) => {
+  dispatch({type: types.SET_REVARRAY, payload: payload});
 }
 export const showTopDialog = (dispatch, payload) => {
   dispatch({type: types.SET_SHOWTOPDIALOG, payload: payload});

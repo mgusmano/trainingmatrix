@@ -35,6 +35,7 @@ export const MatrixReducer = (state, action) => {
     case types.SET_GROUPID: return {...state,groupID:payload}
     case types.SET_ROWSARRAY: return {...state,rowsArray:payload}
     case types.SET_COLSARRAY: return {...state,colsArray:payload}
+    case types.SET_REVARRAY: return {...state,revArray:payload}
     case types.SET_SHOWTOPDIALOG: return {...state,topDialog:payload}
     case types.SET_TOP: return {...state,top:payload}
     case types.SET_MAIN: return {...state,main:payload}
