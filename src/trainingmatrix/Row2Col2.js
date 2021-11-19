@@ -8,7 +8,6 @@ import { Main } from './Main';
 
 export const Row2Col2 = (props) => {
   const {data} = props;
-  //console.log(data)
   const matrixState = useMatrixState();
   const {row2Orig,row2,col2,fontsize,topHeight,bandX,bandY} = matrixState.dimensions;
 
@@ -42,36 +41,24 @@ export const Row2Col2 = (props) => {
   }
 
   const clickMainCell = (e,colid,rowid,type,data,col,r,c) => {
-    //props.cellClicked(data.certificationID)
-    //console.log(data)
     data.row = r;
     data.col = c;
-    props.cellClicked(data)
-
+    //props.cellClicked(data)
 
     matrixState.setCurrentCertification(data.certificationID)
-
     matrixState.setMain(<Main data={data}/>)
 
     data.operatorName = data.operator.operatorName
     data.picture = data.operator.picture
     matrixState.setCellData(data)
     matrixState.showMainDialog('block')
-    //matrixState.showSecondaryDialog('none')
     matrixState.showSkillDialog('none')
     matrixState.showOperatorDialog('none')
-
     matrixState.setTop(<Top data={data}/>)
     matrixState.showTopDialog('block')
-
-
   }
 
   const renderMainCell = (props,c,col,r,row,sTop,data,clickCellFunction,fontsize) => {
-    //console.log(r,c)
-
-    //var certificationID = col.certificationID;
-
     const {bandX, bandY} = props
     return (
       <g key={r+c} transform={"translate(" + (c*bandX) + "," + sTop + ")"} className="group" >

@@ -1,19 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAppState } from './state/AppProvider';
 import { Toolstrip } from './Toolstrip.js';
 import TrainingMatrix from './trainingmatrix/TrainingMatrix';
 import axios from "axios";
-//import { Loading } from 'aws-amplify-react';
+//import { getParameterByName } from './state/Util';
 
-//import { join, dirname } from 'path'
-//import { Low, JSONFile } from 'lowdb'
-//import { fileURLToPath } from 'url'
-
-export const App = (props) => {
+export const App = () => {
   const appState = useAppState();
   const appStateRef = useRef(appState);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
+    //setToken(getParameterByName('token'));
+    setToken('token');
+
     async function fetchData() {
       const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api/';
       const auth = {auth:{username:'skillnet',password:'demo'}};
@@ -27,9 +27,9 @@ export const App = (props) => {
     { appStateRef.current.setMultiplier(6) }
   },[])
 
-  const cellClicked = (data) => {
-    //console.log(data)
-  }
+  // const cellClicked = (data) => {
+  //   //console.log(data)
+  // }
 
   return (
     <div style={{display:'flex',flexDirection:'column',height:'100%',width:'100%'}}>
@@ -40,6 +40,10 @@ export const App = (props) => {
         </div>
         <Toolstrip/>
       </div>
+      {token === null &&
+        <div style={{marginTop:'130px',marginLeft:'60px',fontSize:'45px'}}>No Authenticated User...</div>
+      }
+      {token !== null &&
       <div style={{marginTop:'100px',flex:'1'}}>
         {appState.groups === null &&
           <div style={{marginTop:'90px',marginLeft:'60px',fontSize:'45px'}}>Matrix is Loading...</div>
@@ -49,27 +53,11 @@ export const App = (props) => {
           multiplier={appState.multiplier}
           showLegend={appState.legend}
           groupID={appState.groupID}
-          //skillsData={appState.skills}
-          //operatorsData={appState.operators}
-          //certificationsData={appState.certifications}
-          cellClicked={cellClicked}
+          //cellClicked={cellClicked}
         />
         }
       </div>
+      }
     </div>
   )
 }
-
-
-
-
-
-
-    // var url = 'https://skillnetusersapi.azurewebsites.net/api/PartnerLocations?partnerid=434'
-    // axios
-    // .get(url, {
-    //   auth: {username: 'skillnet',password: 'demo'}
-    // })
-    // .then((response) => {
-    //   console.log('result: ', response)
-    // })

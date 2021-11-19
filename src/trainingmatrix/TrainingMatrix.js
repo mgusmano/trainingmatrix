@@ -43,7 +43,7 @@ const MainMatrixProvider = (props) => {
   },[multiplier,groupID])
 
   const cellClicked = (id) => {
-    props.props.cellClicked(id)
+    //props.props.cellClicked(id)
   }
 
   return (
