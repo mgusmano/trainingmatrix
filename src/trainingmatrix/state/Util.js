@@ -7,7 +7,6 @@ export const getValues = ((state, initialState) => {
 })
 
 export const getTheColor = ((currcertID) => {
-  //console.log(certification)
   var color = 'green'
   switch (currcertID) {
     case 0:

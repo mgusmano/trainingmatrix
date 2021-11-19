@@ -163,12 +163,14 @@ export const Main = (props) => {
       </svg>
 
       <div style={{margin:'0 0 0 0',display:'flex',flexDirection:'column'}}>
-        <div><input checked={certification === 0} onChange={onChangeValue} type="radio" value="0" name="cert" /> 0 Not Applicable</div>
-        <div><input checked={certification === 1} onChange={onChangeValue} type="radio" value="1" name="cert" /> 1 In Training</div>
-        <div><input checked={certification === 2} onChange={onChangeValue} type="radio" value="2" name="cert" /> 2 Developing</div>
-        <div style={{color:color}}><input disabled={disabled} checked={certification === 3} onChange={onChangeValue} type="radio" value="3" name="cert" /> 3 Certified</div>
-        <div style={{color:color}}><input disabled={disabled} checked={certification === 4} onChange={onChangeValue} type="radio" value="4" name="cert" /> 4 Trainer</div>
-        <div style={{color:color}}><input disabled={disabled} checked={certification === 5} onChange={onChangeValue} type="radio" value="5" name="cert" /> 5 Master Trainer</div>
+      <div>
+        <div><input checked={certification === 0} onChange={onChangeValue} type="radio" value={0} name="cert" /> 0 Not Applicable</div>
+        <div><input checked={certification === 1} onChange={onChangeValue} type="radio" value={1} name="cert" /> 1 In Training</div>
+        <div><input checked={certification === 2} onChange={onChangeValue} type="radio" value={2} name="cert" /> 2 Developing</div>
+        <div style={{color:color}}><input disabled={disabled} checked={certification === 3} onChange={onChangeValue} type="radio" value={3} name="cert" /> 3 Certified</div>
+        <div style={{color:color}}><input disabled={disabled} checked={certification === 4} onChange={onChangeValue} type="radio" value={4} name="cert" /> 4 Trainer</div>
+        <div style={{color:color}}><input disabled={disabled} checked={certification === 5} onChange={onChangeValue} type="radio" value={5} name="cert" /> 5 Master Trainer</div>
+      </div>
       </div>
 
       <div style={{margin:'120px 0 0 0',display:'flex',flexDirection:'column'}}>
