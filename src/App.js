@@ -3,6 +3,7 @@ import { useAppState } from './state/AppProvider';
 import { Toolstrip } from './Toolstrip.js';
 import TrainingMatrix from './trainingmatrix/TrainingMatrix';
 import axios from "axios";
+import qs from 'qs';
 //import { getParameterByName } from './state/Util';
 
 export const App = () => {
@@ -15,9 +16,27 @@ export const App = () => {
     setToken('token');
 
     async function fetchData() {
-      const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api/';
+      const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
+      const apiRoot2 = 'https://skillnetusersapi.azurewebsites.net';
       const auth = {auth:{username:'skillnet',password:'demo'}};
-      const portalGroupsResult = await axios(apiRoot + 'portalgroups?partnerid=448', auth);
+
+
+      var url = `${apiRoot2}/token`;
+      var j = {"userName": "gabriel.porizan@nordlogic.com","grant_type": "password"}
+      console.log(url)
+      console.log(j)
+      const tokenPostResult = await axios.post(url,qs.stringify(j),auth);
+      console.log(tokenPostResult)
+
+      //http://skillnetusersapi.azurewebsites.net/token(post) will return you a access token.
+      //{"userName": "gabriel.porizan@nordlogic.com","grant_type": "password"}
+
+
+
+      // const tokenResult = await axios(apiRoot + '/decodetoken?token=KpXYQ1m4PmT6UYZv9IlrLQ==', auth);
+      // console.log(tokenResult)
+
+      const portalGroupsResult = await axios(apiRoot + '/portalgroups?partnerid=448', auth);
       appStateRef.current.setGroups(portalGroupsResult.data);
     }
     fetchData();

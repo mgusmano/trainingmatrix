@@ -14,14 +14,28 @@
     "react-loading-overlay": "^1.0.1",
     "react-rnd": "^10.3.5",
     "react-scripts": "^4.0.3",
+    "react-to-webcomponent": "^1.5.1",
+    "rollup-plugin-import-css": "^3.0.2",
     "web-vitals": "^1.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "rollup": "^2.59.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build2": "react-scripts build",
     "build": "CI=false GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "buildx": "NODE_ENV=prod rollup --config rollup.config.js",
+    "servex": "yarn buildx && npx http-server ./docs"
   },
   "eslintConfig": {
     "extends": [

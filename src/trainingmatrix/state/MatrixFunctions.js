@@ -97,6 +97,7 @@ export const setAll = async (dispatch, payload) => {
       operators: operators2Result.data,
       certifications: certifications2Result.data
     }
+    console.log(r)
     return r
   }
 
@@ -133,14 +134,21 @@ export const setAll = async (dispatch, payload) => {
     for (let o = 0; o < certificationsData.length; o++) {
       var found = certificationsDataCreated.find(element => {
         var c;
+        // console.log(element.skillID)
+        // console.log(certificationsData[o].skillID)
+        // console.log(element.operatorID)
+        // console.log(certificationsData[o].operatorID)
         if (element.skillID === certificationsData[o].skillID && element.operatorID === certificationsData[o].operatorID) {
           c = certificationsData[o]
         }
         return c
       });
       //console.log(found)
-      found.meta = certificationsData[o].meta
-      found.data = certificationsData[o].data
+      //console.log(found)
+      if (found !== undefined) {
+        found.meta = certificationsData[o].meta
+        found.data = certificationsData[o].data
+      }
     }
     return certificationsDataCreated;
 
@@ -321,10 +329,18 @@ export const doDBCert = async (payload) => {
   //const localRoot = 'https://my-json-server.typicode.com/mgusmano/toshibaserver';
   const auth = {auth:{username:'skillnet',password:'demo'}};
 
-  var url = `${apiRoot}/PortalGroupUpdateOperatorCertification?skillID=${payload.skillID}&operatorID=${payload.operatorID}&groupID=${payload.groupID}&currcertID=${payload.currcertID}`
+  var url = `${apiRoot}/postOperatorFormInfo`;
+  var j = {groupID:payload.groupID,skillID:payload.skillID,operatorID:payload.operatorID,currcertID:payload.currcertID}
   console.log(url)
-  const updateResult = await axios.post(url,auth);
+  console.log(j)
+  const updateResult = await axios.post(url,j,auth);
   console.log(updateResult)
+
+
+  // var url = `${apiRoot}/PortalGroupUpdateOperatorCertification?skillID=${payload.skillID}&operatorID=${payload.operatorID}&groupID=${payload.groupID}&currcertID=${payload.currcertID}`
+  // console.log(url)
+  // const updateResult = await axios.post(url,auth);
+  // console.log(updateResult)
   return
 
   // var headers = {headers: {'content-type': 'application/json'}};
@@ -371,7 +387,7 @@ export const updateCert = async (dispatch, payload) => {
   doDBCert(payload);
   //dispatch({type: types.UPDATE_CERT, payload: payload});
   setAll(dispatch,{
-    'first':true,
+    //'first':true,
     //'operatorsData':payload.operators,
     //'skillsData':payload.skills,
     //'certificationsData':payload.certifications,

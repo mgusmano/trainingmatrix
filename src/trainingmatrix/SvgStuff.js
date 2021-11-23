@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const SvgX = (props) => {
   //console.log(props)
   return (
