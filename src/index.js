@@ -5,5 +5,5 @@ import { AppProvider } from './state/AppProvider';
 import reactToWebComponent from 'react-to-webcomponent';
 const Index = () => (<AppProvider><App/></AppProvider>);
 
-//ReactDOM.render(Index,document.getElementById('root'));
-customElements.define('training-matrix', reactToWebComponent(Index, React, ReactDOM));
+ReactDOM.render(<AppProvider><App/></AppProvider>,document.getElementById('root'));
+//customElements.define('training-matrix', reactToWebComponent(Index, React, ReactDOM));

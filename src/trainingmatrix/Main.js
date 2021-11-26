@@ -9,7 +9,8 @@ export const Main = (props) => {
   const [diamonddata, setDiamondData] = useState(null)
   const [metadata, setMetaData] = useState(null)
   const [certification, setCertification] = useState(null)
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
+  const [currcertDate, setCurrcertDate] = useState(null);
 
   var operator = {}
   var skill = {}
@@ -32,6 +33,7 @@ export const Main = (props) => {
     }
     var data = matrixState.celldata.data
     var meta = matrixState.celldata.meta
+    //console.log(meta)
     if (typeof data === 'string') {
       data = JSON.parse(data)
     }
@@ -43,8 +45,11 @@ export const Main = (props) => {
     setMetaData(meta)
     setCertification(meta.currcertID)
 
-    if (meta.start !== undefined) {
-      setStartDate(new Date(meta.start))
+    if (meta.startDate !== null) {
+      setStartDate(new Date(meta.startDate))
+    }
+    if (meta.currcertDate !== null) {
+      setCurrcertDate(new Date(meta.currcertDate))
     }
   },[matrixState.celldata.meta,matrixState.celldata.data])
 
@@ -138,21 +143,31 @@ export const Main = (props) => {
   var link = `https://skillnetformsapp.azurewebsites.net?skillID=` + skill.skillID + `&operatorID=` + operator.operatorID + `&userID=` + userID
 
   return (
-    <div style={{padding:'10px 0 0 40px',display:'flex',flexDirection:'column'}}>
+    <div style={{padding:'10px 0 0 40px',fontSize:'20px',display:'flex',flexDirection:'column'}}>
 
       <div style={{margin:'0 0 0 0',fontSize:'20px'}}>
         {skill.skillName}
       </div>
 
-      <div style={{margin:'5px 0 0 0'}}>
+      {startDate !== null &&
+      <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
         <a target='_blank' rel='noreferrer' href={link}>Certification Form</a>
       </div>
+      }
 
-      <div style={{margin:'5px 0 0 0'}}>
-        Started: {startDate.toLocaleDateString()}
+      {startDate !== null &&
+      <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
+        Start Date: {startDate.toLocaleDateString()}
       </div>
+      }
 
-      <div style={{margin:'15px 0 0 0'}}>
+      {currcertDate !== null &&
+      <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
+        Current Cert Date: {currcertDate.toLocaleDateString()}
+      </div>
+      }
+
+      <div style={{margin:'15px 0 0 0',fontSize:'18px'}}>
         Certification:
       </div>
 
@@ -162,7 +177,7 @@ export const Main = (props) => {
         }
       </svg>
 
-      <div style={{margin:'0 0 0 0',display:'flex',flexDirection:'column'}}>
+      <div style={{margin:'0 0 0 0',display:'flex',fontSize:'12px',flexDirection:'column'}}>
       <div>
         <div><input checked={certification === 0} onChange={onChangeValue} type="radio" value={0} name="cert" /> 0 Not Applicable</div>
         <div><input checked={certification === 1} onChange={onChangeValue} type="radio" value={1} name="cert" /> 1 In Training</div>
@@ -174,7 +189,7 @@ export const Main = (props) => {
       </div>
 
       <div style={{margin:'120px 0 0 0',display:'flex',flexDirection:'column'}}>
-        <div style={{fontSize:'12px'}}>certificationID: {certificationID} <br/> skillID: {skill.skillID} <br/> operatorID: {operator.operatorID}</div>
+        <div style={{fontSize:'8px'}}>certificationID: {certificationID} <br/> skillID: {skill.skillID} <br/> operatorID: {operator.operatorID}</div>
       </div>
 
     </div>

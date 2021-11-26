@@ -75,6 +75,21 @@ export const setAll = async (dispatch, payload) => {
     //console.log(skills2Result)
     //console.log(certifications2Result)
 
+
+    //just for the webAPI data while it is broken
+    var certifications2Resultdata = []
+    certifications2Result.data.map((certification,i) => {
+      //console.log(certification)
+      var o = certification
+      o.meta.startDate = o.meta.start
+      o.meta.currcertDate = new Date().toUTCString()
+      o.meta.currcertStatus = 1
+      delete o.meta.start;
+      certifications2Resultdata.push(o)
+      return null
+    })
+    //console.log(certifications2Resultdata)
+
     // //just for the webAPI data while it is broken
     // var operatorsResultdata = []
     // operatorsResult.data.map((operator,i) => {
@@ -95,9 +110,9 @@ export const setAll = async (dispatch, payload) => {
     var r = {
       skills: skills2Result.data,
       operators: operators2Result.data,
-      certifications: certifications2Result.data
+      certifications: certifications2Resultdata
     }
-    console.log(r)
+    //console.log(r)
     return r
   }
 
@@ -120,10 +135,13 @@ export const setAll = async (dispatch, payload) => {
           "meta": {
             "type":"solid",
             "currcertID": 0,
+            "startDate": null, //new Date().toUTCString(),
+            "currcertDate": null, //new Date().toUTCString(),
+            "currcertStatus": 0,
             "certification":"notapplicable",
             "strokecolor":"black",
             "letter":"",
-            "start":"",
+            //"start":"",
             "certstate": "disabled"
           },
           "data": []

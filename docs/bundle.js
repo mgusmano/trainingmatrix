@@ -29920,7 +29920,7 @@
 	const useAppState = () => react.exports.useContext(AppContext);
 
 	const Toolstrip = props => {
-	  const l = sessionStorage.getItem('lastname');
+	  const l = sessionStorage.getItem('userID');
 	  const appState = useAppState(); // const replaceMatrixData = () => {
 	  //   async function fetchData() {
 	  //     const certificationsnewResult = await axios("data/trainingmatrix/data/certificationsnew.json");
@@ -29945,7 +29945,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "TOSHIBA INTERNATIONAL CORPORATION - HEV PLANT"), /*#__PURE__*/React$1.createElement("div", {
+	  }, "TOSHIBA INTERNATIONAL CORPORATION - HEV PLANT - ", l), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      display: 'flex',
 	      flexDirection: 'row'
@@ -29977,18 +29977,24 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "matrix size:"), /*#__PURE__*/React$1.createElement("button", {
+	  }, "matrix size:"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '7px 0 7px 5px',
-	      width: '60px'
+	      margin: '13px 0 7px 5px',
+	      width: '60px',
+	      fontSize: '12px',
+	      textDecoration: 'underline',
+	      cursor: 'pointer'
 	    },
 	    onClick: () => {
 	      appState.setMultiplier(appState.multiplier - 1);
 	    }
-	  }, "smaller"), /*#__PURE__*/React$1.createElement("button", {
+	  }, "smaller"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '7px 0 7px 0',
-	      width: '60px'
+	      margin: '13px 0 7px 0',
+	      width: '60px',
+	      fontSize: '12px',
+	      textDecoration: 'underline',
+	      cursor: 'pointer'
 	    },
 	    onClick: () => {
 	      appState.setMultiplier(appState.multiplier + 1);
@@ -30005,10 +30011,13 @@
 	      display: 'flex',
 	      flexDirection: 'row'
 	    }
-	  }, /*#__PURE__*/React$1.createElement("button", {
+	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '7px 0 7px 1px',
-	      width: '110px'
+	      margin: '13px 0 7px 1px',
+	      width: '110px',
+	      fontSize: '12px',
+	      textDecoration: 'underline',
+	      cursor: 'pointer'
 	    },
 	    onClick: () => {
 	      appState.setLegend(!appState.legend);
@@ -30019,7 +30028,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2021-11-22-a ", l)));
+	  }, "v2021-11-24-a")));
 	};
 
 	const SET_GROUPID = 'SET_GROUPID';
@@ -30098,7 +30107,7 @@
 	 * @param {Object} val The value to test
 	 * @returns {boolean} True if value is a Buffer, otherwise false
 	 */
-	function isBuffer$1(val) {
+	function isBuffer(val) {
 	  return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor)
 	    && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
 	}
@@ -30337,13 +30346,13 @@
 	 * @param {Object} obj1 Object to merge
 	 * @returns {Object} Result of all merge properties
 	 */
-	function merge$3(/* obj1, obj2, obj3, ... */) {
+	function merge$2(/* obj1, obj2, obj3, ... */) {
 	  var result = {};
 	  function assignValue(val, key) {
 	    if (isPlainObject(result[key]) && isPlainObject(val)) {
-	      result[key] = merge$3(result[key], val);
+	      result[key] = merge$2(result[key], val);
 	    } else if (isPlainObject(val)) {
-	      result[key] = merge$3({}, val);
+	      result[key] = merge$2({}, val);
 	    } else if (isArray(val)) {
 	      result[key] = val.slice();
 	    } else {
@@ -30389,10 +30398,10 @@
 	  return content;
 	}
 
-	var utils$g = {
+	var utils$d = {
 	  isArray: isArray,
 	  isArrayBuffer: isArrayBuffer,
-	  isBuffer: isBuffer$1,
+	  isBuffer: isBuffer,
 	  isFormData: isFormData,
 	  isArrayBufferView: isArrayBufferView,
 	  isString: isString,
@@ -30408,15 +30417,15 @@
 	  isURLSearchParams: isURLSearchParams,
 	  isStandardBrowserEnv: isStandardBrowserEnv,
 	  forEach: forEach,
-	  merge: merge$3,
+	  merge: merge$2,
 	  extend: extend,
 	  trim: trim,
 	  stripBOM: stripBOM
 	};
 
-	var utils$f = utils$g;
+	var utils$c = utils$d;
 
-	function encode$1(val) {
+	function encode(val) {
 	  return encodeURIComponent(val).
 	    replace(/%3A/gi, ':').
 	    replace(/%24/g, '$').
@@ -30442,29 +30451,29 @@
 	  var serializedParams;
 	  if (paramsSerializer) {
 	    serializedParams = paramsSerializer(params);
-	  } else if (utils$f.isURLSearchParams(params)) {
+	  } else if (utils$c.isURLSearchParams(params)) {
 	    serializedParams = params.toString();
 	  } else {
 	    var parts = [];
 
-	    utils$f.forEach(params, function serialize(val, key) {
+	    utils$c.forEach(params, function serialize(val, key) {
 	      if (val === null || typeof val === 'undefined') {
 	        return;
 	      }
 
-	      if (utils$f.isArray(val)) {
+	      if (utils$c.isArray(val)) {
 	        key = key + '[]';
 	      } else {
 	        val = [val];
 	      }
 
-	      utils$f.forEach(val, function parseValue(v) {
-	        if (utils$f.isDate(v)) {
+	      utils$c.forEach(val, function parseValue(v) {
+	        if (utils$c.isDate(v)) {
 	          v = v.toISOString();
-	        } else if (utils$f.isObject(v)) {
+	        } else if (utils$c.isObject(v)) {
 	          v = JSON.stringify(v);
 	        }
-	        parts.push(encode$1(key) + '=' + encode$1(v));
+	        parts.push(encode(key) + '=' + encode(v));
 	      });
 	    });
 
@@ -30483,7 +30492,7 @@
 	  return url;
 	};
 
-	var utils$e = utils$g;
+	var utils$b = utils$d;
 
 	function InterceptorManager$1() {
 	  this.handlers = [];
@@ -30527,7 +30536,7 @@
 	 * @param {Function} fn The function to call for each interceptor
 	 */
 	InterceptorManager$1.prototype.forEach = function forEach(fn) {
-	  utils$e.forEach(this.handlers, function forEachHandler(h) {
+	  utils$b.forEach(this.handlers, function forEachHandler(h) {
 	    if (h !== null) {
 	      fn(h);
 	    }
@@ -30536,10 +30545,10 @@
 
 	var InterceptorManager_1 = InterceptorManager$1;
 
-	var utils$d = utils$g;
+	var utils$a = utils$d;
 
 	var normalizeHeaderName$1 = function normalizeHeaderName(headers, normalizedName) {
-	  utils$d.forEach(headers, function processHeader(value, name) {
+	  utils$a.forEach(headers, function processHeader(value, name) {
 	    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
 	      headers[normalizedName] = value;
 	      delete headers[name];
@@ -30630,10 +30639,10 @@
 	  }
 	};
 
-	var utils$c = utils$g;
+	var utils$9 = utils$d;
 
 	var cookies$1 = (
-	  utils$c.isStandardBrowserEnv() ?
+	  utils$9.isStandardBrowserEnv() ?
 
 	  // Standard browser envs support document.cookie
 	    (function standardBrowserEnv() {
@@ -30642,15 +30651,15 @@
 	          var cookie = [];
 	          cookie.push(name + '=' + encodeURIComponent(value));
 
-	          if (utils$c.isNumber(expires)) {
+	          if (utils$9.isNumber(expires)) {
 	            cookie.push('expires=' + new Date(expires).toGMTString());
 	          }
 
-	          if (utils$c.isString(path)) {
+	          if (utils$9.isString(path)) {
 	            cookie.push('path=' + path);
 	          }
 
-	          if (utils$c.isString(domain)) {
+	          if (utils$9.isString(domain)) {
 	            cookie.push('domain=' + domain);
 	          }
 
@@ -30727,7 +30736,7 @@
 	  return requestedURL;
 	};
 
-	var utils$b = utils$g;
+	var utils$8 = utils$d;
 
 	// Headers whose duplicates are ignored by node
 	// c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -30759,10 +30768,10 @@
 
 	  if (!headers) { return parsed; }
 
-	  utils$b.forEach(headers.split('\n'), function parser(line) {
+	  utils$8.forEach(headers.split('\n'), function parser(line) {
 	    i = line.indexOf(':');
-	    key = utils$b.trim(line.substr(0, i)).toLowerCase();
-	    val = utils$b.trim(line.substr(i + 1));
+	    key = utils$8.trim(line.substr(0, i)).toLowerCase();
+	    val = utils$8.trim(line.substr(i + 1));
 
 	    if (key) {
 	      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
@@ -30779,10 +30788,10 @@
 	  return parsed;
 	};
 
-	var utils$a = utils$g;
+	var utils$7 = utils$d;
 
 	var isURLSameOrigin$1 = (
-	  utils$a.isStandardBrowserEnv() ?
+	  utils$7.isStandardBrowserEnv() ?
 
 	  // Standard browser envs have full support of the APIs needed to test
 	  // whether the request URL is of the same origin as current location.
@@ -30832,7 +30841,7 @@
 	    * @returns {boolean} True if URL shares the same origin, otherwise false
 	    */
 	      return function isURLSameOrigin(requestURL) {
-	        var parsed = (utils$a.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+	        var parsed = (utils$7.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
 	        return (parsed.protocol === originURL.protocol &&
 	            parsed.host === originURL.host);
 	      };
@@ -30864,7 +30873,7 @@
 
 	var Cancel_1 = Cancel$3;
 
-	var utils$9 = utils$g;
+	var utils$6 = utils$d;
 	var settle = settle$1;
 	var cookies = cookies$1;
 	var buildURL$1 = buildURL$2;
@@ -30872,7 +30881,7 @@
 	var parseHeaders = parseHeaders$1;
 	var isURLSameOrigin = isURLSameOrigin$1;
 	var createError = createError$2;
-	var defaults$6 = defaults_1;
+	var defaults$4 = defaults_1;
 	var Cancel$2 = Cancel_1;
 
 	var xhr = function xhrAdapter(config) {
@@ -30891,7 +30900,7 @@
 	      }
 	    }
 
-	    if (utils$9.isFormData(requestData)) {
+	    if (utils$6.isFormData(requestData)) {
 	      delete requestHeaders['Content-Type']; // Let the browser set it
 	    }
 
@@ -30987,7 +30996,7 @@
 	    // Handle timeout
 	    request.ontimeout = function handleTimeout() {
 	      var timeoutErrorMessage = config.timeout ? 'timeout of ' + config.timeout + 'ms exceeded' : 'timeout exceeded';
-	      var transitional = config.transitional || defaults$6.transitional;
+	      var transitional = config.transitional || defaults$4.transitional;
 	      if (config.timeoutErrorMessage) {
 	        timeoutErrorMessage = config.timeoutErrorMessage;
 	      }
@@ -31004,7 +31013,7 @@
 	    // Add xsrf header
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
-	    if (utils$9.isStandardBrowserEnv()) {
+	    if (utils$6.isStandardBrowserEnv()) {
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
 	        cookies.read(config.xsrfCookieName) :
@@ -31017,7 +31026,7 @@
 
 	    // Add headers to the request
 	    if ('setRequestHeader' in request) {
-	      utils$9.forEach(requestHeaders, function setRequestHeader(val, key) {
+	      utils$6.forEach(requestHeaders, function setRequestHeader(val, key) {
 	        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
 	          // Remove Content-Type if data is undefined
 	          delete requestHeaders[key];
@@ -31029,7 +31038,7 @@
 	    }
 
 	    // Add withCredentials to request if needed
-	    if (!utils$9.isUndefined(config.withCredentials)) {
+	    if (!utils$6.isUndefined(config.withCredentials)) {
 	      request.withCredentials = !!config.withCredentials;
 	    }
 
@@ -31075,7 +31084,7 @@
 	  });
 	};
 
-	var utils$8 = utils$g;
+	var utils$5 = utils$d;
 	var normalizeHeaderName = normalizeHeaderName$1;
 	var enhanceError = enhanceError$2;
 
@@ -31084,7 +31093,7 @@
 	};
 
 	function setContentTypeIfUnset(headers, value) {
-	  if (!utils$8.isUndefined(headers) && utils$8.isUndefined(headers['Content-Type'])) {
+	  if (!utils$5.isUndefined(headers) && utils$5.isUndefined(headers['Content-Type'])) {
 	    headers['Content-Type'] = value;
 	  }
 	}
@@ -31102,10 +31111,10 @@
 	}
 
 	function stringifySafely(rawValue, parser, encoder) {
-	  if (utils$8.isString(rawValue)) {
+	  if (utils$5.isString(rawValue)) {
 	    try {
 	      (parser || JSON.parse)(rawValue);
-	      return utils$8.trim(rawValue);
+	      return utils$5.trim(rawValue);
 	    } catch (e) {
 	      if (e.name !== 'SyntaxError') {
 	        throw e;
@@ -31116,7 +31125,7 @@
 	  return (encoder || JSON.stringify)(rawValue);
 	}
 
-	var defaults$5 = {
+	var defaults$3 = {
 
 	  transitional: {
 	    silentJSONParsing: true,
@@ -31130,23 +31139,23 @@
 	    normalizeHeaderName(headers, 'Accept');
 	    normalizeHeaderName(headers, 'Content-Type');
 
-	    if (utils$8.isFormData(data) ||
-	      utils$8.isArrayBuffer(data) ||
-	      utils$8.isBuffer(data) ||
-	      utils$8.isStream(data) ||
-	      utils$8.isFile(data) ||
-	      utils$8.isBlob(data)
+	    if (utils$5.isFormData(data) ||
+	      utils$5.isArrayBuffer(data) ||
+	      utils$5.isBuffer(data) ||
+	      utils$5.isStream(data) ||
+	      utils$5.isFile(data) ||
+	      utils$5.isBlob(data)
 	    ) {
 	      return data;
 	    }
-	    if (utils$8.isArrayBufferView(data)) {
+	    if (utils$5.isArrayBufferView(data)) {
 	      return data.buffer;
 	    }
-	    if (utils$8.isURLSearchParams(data)) {
+	    if (utils$5.isURLSearchParams(data)) {
 	      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
 	      return data.toString();
 	    }
-	    if (utils$8.isObject(data) || (headers && headers['Content-Type'] === 'application/json')) {
+	    if (utils$5.isObject(data) || (headers && headers['Content-Type'] === 'application/json')) {
 	      setContentTypeIfUnset(headers, 'application/json');
 	      return stringifySafely(data);
 	    }
@@ -31154,12 +31163,12 @@
 	  }],
 
 	  transformResponse: [function transformResponse(data) {
-	    var transitional = this.transitional || defaults$5.transitional;
+	    var transitional = this.transitional || defaults$3.transitional;
 	    var silentJSONParsing = transitional && transitional.silentJSONParsing;
 	    var forcedJSONParsing = transitional && transitional.forcedJSONParsing;
 	    var strictJSONParsing = !silentJSONParsing && this.responseType === 'json';
 
-	    if (strictJSONParsing || (forcedJSONParsing && utils$8.isString(data) && data.length)) {
+	    if (strictJSONParsing || (forcedJSONParsing && utils$5.isString(data) && data.length)) {
 	      try {
 	        return JSON.parse(data);
 	      } catch (e) {
@@ -31198,18 +31207,18 @@
 	  }
 	};
 
-	utils$8.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-	  defaults$5.headers[method] = {};
+	utils$5.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+	  defaults$3.headers[method] = {};
 	});
 
-	utils$8.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-	  defaults$5.headers[method] = utils$8.merge(DEFAULT_CONTENT_TYPE);
+	utils$5.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+	  defaults$3.headers[method] = utils$5.merge(DEFAULT_CONTENT_TYPE);
 	});
 
-	var defaults_1 = defaults$5;
+	var defaults_1 = defaults$3;
 
-	var utils$7 = utils$g;
-	var defaults$4 = defaults_1;
+	var utils$4 = utils$d;
+	var defaults$2 = defaults_1;
 
 	/**
 	 * Transform the data for a request or a response
@@ -31220,9 +31229,9 @@
 	 * @returns {*} The resulting transformed data
 	 */
 	var transformData$1 = function transformData(data, headers, fns) {
-	  var context = this || defaults$4;
+	  var context = this || defaults$2;
 	  /*eslint no-param-reassign:0*/
-	  utils$7.forEach(fns, function transform(fn) {
+	  utils$4.forEach(fns, function transform(fn) {
 	    data = fn.call(context, data, headers);
 	  });
 
@@ -31233,10 +31242,10 @@
 	  return !!(value && value.__CANCEL__);
 	};
 
-	var utils$6 = utils$g;
+	var utils$3 = utils$d;
 	var transformData = transformData$1;
 	var isCancel = isCancel$1;
-	var defaults$3 = defaults_1;
+	var defaults$1 = defaults_1;
 	var Cancel$1 = Cancel_1;
 
 	/**
@@ -31273,20 +31282,20 @@
 	  );
 
 	  // Flatten headers
-	  config.headers = utils$6.merge(
+	  config.headers = utils$3.merge(
 	    config.headers.common || {},
 	    config.headers[config.method] || {},
 	    config.headers
 	  );
 
-	  utils$6.forEach(
+	  utils$3.forEach(
 	    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
 	    function cleanHeaderConfig(method) {
 	      delete config.headers[method];
 	    }
 	  );
 
-	  var adapter = config.adapter || defaults$3.adapter;
+	  var adapter = config.adapter || defaults$1.adapter;
 
 	  return adapter(config).then(function onAdapterResolution(response) {
 	    throwIfCancellationRequested(config);
@@ -31319,7 +31328,7 @@
 	  });
 	};
 
-	var utils$5 = utils$g;
+	var utils$2 = utils$d;
 
 	/**
 	 * Config-specific merge-function which creates a new config-object
@@ -31335,11 +31344,11 @@
 	  var config = {};
 
 	  function getMergedValue(target, source) {
-	    if (utils$5.isPlainObject(target) && utils$5.isPlainObject(source)) {
-	      return utils$5.merge(target, source);
-	    } else if (utils$5.isPlainObject(source)) {
-	      return utils$5.merge({}, source);
-	    } else if (utils$5.isArray(source)) {
+	    if (utils$2.isPlainObject(target) && utils$2.isPlainObject(source)) {
+	      return utils$2.merge(target, source);
+	    } else if (utils$2.isPlainObject(source)) {
+	      return utils$2.merge({}, source);
+	    } else if (utils$2.isArray(source)) {
 	      return source.slice();
 	    }
 	    return source;
@@ -31347,25 +31356,25 @@
 
 	  // eslint-disable-next-line consistent-return
 	  function mergeDeepProperties(prop) {
-	    if (!utils$5.isUndefined(config2[prop])) {
+	    if (!utils$2.isUndefined(config2[prop])) {
 	      return getMergedValue(config1[prop], config2[prop]);
-	    } else if (!utils$5.isUndefined(config1[prop])) {
+	    } else if (!utils$2.isUndefined(config1[prop])) {
 	      return getMergedValue(undefined, config1[prop]);
 	    }
 	  }
 
 	  // eslint-disable-next-line consistent-return
 	  function valueFromConfig2(prop) {
-	    if (!utils$5.isUndefined(config2[prop])) {
+	    if (!utils$2.isUndefined(config2[prop])) {
 	      return getMergedValue(undefined, config2[prop]);
 	    }
 	  }
 
 	  // eslint-disable-next-line consistent-return
 	  function defaultToConfig2(prop) {
-	    if (!utils$5.isUndefined(config2[prop])) {
+	    if (!utils$2.isUndefined(config2[prop])) {
 	      return getMergedValue(undefined, config2[prop]);
-	    } else if (!utils$5.isUndefined(config1[prop])) {
+	    } else if (!utils$2.isUndefined(config1[prop])) {
 	      return getMergedValue(undefined, config1[prop]);
 	    }
 	  }
@@ -31408,10 +31417,10 @@
 	    'validateStatus': mergeDirectKeys
 	  };
 
-	  utils$5.forEach(Object.keys(config1).concat(Object.keys(config2)), function computeConfigValue(prop) {
+	  utils$2.forEach(Object.keys(config1).concat(Object.keys(config2)), function computeConfigValue(prop) {
 	    var merge = mergeMap[prop] || mergeDeepProperties;
 	    var configValue = merge(prop);
-	    (utils$5.isUndefined(configValue) && merge !== mergeDirectKeys) || (config[prop] = configValue);
+	    (utils$2.isUndefined(configValue) && merge !== mergeDirectKeys) || (config[prop] = configValue);
 	  });
 
 	  return config;
@@ -31502,7 +31511,7 @@
 	  validators: validators$1
 	};
 
-	var utils$4 = utils$g;
+	var utils$1 = utils$d;
 	var buildURL = buildURL$2;
 	var InterceptorManager = InterceptorManager_1;
 	var dispatchRequest = dispatchRequest$1;
@@ -31625,7 +31634,7 @@
 	};
 
 	// Provide aliases for supported request methods
-	utils$4.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+	utils$1.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
 	  /*eslint func-names:0*/
 	  Axios$1.prototype[method] = function(url, config) {
 	    return this.request(mergeConfig$1(config || {}, {
@@ -31636,7 +31645,7 @@
 	  };
 	});
 
-	utils$4.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+	utils$1.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 	  /*eslint func-names:0*/
 	  Axios$1.prototype[method] = function(url, data, config) {
 	    return this.request(mergeConfig$1(config || {}, {
@@ -31803,11 +31812,11 @@
 	  return (typeof payload === 'object') && (payload.isAxiosError === true);
 	};
 
-	var utils$3 = utils$g;
+	var utils = utils$d;
 	var bind = bind$2;
 	var Axios = Axios_1;
 	var mergeConfig = mergeConfig$2;
-	var defaults$2 = defaults_1;
+	var defaults = defaults_1;
 
 	/**
 	 * Create an instance of Axios
@@ -31820,10 +31829,10 @@
 	  var instance = bind(Axios.prototype.request, context);
 
 	  // Copy axios.prototype to instance
-	  utils$3.extend(instance, Axios.prototype, context);
+	  utils.extend(instance, Axios.prototype, context);
 
 	  // Copy context to instance
-	  utils$3.extend(instance, context);
+	  utils.extend(instance, context);
 
 	  // Factory for creating new instances
 	  instance.create = function create(instanceConfig) {
@@ -31834,7 +31843,7 @@
 	}
 
 	// Create the default instance to be exported
-	var axios$1 = createInstance(defaults$2);
+	var axios$1 = createInstance(defaults);
 
 	// Expose Axios class to allow class inheritance
 	axios$1.Axios = Axios;
@@ -31952,6 +31961,19 @@
 	    const operators2Result = await axios(`${apiRoot}/PortalGroupOperators?groupid=${groupID}`, auth);
 	    const certifications2Result = await axios(`${apiRoot}/PortalCertificationsRating?groupid=${groupID}`, auth); //console.log(skills2Result)
 	    //console.log(certifications2Result)
+	    //just for the webAPI data while it is broken
+
+	    var certifications2Resultdata = [];
+	    certifications2Result.data.map((certification, i) => {
+	      //console.log(certification)
+	      var o = certification;
+	      o.meta.startDate = o.meta.start;
+	      o.meta.currcertDate = new Date().toUTCString();
+	      o.meta.currcertStatus = 1;
+	      delete o.meta.start;
+	      certifications2Resultdata.push(o);
+	      return null;
+	    }); //console.log(certifications2Resultdata)
 	    // //just for the webAPI data while it is broken
 	    // var operatorsResultdata = []
 	    // operatorsResult.data.map((operator,i) => {
@@ -31970,9 +31992,9 @@
 	    var r = {
 	      skills: skills2Result.data,
 	      operators: operators2Result.data,
-	      certifications: certifications2Result.data
-	    };
-	    console.log(r);
+	      certifications: certifications2Resultdata
+	    }; //console.log(r)
+
 	    return r;
 	  };
 
@@ -31995,10 +32017,15 @@
 	          "meta": {
 	            "type": "solid",
 	            "currcertID": 0,
+	            "startDate": null,
+	            //new Date().toUTCString(),
+	            "currcertDate": null,
+	            //new Date().toUTCString(),
+	            "currcertStatus": 0,
 	            "certification": "notapplicable",
 	            "strokecolor": "black",
 	            "letter": "",
-	            "start": "",
+	            //"start":"",
 	            "certstate": "disabled"
 	          },
 	          "data": []
@@ -33124,7 +33151,7 @@
 	{
 	  var ReactPropTypesSecret$1 = ReactPropTypesSecret_1;
 	  var loggedTypeFailures = {};
-	  var has$3 = Function.call.bind(Object.prototype.hasOwnProperty);
+	  var has$1 = Function.call.bind(Object.prototype.hasOwnProperty);
 
 	  printWarning$1 = function(text) {
 	    var message = 'Warning: ' + text;
@@ -33154,7 +33181,7 @@
 	function checkPropTypes$1(typeSpecs, values, location, componentName, getStack) {
 	  {
 	    for (var typeSpecName in typeSpecs) {
-	      if (has$3(typeSpecs, typeSpecName)) {
+	      if (has$1(typeSpecs, typeSpecName)) {
 	        var error;
 	        // Prop type validation may throw. In case they do, we don't want to
 	        // fail the render phase where it didn't fail before. So we log it.
@@ -33221,12 +33248,12 @@
 	 */
 
 	var ReactIs$1 = reactIs.exports;
-	var assign$1 = objectAssign;
+	var assign = objectAssign;
 
 	var ReactPropTypesSecret = ReactPropTypesSecret_1;
 	var checkPropTypes = checkPropTypes_1;
 
-	var has$2 = Function.call.bind(Object.prototype.hasOwnProperty);
+	var has = Function.call.bind(Object.prototype.hasOwnProperty);
 	var printWarning = function() {};
 
 	{
@@ -33561,7 +33588,7 @@
 	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
 	      }
 	      for (var key in propValue) {
-	        if (has$2(propValue, key)) {
+	        if (has(propValue, key)) {
 	          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
 	          if (error instanceof Error) {
 	            return error;
@@ -33644,7 +33671,7 @@
 	      }
 	      // We need to check all keys in case some are required but missing from
 	      // props.
-	      var allKeys = assign$1({}, props[propName], shapeTypes);
+	      var allKeys = assign({}, props[propName], shapeTypes);
 	      for (var key in allKeys) {
 	        var checker = shapeTypes[key];
 	        if (!checker) {
@@ -36997,7 +37024,7 @@
 	  }
 	}
 
-	function merge$2(registered, css, className) {
+	function merge$1(registered, css, className) {
 	  var registeredStyles = [];
 	  var rawClassName = getRegisteredStyles$1(registered, registeredStyles, className);
 
@@ -37059,7 +37086,7 @@
 	      args[_key4] = arguments[_key4];
 	    }
 
-	    return merge$2(cache.registered, css, classnames$1(args));
+	    return merge$1(cache.registered, css, classnames$1(args));
 	  };
 
 	  return {
@@ -37081,7 +37108,7 @@
 	    sheet: cache.sheet,
 	    cache: cache,
 	    getRegisteredStyles: getRegisteredStyles$1.bind(null, cache.registered),
-	    merge: merge$2.bind(null, cache.registered, css)
+	    merge: merge$1.bind(null, cache.registered, css)
 	  };
 	};
 
@@ -37134,7 +37161,7 @@
 	    flush = _createEmotion.flush,
 	    hydrate = _createEmotion.hydrate,
 	    cx = _createEmotion.cx,
-	    merge$1 = _createEmotion.merge,
+	    merge = _createEmotion.merge,
 	    getRegisteredStyles = _createEmotion.getRegisteredStyles,
 	    injectGlobal = _createEmotion.injectGlobal,
 	    keyframes = _createEmotion.keyframes,
@@ -37152,7 +37179,7 @@
 		hydrate: hydrate,
 		injectGlobal: injectGlobal,
 		keyframes: keyframes,
-		merge: merge$1,
+		merge: merge,
 		sheet: sheet
 	});
 
@@ -41320,14 +41347,17 @@
 	    style: {
 	      display: 'flex',
 	      flexDirection: 'column',
-	      padding: '10px',
+	      fontSize: '12px',
+	      padding: '0',
 	      width: '100%',
 	      xheight: '500px',
 	      background: 'gainsboro'
 	    }
-	  }, /*#__PURE__*/React$1.createElement("button", {
+	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      width: '50px'
+	      width: '50px',
+	      textDecoration: 'underline',
+	      cursor: 'pointer'
 	    },
 	    onClick: () => {
 	      matrixState.showTopDialog('none');
@@ -41337,8 +41367,9 @@
 	    }
 	  }, "close"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      marginLeft: '30px',
-	      marginTop: '5',
+	      fontSize: '20px',
+	      marginLeft: '0px',
+	      marginTop: '0',
 	      height: '400px',
 	      borderBottom: '4px solid black'
 	    }
@@ -41354,10 +41385,21 @@
 	    }
 	  }), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      marginTop: '10px',
-	      fontSize: '20px'
+	      marginTop: '10px'
 	    }
-	  }, matrixState.celldata.operatorName), /*#__PURE__*/React$1.createElement("div", null, "Title"), /*#__PURE__*/React$1.createElement("div", null, "Plant Name"), /*#__PURE__*/React$1.createElement("div", null, "Location"))));
+	  }, matrixState.celldata.operatorName), /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      fontSize: '12px'
+	    }
+	  }, "Title"), /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      fontSize: '12px'
+	    }
+	  }, "Plant Name"), /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      fontSize: '12px'
+	    }
+	  }, "Location"))));
 	});
 
 	const Main = props => {
@@ -41366,7 +41408,8 @@
 	  const [diamonddata, setDiamondData] = react.exports.useState(null);
 	  const [metadata, setMetaData] = react.exports.useState(null);
 	  const [certification, setCertification] = react.exports.useState(null);
-	  const [startDate, setStartDate] = react.exports.useState(new Date());
+	  const [startDate, setStartDate] = react.exports.useState(null);
+	  const [currcertDate, setCurrcertDate] = react.exports.useState(null);
 	  var operator = {};
 	  var skill = {};
 	  var certificationID = "0";
@@ -41388,7 +41431,7 @@
 	    }
 
 	    var data = matrixState.celldata.data;
-	    var meta = matrixState.celldata.meta;
+	    var meta = matrixState.celldata.meta; //console.log(meta)
 
 	    if (typeof data === 'string') {
 	      data = JSON.parse(data);
@@ -41402,8 +41445,12 @@
 	    setMetaData(meta);
 	    setCertification(meta.currcertID);
 
-	    if (meta.start !== undefined) {
-	      setStartDate(new Date(meta.start));
+	    if (meta.startDate !== null) {
+	      setStartDate(new Date(meta.startDate));
+	    }
+
+	    if (meta.currcertDate !== null) {
+	      setCurrcertDate(new Date(meta.currcertDate));
 	    }
 	  }, [matrixState.celldata.meta, matrixState.celldata.data]);
 
@@ -41496,6 +41543,7 @@
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      padding: '10px 0 0 40px',
+	      fontSize: '20px',
 	      display: 'flex',
 	      flexDirection: 'column'
 	    }
@@ -41504,21 +41552,29 @@
 	      margin: '0 0 0 0',
 	      fontSize: '20px'
 	    }
-	  }, skill.skillName), /*#__PURE__*/React$1.createElement("div", {
+	  }, skill.skillName), startDate !== null && /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '5px 0 0 0'
+	      margin: '5px 0 0 0',
+	      fontSize: '12px'
 	    }
 	  }, /*#__PURE__*/React$1.createElement("a", {
 	    target: "_blank",
 	    rel: "noreferrer",
 	    href: link
-	  }, "Certification Form")), /*#__PURE__*/React$1.createElement("div", {
+	  }, "Certification Form")), startDate !== null && /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '5px 0 0 0'
+	      margin: '5px 0 0 0',
+	      fontSize: '12px'
 	    }
-	  }, "Started: ", startDate.toLocaleDateString()), /*#__PURE__*/React$1.createElement("div", {
+	  }, "Start Date: ", startDate.toLocaleDateString()), currcertDate !== null && /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '15px 0 0 0'
+	      margin: '5px 0 0 0',
+	      fontSize: '12px'
+	    }
+	  }, "Current Cert Date: ", currcertDate.toLocaleDateString()), /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '15px 0 0 0',
+	      fontSize: '18px'
 	    }
 	  }, "Certification:"), /*#__PURE__*/React$1.createElement("svg", {
 	    style: {
@@ -41535,6 +41591,7 @@
 	    style: {
 	      margin: '0 0 0 0',
 	      display: 'flex',
+	      fontSize: '12px',
 	      flexDirection: 'column'
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", null, /*#__PURE__*/React$1.createElement("div", null, /*#__PURE__*/React$1.createElement("input", {
@@ -41596,7 +41653,7 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      fontSize: '12px'
+	      fontSize: '8px'
 	    }
 	  }, "certificationID: ", certificationID, " ", /*#__PURE__*/React$1.createElement("br", null), " skillID: ", skill.skillID, " ", /*#__PURE__*/React$1.createElement("br", null), " operatorID: ", operator.operatorID)));
 	}; // {/*
@@ -43680,20 +43737,54 @@
 	  }, [multiplier, groupID]);
 
 	  const cellClicked = id => {//props.props.cellClicked(id)
-	  };
+	  }; //        <div role="separator"></div>
 
-	  return /*#__PURE__*/React$1.createElement("div", {
+
+	  var dialogWidth = '0px';
+
+	  if (matrixState.mainDialog === 'block') {
+	    dialogWidth = '370px';
+	  }
+
+	  if (matrixState.skillDialog === 'block') {
+	    dialogWidth = '370px';
+
+	    if (matrixState.mainDialog === 'block') {
+	      dialogWidth = '720px';
+	    }
+	  }
+
+	  if (matrixState.operatorDialog === 'block') {
+	    dialogWidth = '370px';
+
+	    if (matrixState.mainDialog === 'block') {
+	      dialogWidth = '720px';
+	    }
+	  }
+
+	  return /*#__PURE__*/React$1.createElement(React$1.Fragment, null, /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      display: 'flex',
+	      flexDirection: 'row',
+	      width: '100%',
+	      height: 'calc(100vh - 62px)'
+	    }
+	  }, /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      flex: '1',
+	      overflow: 'scroll',
+	      background: 'lightgray'
+	    }
+	  }, /*#__PURE__*/React$1.createElement("div", {
 	    className: "trainingmatrix",
 	    style: { ...styles$3.v,
-	      width: '100%',
-	      height: '100%',
 	      background: 'lightgray'
 	    }
 	  }, props.props.showLegend && /*#__PURE__*/React$1.createElement(Legend, null), matrixState.dimensions !== null && /*#__PURE__*/React$1.createElement("div", {
 	    className: "mainarea",
 	    "data-flex-splitter-horizontal": true,
 	    style: { ...styles$3.horizontal,
-	      padding: '20px',
+	      overflow: 'visible',
 	      width: '100%',
 	      height: '100%'
 	    }
@@ -43701,6 +43792,7 @@
 	    "data-flex-splitter-horizontal": true,
 	    className: "left",
 	    style: { ...styles$3.v,
+	      overflow: 'visible',
 	      flex: 1,
 	      boxSizing: 'border-box',
 	      display: 'flex'
@@ -43709,7 +43801,7 @@
 	    className: "leftrow1",
 	    height: matrixState.dimensions.row1,
 	    style: { ...styles$3.h,
-	      overflow: 'hidden',
+	      overflow: 'visible',
 	      height: matrixState.dimensions.row1 + 'px',
 	      background: 'lightgray'
 	    }
@@ -43735,6 +43827,7 @@
 	  })), /*#__PURE__*/React$1.createElement("div", {
 	    className: "leftrow2",
 	    style: { ...styles$3.h,
+	      overflow: 'visible',
 	      xflex: '1',
 	      height: matrixState.dimensions.row2Orig + 'px',
 	      background: 'lightgray'
@@ -43768,6 +43861,7 @@
 	  }), /*#__PURE__*/React$1.createElement("div", {
 	    className: "leftrow3",
 	    style: { ...styles$3.h,
+	      overflow: 'visible',
 	      height: matrixState.dimensions.row3 + 'px',
 	      minHeight: matrixState.dimensions.row3 + 'px',
 	      background: 'lightgray'
@@ -43776,14 +43870,19 @@
 	    data: [['Goal'], ['# Certified'], ['%'], ['Gap']]
 	  }), /*#__PURE__*/React$1.createElement(Row3Col1a, null), matrixState.colsArray !== null && /*#__PURE__*/React$1.createElement(Row3Col2, {
 	    data: matrixState.colsArray
-	  }), /*#__PURE__*/React$1.createElement(Row3Col3, null))), /*#__PURE__*/React$1.createElement("div", {
-	    role: "separator"
-	  }), /*#__PURE__*/React$1.createElement("div", {
+	  }), /*#__PURE__*/React$1.createElement(Row3Col3, null)))))), /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      width: dialogWidth
+	    }
+	  }, /*#__PURE__*/React$1.createElement("div", {
 	    className: "right",
 	    style: {
+	      marginTop: '10px',
+	      marginLeft: '10px',
+	      position: 'fixed',
 	      display: 'flex',
 	      flexDirection: 'column',
-	      overflow: 'hidden',
+	      overflow: 'visible',
 	      padding: '0px',
 	      background: 'white',
 	      boxSizing: 'border-box',
@@ -43800,7 +43899,7 @@
 	      flex: '1',
 	      display: 'flex',
 	      flexDirection: 'row',
-	      overflow: 'hidden',
+	      overflow: 'visible',
 	      padding: '0px',
 	      background: 'white',
 	      boxSizing: 'border-box',
@@ -43833,629 +43932,17 @@
 	      xpadding: '10px',
 	      xboxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)'
 	    }
-	  }, matrixState.main)))));
+	  }, matrixState.main))))));
 	};
 
-	var has$1 = Object.prototype.hasOwnProperty;
-
-	var hexTable = (function () {
+	((function () {
 	    var array = [];
 	    for (var i = 0; i < 256; ++i) {
 	        array.push('%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase());
 	    }
 
 	    return array;
-	}());
-
-	var compactQueue = function compactQueue(queue) {
-	    var obj;
-
-	    while (queue.length) {
-	        var item = queue.pop();
-	        obj = item.obj[item.prop];
-
-	        if (Array.isArray(obj)) {
-	            var compacted = [];
-
-	            for (var j = 0; j < obj.length; ++j) {
-	                if (typeof obj[j] !== 'undefined') {
-	                    compacted.push(obj[j]);
-	                }
-	            }
-
-	            item.obj[item.prop] = compacted;
-	        }
-	    }
-
-	    return obj;
-	};
-
-	var arrayToObject = function arrayToObject(source, options) {
-	    var obj = options && options.plainObjects ? Object.create(null) : {};
-	    for (var i = 0; i < source.length; ++i) {
-	        if (typeof source[i] !== 'undefined') {
-	            obj[i] = source[i];
-	        }
-	    }
-
-	    return obj;
-	};
-
-	var merge = function merge(target, source, options) {
-	    if (!source) {
-	        return target;
-	    }
-
-	    if (typeof source !== 'object') {
-	        if (Array.isArray(target)) {
-	            target.push(source);
-	        } else if (typeof target === 'object') {
-	            if (options.plainObjects || options.allowPrototypes || !has$1.call(Object.prototype, source)) {
-	                target[source] = true;
-	            }
-	        } else {
-	            return [target, source];
-	        }
-
-	        return target;
-	    }
-
-	    if (typeof target !== 'object') {
-	        return [target].concat(source);
-	    }
-
-	    var mergeTarget = target;
-	    if (Array.isArray(target) && !Array.isArray(source)) {
-	        mergeTarget = arrayToObject(target, options);
-	    }
-
-	    if (Array.isArray(target) && Array.isArray(source)) {
-	        source.forEach(function (item, i) {
-	            if (has$1.call(target, i)) {
-	                if (target[i] && typeof target[i] === 'object') {
-	                    target[i] = merge(target[i], item, options);
-	                } else {
-	                    target.push(item);
-	                }
-	            } else {
-	                target[i] = item;
-	            }
-	        });
-	        return target;
-	    }
-
-	    return Object.keys(source).reduce(function (acc, key) {
-	        var value = source[key];
-
-	        if (has$1.call(acc, key)) {
-	            acc[key] = merge(acc[key], value, options);
-	        } else {
-	            acc[key] = value;
-	        }
-	        return acc;
-	    }, mergeTarget);
-	};
-
-	var assign = function assignSingleSource(target, source) {
-	    return Object.keys(source).reduce(function (acc, key) {
-	        acc[key] = source[key];
-	        return acc;
-	    }, target);
-	};
-
-	var decode = function (str) {
-	    try {
-	        return decodeURIComponent(str.replace(/\+/g, ' '));
-	    } catch (e) {
-	        return str;
-	    }
-	};
-
-	var encode = function encode(str) {
-	    // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
-	    // It has been adapted here for stricter adherence to RFC 3986
-	    if (str.length === 0) {
-	        return str;
-	    }
-
-	    var string = typeof str === 'string' ? str : String(str);
-
-	    var out = '';
-	    for (var i = 0; i < string.length; ++i) {
-	        var c = string.charCodeAt(i);
-
-	        if (
-	            c === 0x2D // -
-	            || c === 0x2E // .
-	            || c === 0x5F // _
-	            || c === 0x7E // ~
-	            || (c >= 0x30 && c <= 0x39) // 0-9
-	            || (c >= 0x41 && c <= 0x5A) // a-z
-	            || (c >= 0x61 && c <= 0x7A) // A-Z
-	        ) {
-	            out += string.charAt(i);
-	            continue;
-	        }
-
-	        if (c < 0x80) {
-	            out = out + hexTable[c];
-	            continue;
-	        }
-
-	        if (c < 0x800) {
-	            out = out + (hexTable[0xC0 | (c >> 6)] + hexTable[0x80 | (c & 0x3F)]);
-	            continue;
-	        }
-
-	        if (c < 0xD800 || c >= 0xE000) {
-	            out = out + (hexTable[0xE0 | (c >> 12)] + hexTable[0x80 | ((c >> 6) & 0x3F)] + hexTable[0x80 | (c & 0x3F)]);
-	            continue;
-	        }
-
-	        i += 1;
-	        c = 0x10000 + (((c & 0x3FF) << 10) | (string.charCodeAt(i) & 0x3FF));
-	        out += hexTable[0xF0 | (c >> 18)]
-	            + hexTable[0x80 | ((c >> 12) & 0x3F)]
-	            + hexTable[0x80 | ((c >> 6) & 0x3F)]
-	            + hexTable[0x80 | (c & 0x3F)];
-	    }
-
-	    return out;
-	};
-
-	var compact = function compact(value) {
-	    var queue = [{ obj: { o: value }, prop: 'o' }];
-	    var refs = [];
-
-	    for (var i = 0; i < queue.length; ++i) {
-	        var item = queue[i];
-	        var obj = item.obj[item.prop];
-
-	        var keys = Object.keys(obj);
-	        for (var j = 0; j < keys.length; ++j) {
-	            var key = keys[j];
-	            var val = obj[key];
-	            if (typeof val === 'object' && val !== null && refs.indexOf(val) === -1) {
-	                queue.push({ obj: obj, prop: key });
-	                refs.push(val);
-	            }
-	        }
-	    }
-
-	    return compactQueue(queue);
-	};
-
-	var isRegExp = function isRegExp(obj) {
-	    return Object.prototype.toString.call(obj) === '[object RegExp]';
-	};
-
-	var isBuffer = function isBuffer(obj) {
-	    if (obj === null || typeof obj === 'undefined') {
-	        return false;
-	    }
-
-	    return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
-	};
-
-	var utils$2 = {
-	    arrayToObject: arrayToObject,
-	    assign: assign,
-	    compact: compact,
-	    decode: decode,
-	    encode: encode,
-	    isBuffer: isBuffer,
-	    isRegExp: isRegExp,
-	    merge: merge
-	};
-
-	var replace = String.prototype.replace;
-	var percentTwenties = /%20/g;
-
-	var formats$2 = {
-	    'default': 'RFC3986',
-	    formatters: {
-	        RFC1738: function (value) {
-	            return replace.call(value, percentTwenties, '+');
-	        },
-	        RFC3986: function (value) {
-	            return value;
-	        }
-	    },
-	    RFC1738: 'RFC1738',
-	    RFC3986: 'RFC3986'
-	};
-
-	var utils$1 = utils$2;
-	var formats$1 = formats$2;
-
-	var arrayPrefixGenerators = {
-	    brackets: function brackets(prefix) { // eslint-disable-line func-name-matching
-	        return prefix + '[]';
-	    },
-	    indices: function indices(prefix, key) { // eslint-disable-line func-name-matching
-	        return prefix + '[' + key + ']';
-	    },
-	    repeat: function repeat(prefix) { // eslint-disable-line func-name-matching
-	        return prefix;
-	    }
-	};
-
-	var toISO = Date.prototype.toISOString;
-
-	var defaults$1 = {
-	    delimiter: '&',
-	    encode: true,
-	    encoder: utils$1.encode,
-	    encodeValuesOnly: false,
-	    serializeDate: function serializeDate(date) { // eslint-disable-line func-name-matching
-	        return toISO.call(date);
-	    },
-	    skipNulls: false,
-	    strictNullHandling: false
-	};
-
-	var stringify$1 = function stringify( // eslint-disable-line func-name-matching
-	    object,
-	    prefix,
-	    generateArrayPrefix,
-	    strictNullHandling,
-	    skipNulls,
-	    encoder,
-	    filter,
-	    sort,
-	    allowDots,
-	    serializeDate,
-	    formatter,
-	    encodeValuesOnly
-	) {
-	    var obj = object;
-	    if (typeof filter === 'function') {
-	        obj = filter(prefix, obj);
-	    } else if (obj instanceof Date) {
-	        obj = serializeDate(obj);
-	    } else if (obj === null) {
-	        if (strictNullHandling) {
-	            return encoder && !encodeValuesOnly ? encoder(prefix, defaults$1.encoder) : prefix;
-	        }
-
-	        obj = '';
-	    }
-
-	    if (typeof obj === 'string' || typeof obj === 'number' || typeof obj === 'boolean' || utils$1.isBuffer(obj)) {
-	        if (encoder) {
-	            var keyValue = encodeValuesOnly ? prefix : encoder(prefix, defaults$1.encoder);
-	            return [formatter(keyValue) + '=' + formatter(encoder(obj, defaults$1.encoder))];
-	        }
-	        return [formatter(prefix) + '=' + formatter(String(obj))];
-	    }
-
-	    var values = [];
-
-	    if (typeof obj === 'undefined') {
-	        return values;
-	    }
-
-	    var objKeys;
-	    if (Array.isArray(filter)) {
-	        objKeys = filter;
-	    } else {
-	        var keys = Object.keys(obj);
-	        objKeys = sort ? keys.sort(sort) : keys;
-	    }
-
-	    for (var i = 0; i < objKeys.length; ++i) {
-	        var key = objKeys[i];
-
-	        if (skipNulls && obj[key] === null) {
-	            continue;
-	        }
-
-	        if (Array.isArray(obj)) {
-	            values = values.concat(stringify(
-	                obj[key],
-	                generateArrayPrefix(prefix, key),
-	                generateArrayPrefix,
-	                strictNullHandling,
-	                skipNulls,
-	                encoder,
-	                filter,
-	                sort,
-	                allowDots,
-	                serializeDate,
-	                formatter,
-	                encodeValuesOnly
-	            ));
-	        } else {
-	            values = values.concat(stringify(
-	                obj[key],
-	                prefix + (allowDots ? '.' + key : '[' + key + ']'),
-	                generateArrayPrefix,
-	                strictNullHandling,
-	                skipNulls,
-	                encoder,
-	                filter,
-	                sort,
-	                allowDots,
-	                serializeDate,
-	                formatter,
-	                encodeValuesOnly
-	            ));
-	        }
-	    }
-
-	    return values;
-	};
-
-	var stringify_1 = function (object, opts) {
-	    var obj = object;
-	    var options = opts ? utils$1.assign({}, opts) : {};
-
-	    if (options.encoder !== null && options.encoder !== undefined && typeof options.encoder !== 'function') {
-	        throw new TypeError('Encoder has to be a function.');
-	    }
-
-	    var delimiter = typeof options.delimiter === 'undefined' ? defaults$1.delimiter : options.delimiter;
-	    var strictNullHandling = typeof options.strictNullHandling === 'boolean' ? options.strictNullHandling : defaults$1.strictNullHandling;
-	    var skipNulls = typeof options.skipNulls === 'boolean' ? options.skipNulls : defaults$1.skipNulls;
-	    var encode = typeof options.encode === 'boolean' ? options.encode : defaults$1.encode;
-	    var encoder = typeof options.encoder === 'function' ? options.encoder : defaults$1.encoder;
-	    var sort = typeof options.sort === 'function' ? options.sort : null;
-	    var allowDots = typeof options.allowDots === 'undefined' ? false : options.allowDots;
-	    var serializeDate = typeof options.serializeDate === 'function' ? options.serializeDate : defaults$1.serializeDate;
-	    var encodeValuesOnly = typeof options.encodeValuesOnly === 'boolean' ? options.encodeValuesOnly : defaults$1.encodeValuesOnly;
-	    if (typeof options.format === 'undefined') {
-	        options.format = formats$1['default'];
-	    } else if (!Object.prototype.hasOwnProperty.call(formats$1.formatters, options.format)) {
-	        throw new TypeError('Unknown format option provided.');
-	    }
-	    var formatter = formats$1.formatters[options.format];
-	    var objKeys;
-	    var filter;
-
-	    if (typeof options.filter === 'function') {
-	        filter = options.filter;
-	        obj = filter('', obj);
-	    } else if (Array.isArray(options.filter)) {
-	        filter = options.filter;
-	        objKeys = filter;
-	    }
-
-	    var keys = [];
-
-	    if (typeof obj !== 'object' || obj === null) {
-	        return '';
-	    }
-
-	    var arrayFormat;
-	    if (options.arrayFormat in arrayPrefixGenerators) {
-	        arrayFormat = options.arrayFormat;
-	    } else if ('indices' in options) {
-	        arrayFormat = options.indices ? 'indices' : 'repeat';
-	    } else {
-	        arrayFormat = 'indices';
-	    }
-
-	    var generateArrayPrefix = arrayPrefixGenerators[arrayFormat];
-
-	    if (!objKeys) {
-	        objKeys = Object.keys(obj);
-	    }
-
-	    if (sort) {
-	        objKeys.sort(sort);
-	    }
-
-	    for (var i = 0; i < objKeys.length; ++i) {
-	        var key = objKeys[i];
-
-	        if (skipNulls && obj[key] === null) {
-	            continue;
-	        }
-
-	        keys = keys.concat(stringify$1(
-	            obj[key],
-	            key,
-	            generateArrayPrefix,
-	            strictNullHandling,
-	            skipNulls,
-	            encode ? encoder : null,
-	            filter,
-	            sort,
-	            allowDots,
-	            serializeDate,
-	            formatter,
-	            encodeValuesOnly
-	        ));
-	    }
-
-	    var joined = keys.join(delimiter);
-	    var prefix = options.addQueryPrefix === true ? '?' : '';
-
-	    return joined.length > 0 ? prefix + joined : '';
-	};
-
-	var utils = utils$2;
-
-	var has = Object.prototype.hasOwnProperty;
-
-	var defaults = {
-	    allowDots: false,
-	    allowPrototypes: false,
-	    arrayLimit: 20,
-	    decoder: utils.decode,
-	    delimiter: '&',
-	    depth: 5,
-	    parameterLimit: 1000,
-	    plainObjects: false,
-	    strictNullHandling: false
-	};
-
-	var parseValues = function parseQueryStringValues(str, options) {
-	    var obj = {};
-	    var cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
-	    var limit = options.parameterLimit === Infinity ? undefined : options.parameterLimit;
-	    var parts = cleanStr.split(options.delimiter, limit);
-
-	    for (var i = 0; i < parts.length; ++i) {
-	        var part = parts[i];
-
-	        var bracketEqualsPos = part.indexOf(']=');
-	        var pos = bracketEqualsPos === -1 ? part.indexOf('=') : bracketEqualsPos + 1;
-
-	        var key, val;
-	        if (pos === -1) {
-	            key = options.decoder(part, defaults.decoder);
-	            val = options.strictNullHandling ? null : '';
-	        } else {
-	            key = options.decoder(part.slice(0, pos), defaults.decoder);
-	            val = options.decoder(part.slice(pos + 1), defaults.decoder);
-	        }
-	        if (has.call(obj, key)) {
-	            obj[key] = [].concat(obj[key]).concat(val);
-	        } else {
-	            obj[key] = val;
-	        }
-	    }
-
-	    return obj;
-	};
-
-	var parseObject = function (chain, val, options) {
-	    var leaf = val;
-
-	    for (var i = chain.length - 1; i >= 0; --i) {
-	        var obj;
-	        var root = chain[i];
-
-	        if (root === '[]') {
-	            obj = [];
-	            obj = obj.concat(leaf);
-	        } else {
-	            obj = options.plainObjects ? Object.create(null) : {};
-	            var cleanRoot = root.charAt(0) === '[' && root.charAt(root.length - 1) === ']' ? root.slice(1, -1) : root;
-	            var index = parseInt(cleanRoot, 10);
-	            if (
-	                !isNaN(index)
-	                && root !== cleanRoot
-	                && String(index) === cleanRoot
-	                && index >= 0
-	                && (options.parseArrays && index <= options.arrayLimit)
-	            ) {
-	                obj = [];
-	                obj[index] = leaf;
-	            } else {
-	                obj[cleanRoot] = leaf;
-	            }
-	        }
-
-	        leaf = obj;
-	    }
-
-	    return leaf;
-	};
-
-	var parseKeys = function parseQueryStringKeys(givenKey, val, options) {
-	    if (!givenKey) {
-	        return;
-	    }
-
-	    // Transform dot notation to bracket notation
-	    var key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
-
-	    // The regex chunks
-
-	    var brackets = /(\[[^[\]]*])/;
-	    var child = /(\[[^[\]]*])/g;
-
-	    // Get the parent
-
-	    var segment = brackets.exec(key);
-	    var parent = segment ? key.slice(0, segment.index) : key;
-
-	    // Stash the parent if it exists
-
-	    var keys = [];
-	    if (parent) {
-	        // If we aren't using plain objects, optionally prefix keys
-	        // that would overwrite object prototype properties
-	        if (!options.plainObjects && has.call(Object.prototype, parent)) {
-	            if (!options.allowPrototypes) {
-	                return;
-	            }
-	        }
-
-	        keys.push(parent);
-	    }
-
-	    // Loop through children appending to the array until we hit depth
-
-	    var i = 0;
-	    while ((segment = child.exec(key)) !== null && i < options.depth) {
-	        i += 1;
-	        if (!options.plainObjects && has.call(Object.prototype, segment[1].slice(1, -1))) {
-	            if (!options.allowPrototypes) {
-	                return;
-	            }
-	        }
-	        keys.push(segment[1]);
-	    }
-
-	    // If there's a remainder, just add whatever is left
-
-	    if (segment) {
-	        keys.push('[' + key.slice(segment.index) + ']');
-	    }
-
-	    return parseObject(keys, val, options);
-	};
-
-	var parse$1 = function (str, opts) {
-	    var options = opts ? utils.assign({}, opts) : {};
-
-	    if (options.decoder !== null && options.decoder !== undefined && typeof options.decoder !== 'function') {
-	        throw new TypeError('Decoder has to be a function.');
-	    }
-
-	    options.ignoreQueryPrefix = options.ignoreQueryPrefix === true;
-	    options.delimiter = typeof options.delimiter === 'string' || utils.isRegExp(options.delimiter) ? options.delimiter : defaults.delimiter;
-	    options.depth = typeof options.depth === 'number' ? options.depth : defaults.depth;
-	    options.arrayLimit = typeof options.arrayLimit === 'number' ? options.arrayLimit : defaults.arrayLimit;
-	    options.parseArrays = options.parseArrays !== false;
-	    options.decoder = typeof options.decoder === 'function' ? options.decoder : defaults.decoder;
-	    options.allowDots = typeof options.allowDots === 'boolean' ? options.allowDots : defaults.allowDots;
-	    options.plainObjects = typeof options.plainObjects === 'boolean' ? options.plainObjects : defaults.plainObjects;
-	    options.allowPrototypes = typeof options.allowPrototypes === 'boolean' ? options.allowPrototypes : defaults.allowPrototypes;
-	    options.parameterLimit = typeof options.parameterLimit === 'number' ? options.parameterLimit : defaults.parameterLimit;
-	    options.strictNullHandling = typeof options.strictNullHandling === 'boolean' ? options.strictNullHandling : defaults.strictNullHandling;
-
-	    if (str === '' || str === null || typeof str === 'undefined') {
-	        return options.plainObjects ? Object.create(null) : {};
-	    }
-
-	    var tempObj = typeof str === 'string' ? parseValues(str, options) : str;
-	    var obj = options.plainObjects ? Object.create(null) : {};
-
-	    // Iterate over the keys and setup the new object
-
-	    var keys = Object.keys(tempObj);
-	    for (var i = 0; i < keys.length; ++i) {
-	        var key = keys[i];
-	        var newObj = parseKeys(key, tempObj[key], options);
-	        obj = utils.merge(obj, newObj, options);
-	    }
-
-	    return utils.compact(obj);
-	};
-
-	var stringify = stringify_1;
-	var parse = parse$1;
-	var formats = formats$2;
-
-	var lib = {
-	    formats: formats,
-	    parse: parse,
-	    stringify: stringify
-	};
+	})());
 
 	const App = () => {
 	  const appState = useAppState();
@@ -44467,22 +43954,16 @@
 
 	    async function fetchData() {
 	      const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
-	      const apiRoot2 = 'https://skillnetusersapi.azurewebsites.net';
 	      const auth = {
 	        auth: {
 	          username: 'skillnet',
 	          password: 'demo'
 	        }
-	      };
-	      var url = `${apiRoot2}/token`;
-	      var j = {
-	        "userName": "gabriel.porizan@nordlogic.com",
-	        "grant_type": "password"
-	      };
-	      console.log(url);
-	      console.log(j);
-	      const tokenPostResult = await axios.post(url, lib.stringify(j), auth);
-	      console.log(tokenPostResult); //http://skillnetusersapi.azurewebsites.net/token(post) will return you a access token.
+	      }; // var url = `${apiRoot2}/token`;
+	      // var j = {"userName": "gabriel.porizan@nordlogic.com","grant_type": "password"}
+	      // const tokenPostResult = await axios.post(url,qs.stringify(j),auth);
+	      //console.log(tokenPostResult)
+	      //http://skillnetusersapi.azurewebsites.net/token(post) will return you a access token.
 	      //{"userName": "gabriel.porizan@nordlogic.com","grant_type": "password"}
 	      // const tokenResult = await axios(apiRoot + '/decodetoken?token=KpXYQ1m4PmT6UYZv9IlrLQ==', auth);
 	      // console.log(tokenResult)
@@ -44503,56 +43984,34 @@
 	  }, []); // const cellClicked = (data) => {
 	  //   //console.log(data)
 	  // }
+	  // <div style={{height:'60px',display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+	  //   <div><img style={{margin:'10px',width:'150px'}} src="Logo.57fd82aa.png" alt="Toshiba"/></div>
+	  //   <div><img style={{margin:'10px',borderRadius:'50%',width: 40,height:40}} src="https://azureportal.skillnet.net/UserFiles/55483/Pictures/Pic_55483_56116_Avatar.jpg" alt="Toshiba"/></div>
+	  // </div>
+	  // <div style={{xmarginTop:'100px',flex:'1',width:'100%',background:'lightgray'}}>
 
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      display: 'flex',
 	      flexDirection: 'column',
 	      height: '100%',
-	      width: '100%'
+	      width: '100%',
+	      overflow: 'hidden'
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      position: 'fixed',
+	      xposition: 'fixed',
 	      zIndex: '10000',
 	      width: '100%',
 	      background: 'white'
 	    }
-	  }, /*#__PURE__*/React$1.createElement("div", {
+	  }, /*#__PURE__*/React$1.createElement(Toolstrip, null)), token === null && /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      height: '60px',
-	      display: 'flex',
-	      flexDirection: 'row',
-	      justifyContent: 'space-between'
-	    }
-	  }, /*#__PURE__*/React$1.createElement("div", null, /*#__PURE__*/React$1.createElement("img", {
-	    style: {
-	      margin: '10px',
-	      width: '150px'
-	    },
-	    src: "Logo.57fd82aa.png",
-	    alt: "Toshiba"
-	  })), /*#__PURE__*/React$1.createElement("div", null, /*#__PURE__*/React$1.createElement("img", {
-	    style: {
-	      margin: '10px',
-	      borderRadius: '50%',
-	      width: 40,
-	      height: 40
-	    },
-	    src: "https://azureportal.skillnet.net/UserFiles/55483/Pictures/Pic_55483_56116_Avatar.jpg",
-	    alt: "Toshiba"
-	  }))), /*#__PURE__*/React$1.createElement(Toolstrip, null)), token === null && /*#__PURE__*/React$1.createElement("div", {
-	    style: {
-	      marginTop: '130px',
+	      xmarginTop: '130px',
 	      marginLeft: '60px',
 	      fontSize: '45px'
 	    }
-	  }, "No Authenticated User..."), token !== null && /*#__PURE__*/React$1.createElement("div", {
-	    style: {
-	      marginTop: '100px',
-	      flex: '1'
-	    }
-	  }, appState.groups === null && /*#__PURE__*/React$1.createElement("div", {
+	  }, "No Authenticated User..."), token !== null && /*#__PURE__*/React$1.createElement(React$1.Fragment, null, appState.groups === null && /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      marginTop: '90px',
 	      marginLeft: '60px',
@@ -44682,7 +44141,7 @@
 		return WebComponent;
 	}
 
-	const Index = () => /*#__PURE__*/React$1.createElement(AppProvider, null, /*#__PURE__*/React$1.createElement(App, null)); //ReactDOM.render(Index,document.getElementById('root'));
+	const Index = () => /*#__PURE__*/React$1.createElement(AppProvider, null, /*#__PURE__*/React$1.createElement(App, null)); //ReactDOM.render(<AppProvider><App/></AppProvider>,document.getElementById('root'));
 
 
 	customElements.define('training-matrix', reactToWebComponent(Index, React$1, ReactDOM));

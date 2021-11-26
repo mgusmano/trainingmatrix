@@ -21,12 +21,13 @@ export const App = () => {
       const auth = {auth:{username:'skillnet',password:'demo'}};
 
 
-      var url = `${apiRoot2}/token`;
-      var j = {"userName": "gabriel.porizan@nordlogic.com","grant_type": "password"}
-      console.log(url)
-      console.log(j)
-      const tokenPostResult = await axios.post(url,qs.stringify(j),auth);
-      console.log(tokenPostResult)
+      // var url = `${apiRoot2}/token`;
+      // var j = {"userName": "gabriel.porizan@nordlogic.com","grant_type": "password"}
+      // const tokenPostResult = await axios.post(url,qs.stringify(j),auth);
+
+
+
+      //console.log(tokenPostResult)
 
       //http://skillnetusersapi.azurewebsites.net/token(post) will return you a access token.
       //{"userName": "gabriel.porizan@nordlogic.com","grant_type": "password"}
@@ -49,21 +50,22 @@ export const App = () => {
   // const cellClicked = (data) => {
   //   //console.log(data)
   // }
+          // <div style={{height:'60px',display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+        //   <div><img style={{margin:'10px',width:'150px'}} src="Logo.57fd82aa.png" alt="Toshiba"/></div>
+        //   <div><img style={{margin:'10px',borderRadius:'50%',width: 40,height:40}} src="https://azureportal.skillnet.net/UserFiles/55483/Pictures/Pic_55483_56116_Avatar.jpg" alt="Toshiba"/></div>
+        // </div>
 
+        // <div style={{xmarginTop:'100px',flex:'1',width:'100%',background:'lightgray'}}>
   return (
-    <div style={{display:'flex',flexDirection:'column',height:'100%',width:'100%'}}>
-      <div style={{position:'fixed',zIndex:'10000',width:'100%',background:'white'}}>
-        <div style={{height:'60px',display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-          <div><img style={{margin:'10px',width:'150px'}} src="Logo.57fd82aa.png" alt="Toshiba"/></div>
-          <div><img style={{margin:'10px',borderRadius:'50%',width: 40,height:40}} src="https://azureportal.skillnet.net/UserFiles/55483/Pictures/Pic_55483_56116_Avatar.jpg" alt="Toshiba"/></div>
-        </div>
+    <div style={{display:'flex',flexDirection:'column',height:'100%',width:'100%',overflow:'hidden'}}>
+      <div style={{xposition:'fixed',zIndex:'10000',width:'100%',background:'white'}}>
         <Toolstrip/>
       </div>
       {token === null &&
-        <div style={{marginTop:'130px',marginLeft:'60px',fontSize:'45px'}}>No Authenticated User...</div>
+        <div style={{xmarginTop:'130px',marginLeft:'60px',fontSize:'45px'}}>No Authenticated User...</div>
       }
       {token !== null &&
-      <div style={{marginTop:'100px',flex:'1'}}>
+<>
         {appState.groups === null &&
           <div style={{marginTop:'90px',marginLeft:'60px',fontSize:'45px'}}>Matrix is Loading...</div>
         }
@@ -75,7 +77,7 @@ export const App = () => {
           //cellClicked={cellClicked}
         />
         }
-      </div>
+</>
       }
     </div>
   )

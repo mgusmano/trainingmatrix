@@ -46,91 +46,126 @@ const MainMatrixProvider = (props) => {
     //props.props.cellClicked(id)
   }
 
+  //        <div role="separator"></div>
+
+  var dialogWidth = '0px'
+  if (matrixState.mainDialog === 'block') {
+    dialogWidth = '370px'
+  }
+  if (matrixState.skillDialog === 'block') {
+    dialogWidth = '370px'
+    if (matrixState.mainDialog === 'block') {
+      dialogWidth = '720px'
+    }
+  }
+  if (matrixState.operatorDialog === 'block') {
+    dialogWidth = '370px'
+    if (matrixState.mainDialog === 'block') {
+      dialogWidth = '720px'
+    }
+  }
+
   return (
-    <div className='trainingmatrix' style={{...styles.v,width:'100%',height:'100%',background:'lightgray'}}>
-      {props.props.showLegend && <Legend/>}
 
-      {/* main area start */}
-      {matrixState.dimensions !== null &&
-      <div className='mainarea' data-flex-splitter-horizontal style={{...styles.horizontal,padding:'20px',width:'100%',height:'100%'}}>
+<>
 
-        {/* left area - matrix - start */}
-        <div data-flex-splitter-horizontal className='left' style={{...styles.v,flex:1,boxSizing:'border-box',display:'flex'}}>
 
-          <div className='leftrow1' height={matrixState.dimensions.row1} style={{...styles.h,overflow:'hidden',height:matrixState.dimensions.row1+'px',background:'lightgray'}}>
-            <Row1Col1/>
-            <Row1Col1a data={[['Rev#']]}/>
-            <LoadingOverlay
-              style={{width:'100%',height:'100%',zIndex:'10'}}
-              active={false}
-              spinner
-              text='Loading...'
-              >
-              <Row1Col2 data={matrixState.byOperator}/>
-            </LoadingOverlay>
-            <div style={{width:'5px'}}></div>
-            <Row1Col3 data={[['Goal','# Certified','%','Gap']]}/>
+    <div style={{display:'flex',flexDirection:'row',width:'100%',height: 'calc(100vh - 62px)'}}>
+
+
+
+      <div style={{flex:'1',overflow:'auto',background:'lightgray'}}>
+        <div className='trainingmatrix' style={{...styles.v,background:'lightgray'}}>
+          {props.props.showLegend && <Legend/>}
+
+          {/* main area start */}
+          {matrixState.dimensions !== null &&
+          <div className='mainarea' data-flex-splitter-horizontal style={{...styles.horizontal,overflow:'visible',width:'100%',height:'100%'}}>
+
+
+
+
+
+
+
+
+
+            {/* left area - matrix - start */}
+            <div data-flex-splitter-horizontal className='left' style={{...styles.v,overflow:'visible',flex:1,boxSizing:'border-box',display:'flex'}}>
+
+              <div className='leftrow1' height={matrixState.dimensions.row1} style={{...styles.h,overflow:'visible',height:matrixState.dimensions.row1+'px',background:'lightgray'}}>
+                <Row1Col1/>
+                <Row1Col1a data={[['Rev#']]}/>
+                <LoadingOverlay
+                  style={{width:'100%',height:'100%',zIndex:'10'}}
+                  active={false}
+                  spinner
+                  text='Loading...'
+                  >
+                  <Row1Col2 data={matrixState.byOperator}/>
+                </LoadingOverlay>
+                <div style={{width:'5px'}}></div>
+                <Row1Col3 data={[['Goal','# Certified','%','Gap']]}/>
+              </div>
+
+              <div className='leftrow2' style={{...styles.h,overflow:'visible',xflex:'1',height:(matrixState.dimensions.row2Orig)+'px',background:'lightgray'}}>
+                <Row2Col1 data={matrixState.bySkill}/>
+                {/* <Row2Col1a/> */}
+                {matrixState.revArray !== null &&
+                <Row2Col1a data={matrixState.revArray}/>
+                }
+                {/* <Log data={matrixState.active}/> */}
+                <LoadingOverlay
+                  style={{width:'100%',height:'100%',zIndex:'10'}}
+                  active={matrixState.active}
+                  spinner
+                  text='Loading...'
+                  >
+                  <Row2Col2 data={matrixState.bySkill} cellClicked={cellClicked}/>
+                </LoadingOverlay>
+                <div style={{width:'5px'}}></div>
+                {matrixState.rowsArray !== null &&
+                  <Row2Col3 data={matrixState.rowsArray}/>
+                }
+              </div>
+
+              <div style={{height:'5px'}}></div>
+
+              <div className='leftrow3' style={{...styles.h,overflow:'visible',height: matrixState.dimensions.row3+'px',minHeight:matrixState.dimensions.row3+'px',background:'lightgray'}}>
+                <Row3Col1 data={[['Goal'],['# Certified'],['%'],['Gap']]}/>
+                <Row3Col1a/>
+                {matrixState.colsArray !== null &&
+                  <Row3Col2 data={matrixState.colsArray}/>
+                }
+                <Row3Col3/>
+              </div>
+
+            </div>
+            {/* left area - matrix - end */}
+
+
+
+
+
+
+
+
           </div>
-
-          <div className='leftrow2' style={{...styles.h,xflex:'1',height:(matrixState.dimensions.row2Orig)+'px',background:'lightgray'}}>
-            <Row2Col1 data={matrixState.bySkill}/>
-            {/* <Row2Col1a/> */}
-            {matrixState.revArray !== null &&
-            <Row2Col1a data={matrixState.revArray}/>
-            }
-            {/* <Log data={matrixState.active}/> */}
-            <LoadingOverlay
-              style={{width:'100%',height:'100%',zIndex:'10'}}
-              active={matrixState.active}
-              spinner
-              text='Loading...'
-              >
-              <Row2Col2 data={matrixState.bySkill} cellClicked={cellClicked}/>
-            </LoadingOverlay>
-            <div style={{width:'5px'}}></div>
-            {matrixState.rowsArray !== null &&
-              <Row2Col3 data={matrixState.rowsArray}/>
-            }
-          </div>
-
-          <div style={{height:'5px'}}></div>
-
-          <div className='leftrow3' style={{...styles.h,height: matrixState.dimensions.row3+'px',minHeight:matrixState.dimensions.row3+'px',background:'lightgray'}}>
-            <Row3Col1 data={[['Goal'],['# Certified'],['%'],['Gap']]}/>
-            <Row3Col1a/>
-            {matrixState.colsArray !== null &&
-              <Row3Col2 data={matrixState.colsArray}/>
-            }
-            <Row3Col3/>
-          </div>
-
+          }
+          {/* main area end */}
         </div>
-        {/* left area - matrix - end */}
+      </div>
 
-        <div role="separator"></div>
 
+      <div style={{width:dialogWidth}}>
         {/* right area - details - start */}
-        {/* <div className='right' style={{display:'flex',flexDirection:'row',overflow: 'hidden',padding:'0px', background:'white', boxSizing:'border-box',boxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)'}}>
-          <div style={{display: matrixState.skillDialog, width:'300px', height:'100%', boxSizing:'border-box', xpadding:'10px', xboxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)'}}>
-            {matrixState.specific}
-          </div>
-          <div style={{display: matrixState.operatorDialog, width:'300px', height:'100%', boxSizing:'border-box', xpadding:'10px', xboxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)'}}>
-            {matrixState.specific}
-          </div>
-          <div style={{display: matrixState.mainDialog, width:'300px', height:'100%', boxSizing:'border-box', xpadding:'10px', xboxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)'}}>
-          {matrixState.main}
-          </div>
-        </div> */}
-        {/* right area - details - end */}
-
-        {/* right area - details - start */}
-        <div className='right' style={{display:'flex',flexDirection:'column',overflow: 'hidden',padding:'0px', background:'white', boxSizing:'border-box',boxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)'}}>
+        <div className='right' style={{marginTop:'10px',marginLeft:'10px',position:'fixed',display:'flex',flexDirection:'column',overflow: 'visible',padding:'0px', background:'white', boxSizing:'border-box',boxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)'}}>
 
           <div style={{height:'200px',display: matrixState.topDialog}}>
             {matrixState.top}
           </div>
 
-          <div className='right' style={{flex: '1',display:'flex',flexDirection:'row',overflow: 'hidden',padding:'0px', background:'white', boxSizing:'border-box',xboxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)'}}>
+          <div className='right' style={{flex: '1',display:'flex',flexDirection:'row',overflow: 'visible',padding:'0px', background:'white', boxSizing:'border-box',xboxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)'}}>
             <div style={{display: matrixState.skillDialog, width:'350px', height:'90%', boxSizing:'border-box', xpadding:'10px', xboxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)'}}>
               {matrixState.specific}
             </div>
@@ -144,11 +179,14 @@ const MainMatrixProvider = (props) => {
 
         </div>
         {/* right area - details - end */}
-
       </div>
-      }
-      {/* main area end */}
+
+
+
+
     </div>
+
+    </>
   )
 }
 
