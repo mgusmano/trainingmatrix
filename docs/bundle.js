@@ -30028,7 +30028,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2021-11-24-a")));
+	  }, "v2021-11-29-a")));
 	};
 
 	const SET_GROUPID = 'SET_GROUPID';
@@ -43772,7 +43772,7 @@
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      flex: '1',
-	      overflow: 'scroll',
+	      overflow: 'auto',
 	      background: 'lightgray'
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
