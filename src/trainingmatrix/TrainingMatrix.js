@@ -70,7 +70,7 @@ const MainMatrixProvider = (props) => {
 <>
 
 
-    <div style={{display:'flex',flexDirection:'row',width:'100%',height: 'calc(100vh - 62px)'}}>
+    <div style={{display:'flex',flexDirection:'row',width:'100%',height: 'calc(100vh - 162px)'}}>
 
 
 
@@ -81,14 +81,6 @@ const MainMatrixProvider = (props) => {
           {/* main area start */}
           {matrixState.dimensions !== null &&
           <div className='mainarea' data-flex-splitter-horizontal style={{...styles.horizontal,overflow:'visible',width:'100%',height:'100%'}}>
-
-
-
-
-
-
-
-
 
             {/* left area - matrix - start */}
             <div data-flex-splitter-horizontal className='left' style={{...styles.v,overflow:'visible',flex:1,boxSizing:'border-box',display:'flex'}}>

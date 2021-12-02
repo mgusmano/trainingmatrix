@@ -27,6 +27,7 @@ export const setAll = async (dispatch, payload) => {
       dispatch({type: types.SET_COLSARRAY, payload: []});
     }
 
+
     dispatch({type: types.SET_REVARRAY, payload: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]});
 
     var bySkill = []
@@ -68,6 +69,7 @@ export const setAll = async (dispatch, payload) => {
     //const certificationsResult = await axios(`${localRoot}/certifications?groupID=${groupID}`);
 
     const skillsUrl = `${apiRoot}/PortalGroupSkillsOnly?groupid=${groupID}`
+    console.log(skillsUrl)
     const skills2Result = await axios(skillsUrl,auth);
     const operators2Result = await axios(`${apiRoot}/PortalGroupOperators?groupid=${groupID}`,auth);
     const certifications2Result = await axios(`${apiRoot}/PortalCertificationsRating?groupid=${groupID}`,auth);

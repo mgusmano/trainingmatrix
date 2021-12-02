@@ -30028,7 +30028,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2021-11-29-a")));
+	  }, "v2021-11-29-b")));
 	};
 
 	const SET_GROUPID = 'SET_GROUPID';
@@ -31957,6 +31957,7 @@
 	    //const certificationsResult = await axios(`${localRoot}/certifications?groupID=${groupID}`);
 
 	    const skillsUrl = `${apiRoot}/PortalGroupSkillsOnly?groupid=${groupID}`;
+	    console.log(skillsUrl);
 	    const skills2Result = await axios(skillsUrl, auth);
 	    const operators2Result = await axios(`${apiRoot}/PortalGroupOperators?groupid=${groupID}`, auth);
 	    const certifications2Result = await axios(`${apiRoot}/PortalCertificationsRating?groupid=${groupID}`, auth); //console.log(skills2Result)
