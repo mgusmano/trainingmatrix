@@ -3,7 +3,6 @@ import { useAppState } from './state/AppProvider';
 import { Toolstrip } from './Toolstrip.js';
 import TrainingMatrix from './trainingmatrix/TrainingMatrix';
 import axios from "axios";
-import qs from 'qs';
 //import { getParameterByName } from './state/Util';
 
 export const App = () => {
@@ -17,7 +16,7 @@ export const App = () => {
 
     async function fetchData() {
       const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
-      const apiRoot2 = 'https://skillnetusersapi.azurewebsites.net';
+      //const apiRoot2 = 'https://skillnetusersapi.azurewebsites.net';
       const auth = {auth:{username:'skillnet',password:'demo'}};
 
 
