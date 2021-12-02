@@ -143,7 +143,7 @@ export const Main = (props) => {
   var link = `https://skillnetformsapp.azurewebsites.net?skillID=` + skill.skillID + `&operatorID=` + operator.operatorID + `&userID=` + userID
 
   return (
-    <div style={{padding:'10px 0 0 40px',fontSize:'20px',display:'flex',flexDirection:'column'}}>
+    <div style={{boxSizing:'border-box',height:'500px',padding:'10px 0 0 40px',fontSize:'20px',display:'flex',flexDirection:'column'}}>
 
       <div style={{margin:'0 0 0 0',fontSize:'20px'}}>
         {skill.skillName}
@@ -188,8 +188,8 @@ export const Main = (props) => {
       </div>
       </div>
 
-      <div style={{margin:'120px 0 0 0',display:'flex',flexDirection:'column'}}>
-        <div style={{fontSize:'8px'}}>certificationID: {certificationID} <br/> skillID: {skill.skillID} <br/> operatorID: {operator.operatorID}</div>
+      <div style={{margin:'180px 0 0 0',display:'flex',flexDirection:'column'}}>
+        <div className='values' style={{fontSize:'8px',color:'lightgray'}}>certificationID: {certificationID} skillID: {skill.skillID} operatorID: {operator.operatorID}</div>
       </div>
 
     </div>

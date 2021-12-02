@@ -65,15 +65,16 @@ export const Operator = React.memo((props) => {
   }
 
 //            length={data.data.length}
+//{data.operatorName}
   return (
-    <div style={{display:'flex',flexDirection:'column',padding:'0px',xwidth:'100%',height:'100%'}}>
+    <div style={{boxSizing:'border-box',height:'500px',display:'flex',flexDirection:'column',padding:'0px',xwidth:'100%',xheight:'100%'}}>
       {/* <div style={{height:'30px',fontSize:'18px'}}>
         <div style={{fontSize:'20px'}}>{data.operatorName}</div>
       </div> */}
 
       <div style={{flex:'1',display:'flex',flexDirection:'column',marginLeft:'30px',marginTop:'0px',marginRight:'30px',overflow: 'hidden'}}>
-        <div style={{marginTop:'10px'}}>{data.operatorName} Stations:</div>
-        <div style={{overflow:'auto',maxHeight: 500,border:'0px solid lightgray'}}>
+        <div style={{margin:'10px 0 10px 0'}}>Stations:</div>
+        <div style={{overflow:'auto',maxHeight: 500,border:'1px solid lightgray'}}>
           <ReactList
             itemRenderer={renderItem}
             length={dataSort.length}
@@ -81,7 +82,7 @@ export const Operator = React.memo((props) => {
           />
         </div>
 
-        <div style={{marginTop:'10px'}}>
+        <div style={{margin:'10px 0 10px 0'}}>
           Goal:
           <input
             type="text"
@@ -113,11 +114,12 @@ export const Operator = React.memo((props) => {
 
 
               var payload = {
-                id: operatorID,
+                operatorID: operatorID,
                 goal: goal,
-                skills: matrixState.skills,
-                operators: matrixState.operators,
-                certifications: matrixState.certifications,
+                //skills: matrixState.skills,
+                //operators: matrixState.operators,
+                //certifications: matrixState.certifications,
+                groupID: matrixState.groupID,
                 multiplier: matrixState.dimensions.multiplier
               }
               matrixState.updateOperatorGoal(payload)

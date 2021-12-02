@@ -10,7 +10,7 @@ export const Top = React.memo(() => {
   }
 
   return (
-    <div style={{display:'flex',flexDirection:'column',fontSize:'12px',padding:'0',width:'100%',xheight:'500px',background:'gainsboro'}}>
+    <div style={{boxSizing:'border-box',display:'flex',flexDirection:'column',fontSize:'12px',padding:'0px',width:'100%',xheight:'500px',background:'gainsboro'}}>
       <div style={{width:'50px',textDecoration:'underline',cursor: 'pointer'}}
         onClick={()=>{
           matrixState.showTopDialog('none')
@@ -20,7 +20,7 @@ export const Top = React.memo(() => {
         }}>
         close
       </div>
-      <div style={{fontSize:'20px',marginLeft:'0px',marginTop:'0',height:'400px', borderBottom: '4px solid black'}}>
+      <div style={{boxSizing:'border-box',padding:'10px 20px 20px 30px',fontSize:'20px',marginLeft:'0px',marginTop:'0',height:'400px', borderBottom: '4px solid black'}}>
         {show &&
           <>
           <img alt="pic" src={img} style={{borderRadius: '50%', x: '125px', y: '250px', width: '80px', height: '80px'}}/>

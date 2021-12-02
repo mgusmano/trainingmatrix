@@ -298,8 +298,6 @@ export const setAll = async (dispatch, payload) => {
     return byOperator
   }
 
-
-
   const setInit = (o) => {
     var x = o.oLen
     var y = o.sLen
@@ -428,31 +426,46 @@ export const updateCert = async (dispatch, payload) => {
 }
 
 export const updateSkillGoal = (dispatch, payload) => {
-  var newSkills = payload.skills.slice();
-  const lastSkillIndex = newSkills.findIndex(
-    (skill) => skill.id === payload.id
-  )
-  var oldSkill = payload.skills[lastSkillIndex]
-  if (lastSkillIndex !== -1) {
-    newSkills[lastSkillIndex] = {
-      "skillID": oldSkill.skillID,
-      "groupID": oldSkill.groupID,
-      "skillName": oldSkill.skillName,
-      "goal": parseInt(payload.goal)
-    }
+  console.log(payload.goal)
+  if (isNaN(payload.goal) || payload.goal === '') {
+    alert('Goal is not a number')
+    dispatch({type: types.SET_ACTIVE, payload: false});
+    return
   }
-  var j = {'skillID':payload.id,'goal':parseInt(payload.goal)}
+  // var newSkills = payload.skills.slice();
+  // const lastSkillIndex = newSkills.findIndex(
+  //   (skill) => skill.id === payload.id
+  // )
+  // var oldSkill = payload.skills[lastSkillIndex]
+  // if (lastSkillIndex !== -1) {
+  //   newSkills[lastSkillIndex] = {
+  //     "skillID": oldSkill.skillID,
+  //     "groupID": oldSkill.groupID,
+  //     "skillName": oldSkill.skillName,
+  //     "goal": parseInt(payload.goal)
+  //   }
+  // }
+
+  var j = {'skillID':payload.skillID,'goal':parseInt(payload.goal)}
   console.log('updateSkillGoal: ' + JSON.stringify(j))
-  //console.log(newSkills)
-  dispatch({type: types.UPDATE_SKILLGOAL, payload: {skills:newSkills}});
+  //doDBSkillGoal(payload);
+
   setAll(dispatch,{
-    //'first':true,
-    //'skillsData':newSkills,
-    //'operatorsData':payload.operators,
-    //'certificationsData':payload.certifications,
-    'groupID': oldSkill.groupID,
+    'groupID': payload.groupID,
     'multiplier': payload.multiplier
   })
+
+
+  // //console.log(newSkills)
+  // dispatch({type: types.UPDATE_SKILLGOAL, payload: {skills:newSkills}});
+  // setAll(dispatch,{
+  //   //'first':true,
+  //   //'skillsData':newSkills,
+  //   //'operatorsData':payload.operators,
+  //   //'certificationsData':payload.certifications,
+  //   'groupID': oldSkill.groupID,
+  //   'multiplier': payload.multiplier
+  // })
 
   // API.graphql(graphqlOperation(updateSkill, { input: payload } ))
   // .then(() => {
@@ -461,14 +474,44 @@ export const updateSkillGoal = (dispatch, payload) => {
   // })
 }
 
+export const updateSkillRev = (dispatch, payload) => {
+  console.log(payload.rev)
+  if (isNaN(payload.rev) || payload.rev === '') {
+    alert('Rev# is not a number')
+    dispatch({type: types.SET_ACTIVE, payload: false});
+    return
+  }
+  var j = {'skillID':payload.skillID,'rev':parseInt(payload.rev)}
+  console.log('updateSkillRev: ' + JSON.stringify(j))
+  //doDBSkillRev(payload);
+
+  setAll(dispatch,{
+    'groupID': payload.groupID,
+    'multiplier': payload.multiplier
+  })
+}
+
 export const updateOperatorGoal = async (dispatch,payload) => {
+  console.log(payload.goal)
+  if (isNaN(payload.goal) || payload.goal === '') {
+    alert('Goal is not a number')
+    dispatch({type: types.SET_ACTIVE, payload: false});
+    return
+  }
 
-  var j = {'operatorID':payload.id,'goal':parseInt(payload.goal)}
+  var j = {'operatorID':payload.operatorID,'goal':parseInt(payload.goal)}
   console.log('updateOperatorGoal: ' + JSON.stringify(j))
+  //doDBOperatorGoal(payload);
 
-  var groupID = 1
-  const operatorsResult = await axios(`data/trainingmatrix/data/${groupID}/operators.json`);
-  var newOperators = operatorsResult.data;
+  setAll(dispatch,{
+    'groupID': payload.groupID,
+    'multiplier': payload.multiplier
+  })
+
+
+  // var groupID = 1
+  // const operatorsResult = await axios(`data/trainingmatrix/data/${groupID}/operators.json`);
+  // var newOperators = operatorsResult.data;
 
   // const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api/';
   // const updateOperatorGoalResult = await axios.post(
@@ -495,13 +538,13 @@ export const updateOperatorGoal = async (dispatch,payload) => {
   // //console.log(newOperators)
   // dispatch({type: types.UPDATE_OPERATORGOAL, payload: {operators:newOperators}});
 
-  setAll(dispatch,{
-    'first':true,
-    'skillsData':payload.skills,
-    'operatorsData':newOperators,
-    'certificationsData':payload.certifications,
-    'multiplier': payload.multiplier
-  })
+  // setAll(dispatch,{
+  //   'first':true,
+  //   'skillsData':payload.skills,
+  //   'operatorsData':newOperators,
+  //   'certificationsData':payload.certifications,
+  //   'multiplier': payload.multiplier
+  // })
 
   // API.graphql(graphqlOperation(updateOperator, { input: payload } ))
   // .then(() => {

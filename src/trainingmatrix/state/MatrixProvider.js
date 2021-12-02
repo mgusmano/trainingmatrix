@@ -29,10 +29,12 @@ export const MatrixProvider = (props) => {
     setAll: (payload) => {
       functions.setAll(dispatch, payload)
     },
+    updateSkillGoal: (payload) => functions.updateSkillGoal(dispatch, payload),
+    updateSkillRev: (payload) => functions.updateSkillRev(dispatch, payload),
     updateOperatorGoal: (payload) => functions.updateOperatorGoal(dispatch, payload),
+    updateCert: (payload) => functions.updateCert(dispatch, payload),
 
     setAuthenticatedUser: (payload) => functions.setAuthenticatedUser(dispatch, payload),
-    updateSkillGoal: (payload) => functions.updateSkillGoal(dispatch, payload),
     setRightTotals: (payload) => functions.setRightTotals(dispatch, payload),
     setBottomTotals: (payload) => functions.setBottomTotals(dispatch, payload),
     setCurrentCertification: (payload) => functions.setCurrentCertification(dispatch, payload),
@@ -46,7 +48,7 @@ export const MatrixProvider = (props) => {
     setOriginal: (payload) => functions.setOriginal(dispatch, payload),
 
     toggleLegend: (payload) => functions.toggleLegend(dispatch, payload),
-    updateCert: (payload) => functions.updateCert(dispatch, payload),
+
   }
 
   const initialState = {

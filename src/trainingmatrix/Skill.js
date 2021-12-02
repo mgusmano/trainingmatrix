@@ -30,6 +30,7 @@ export const Skill = React.memo((props) => {
 
   useEffect(() => {
     setGoal(props.data.skill.goal)
+    setRev(props.data.skill.rev)
   },[props])
 
   const clickItem = (event,index) => {
@@ -64,13 +65,13 @@ export const Skill = React.memo((props) => {
   }
 
   return (
-    <div style={{display:'flex',flexDirection:'column',padding:'0px',xwidth:'250px',height:'99%',borderRight:'0px solid red'}}>
+    <div style={{boxSizing:'border-box',height:'500px',display:'flex',flexDirection:'column',padding:'0px',xwidth:'250px',xheight:'99%',borderRight:'0px solid red'}}>
       {/* <div style={{height:'30px',fontSize:'18px'}}>
         <div style={{fontSize:'20px'}}>{data.skill.skillName}</div>
       </div> */}
       <div style={{flex:'1', display:'flex',flexDirection:'column',marginLeft:'30px',marginTop:'0px', marginRight:'30px',overflow: 'hidden'}}>
-        <div style={{marginTop:'10px'}}> {data.skill.skillName} Operators:</div>
-        <div style={{overflow:'auto',maxHeight: 500,border:'0px solid lightgray'}}>
+        <div style={{margin:'10px 0 10px 0'}}> {data.skill.skillName} Operators:</div>
+        <div style={{overflow:'auto',height: '380px',border:'1px solid lightgray'}}>
           <ReactList
             itemRenderer={renderItem}
             length={dataSort.length}
@@ -86,16 +87,18 @@ export const Skill = React.memo((props) => {
               setGoal(event.target.value)
             }}
           />
-          
+
           <button
             onClick={(event)=> {
               matrixState.setActive(true)
               var payload = {
-                id: skillID,
+                skllID: skillID,
                 goal: goal,
-                skills: matrixState.skills,
-                operators: matrixState.operators,
-                certifications: matrixState.certifications,
+                groupID: matrixState.groupID,
+                //skills: matrixState.skills,
+                //operators: matrixState.operators,
+                //certifications: matrixState.certifications,
+
                 multiplier: matrixState.dimensions.multiplier
               }
               matrixState.updateSkillGoal(payload)
@@ -122,13 +125,15 @@ export const Skill = React.memo((props) => {
 
         <button
           onClick={(event)=> {
+            // console.log(rev)
+            // if (rev === '') {
+            //   return
+            // }
             matrixState.setActive(true)
             var payload = {
-              id: skillID,
-              goal: goal,
-              skills: matrixState.skills,
-              operators: matrixState.operators,
-              certifications: matrixState.certifications,
+              skillID: skillID,
+              rev: rev,
+              groupID: matrixState.groupID,
               multiplier: matrixState.dimensions.multiplier
             }
             matrixState.updateSkillRev(payload)
