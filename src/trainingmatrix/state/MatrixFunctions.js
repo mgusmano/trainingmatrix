@@ -27,8 +27,8 @@ export const setAll = async (dispatch, payload) => {
       dispatch({type: types.SET_COLSARRAY, payload: []});
     }
 
-
-    dispatch({type: types.SET_REVARRAY, payload: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]});
+    var rev = doRev(skills)
+    dispatch({type: types.SET_REVARRAY, payload: rev});
 
     var bySkill = []
     var byOperator = []
@@ -69,14 +69,9 @@ export const setAll = async (dispatch, payload) => {
     //const certificationsResult = await axios(`${localRoot}/certifications?groupID=${groupID}`);
 
     const skillsUrl = `${apiRoot}/PortalGroupSkillsOnly?groupid=${groupID}`
-    console.log(skillsUrl)
     const skills2Result = await axios(skillsUrl,auth);
     const operators2Result = await axios(`${apiRoot}/PortalGroupOperators?groupid=${groupID}`,auth);
     const certifications2Result = await axios(`${apiRoot}/PortalCertificationsRating?groupid=${groupID}`,auth);
-
-    //console.log(skills2Result)
-    //console.log(certifications2Result)
-
 
     //just for the webAPI data while it is broken
     var certifications2Resultdata = []
@@ -114,7 +109,6 @@ export const setAll = async (dispatch, payload) => {
       operators: operators2Result.data,
       certifications: certifications2Resultdata
     }
-    //console.log(r)
     return r
   }
 
@@ -195,6 +189,9 @@ export const setAll = async (dispatch, payload) => {
     for (let i = 0; i < certByRow.length; i++) {
       if (certByRow[i].row > currentRow) {
         currentRow = certByRow[i].row
+        if (certByRow[i].skill.goal === 0) {
+          certByRow[i].skill.goal = 1
+        }
         rowCount = rowsArray.push([certByRow[i].skill.goal,0,0,0])
       }
       switch(certByRow[i].meta.currcertID) {
@@ -222,6 +219,9 @@ export const setAll = async (dispatch, payload) => {
     for (let i = 0; i < certByCol.length; i++) {
       if (certByCol[i].col > currentCol) {
         currentCol = certByCol[i].col
+        if (certByCol[i].operator.goal === 0) {
+          certByCol[i].operator.goal = 1
+        }
         colCount = colsArray.push([certByCol[i].operator.goal,0,0,0])
       }
       switch(certByCol[i].meta.currcertID) {
@@ -240,6 +240,15 @@ export const setAll = async (dispatch, payload) => {
       rowsArray,
       colsArray
     }
+  }
+
+  const doRev = (skills) => {
+    var rev = [];
+    skills.map((skill,o) => {
+      rev.push(skill.rev)
+      return null
+    });
+    return rev;
   }
 
   const doBySkill = (operators, skills, certifications) => {
@@ -288,6 +297,8 @@ export const setAll = async (dispatch, payload) => {
     })
     return byOperator
   }
+
+
 
   const setInit = (o) => {
     var x = o.oLen
