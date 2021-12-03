@@ -34,7 +34,6 @@ export const Operator = React.memo((props) => {
   }
 
   const clickItem = (event,index) => {
-    //console.log(data.skill.data[index])
     if (oldtarget !== null) {
       oldtarget.style.background = 'white'
     }
@@ -64,13 +63,9 @@ export const Operator = React.memo((props) => {
     )
   }
 
-//            length={data.data.length}
 //{data.operatorName}
   return (
     <div style={{boxSizing:'border-box',height:'500px',display:'flex',flexDirection:'column',padding:'0px',xwidth:'100%',xheight:'100%'}}>
-      {/* <div style={{height:'30px',fontSize:'18px'}}>
-        <div style={{fontSize:'20px'}}>{data.operatorName}</div>
-      </div> */}
 
       <div style={{flex:'1',display:'flex',flexDirection:'column',marginLeft:'30px',marginTop:'0px',marginRight:'30px',overflow: 'hidden'}}>
         <div style={{margin:'10px 0 10px 0'}}>Stations:</div>
@@ -82,73 +77,28 @@ export const Operator = React.memo((props) => {
           />
         </div>
 
-        <div style={{margin:'10px 0 10px 0'}}>
-          Goal:
-          <input
-            type="text"
-            value={goal}
+        <div style={{margin:'10px 0 10px 0',display:'flex',flexDirection:'row',height:'15px'}}>
+          <div style={{margin:'2px 0 10px 0'}}>Goal:</div>
+          <input type="text" value={goal}
+            style={{margin:'0 0 0 10px',width:'26px',height:'15px'}}
             onChange={(event)=> {
               updateGoal(event.target.value)
             }}
-            style={{marginLeft:'10px',marginTop:5,width:'26px',height:'15px'}}
           />
-          <button
-            onClick={(event)=> {
+          <div
+            style={{margin:'3px 0 7px 15px',width:'40px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}}
+            onClick={()=>{
               matrixState.setActive(true)
-
-              // var c = {
-              //   id: certificationID,
-              //   row: matrixState.celldata.row,
-              //   col: matrixState.celldata.col,
-              //   skill: skill,
-              //   operator: operator,
-              //   skillID: skill.id,
-              //   operatorID: operator.id,
-              //   currcertID: parseInt(event.target.value),
-              //   meta: metaval,
-              //   skills: matrixState.skills,
-              //   operators: matrixState.operators,
-              //   certifications: newCerts,
-              //   multiplier: matrixState.dimensions.multiplier
-              // }
-
-
               var payload = {
                 operatorID: operatorID,
                 goal: goal,
-                //skills: matrixState.skills,
-                //operators: matrixState.operators,
-                //certifications: matrixState.certifications,
                 groupID: matrixState.groupID,
                 multiplier: matrixState.dimensions.multiplier
               }
               matrixState.updateOperatorGoal(payload)
             }}
-          >
-            Update
-          </button>
+          >Update</div>
         </div>
-
-
-
-        {/* <select size="40" onChange={stationSelected}>
-          {data.data.map((item,i) => {
-            const found = matrixState.certifications.find((element) => {
-              var theElement = null
-              if (element.operatorID === item.operator.id && element.skillID === item.skill.id) {
-                theElement = element
-              }
-              return theElement
-            });
-            return (
-              <option key={i} value={found.id}>
-                {item.skill.skillName}
-              </option>
-            )
-          })}
-        </select> */}
-
-
       </div>
 
 
@@ -214,3 +164,40 @@ export const Operator = React.memo((props) => {
   //var img = 'https://examples.sencha.com/extjs/7.4.0/examples/kitchensink/resources/images/staff/' + data.id + '.jpg'
   //var img = 'data/trainingmatrix/pictures/Aaron Cariaga.JPG'
   // var img = 'data/trainingmatrix/pictures/' + data.picture + ''
+
+
+//   <button
+//   onClick={(event)=> {
+//     matrixState.setActive(true)
+
+//     // var c = {
+//     //   id: certificationID,
+//     //   row: matrixState.celldata.row,
+//     //   col: matrixState.celldata.col,
+//     //   skill: skill,
+//     //   operator: operator,
+//     //   skillID: skill.id,
+//     //   operatorID: operator.id,
+//     //   currcertID: parseInt(event.target.value),
+//     //   meta: metaval,
+//     //   skills: matrixState.skills,
+//     //   operators: matrixState.operators,
+//     //   certifications: newCerts,
+//     //   multiplier: matrixState.dimensions.multiplier
+//     // }
+
+
+//     var payload = {
+//       operatorID: operatorID,
+//       goal: goal,
+//       //skills: matrixState.skills,
+//       //operators: matrixState.operators,
+//       //certifications: matrixState.certifications,
+//       groupID: matrixState.groupID,
+//       multiplier: matrixState.dimensions.multiplier
+//     }
+//     matrixState.updateOperatorGoal(payload)
+//   }}
+// >
+//   Update
+// </button>

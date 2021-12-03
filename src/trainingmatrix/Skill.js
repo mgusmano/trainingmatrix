@@ -79,56 +79,47 @@ export const Skill = React.memo((props) => {
           />
         </div>
 
-        <div style={{marginTop:'10px'}}>
-          Goal:
+        <div style={{margin:'10px 0 10px 0',display:'flex',flexDirection:'row',height:'15px'}}>
+          <div style={{margin:'2px 0 10px 0'}}>Goal:</div>
 
-          <input type="text" value={goal} style={{margin:'5px 0 0 14px',width:'26px',height:'15px'}}
+          <input type="text" value={goal}
+            style={{margin:'0 0 0 10px',width:'26px',height:'15px'}}
             onChange={(event)=> {
               setGoal(event.target.value)
             }}
           />
 
-          <button
-            onClick={(event)=> {
+          <div
+            style={{margin:'3px 0 7px 15px',width:'40px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}}
+            onClick={()=>{
               matrixState.setActive(true)
               var payload = {
                 skllID: skillID,
                 goal: goal,
                 groupID: matrixState.groupID,
-                //skills: matrixState.skills,
-                //operators: matrixState.operators,
-                //certifications: matrixState.certifications,
-
                 multiplier: matrixState.dimensions.multiplier
               }
               matrixState.updateSkillGoal(payload)
-              // var payload = {
-              //   id: skillID,
-              //   goal: goal
-              // }
-              // matrixState.updateSkillGoal(payload)
             }}
-          >
-            Update
-          </button>
+          >Update</div>
+
         </div>
 
 
-        <div style={{marginTop:'10px'}}>
-        Rev#:
+        <div style={{margin:'10px 0 10px 0',display:'flex',flexDirection:'row',height:'15px'}}>
 
-        <input type="text" value={rev} style={{margin:'5px 0 0 10px',width:'26px',height:'15px'}}
+        <div style={{margin:'2px 0 10px 0'}}>Rev#:</div>
+
+        <input type="text" value={rev}
+          style={{margin:'0 0 0 10px',width:'26px',height:'15px'}}
           onChange={(event)=> {
             setRev(event.target.value)
           }}
         />
 
-        <button
-          onClick={(event)=> {
-            // console.log(rev)
-            // if (rev === '') {
-            //   return
-            // }
+        <div
+          style={{margin:'3px 0 7px 15px',width:'40px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}}
+          onClick={()=>{
             matrixState.setActive(true)
             var payload = {
               skillID: skillID,
@@ -138,9 +129,8 @@ export const Skill = React.memo((props) => {
             }
             matrixState.updateSkillRev(payload)
           }}
-        >
-          Update
-        </button>
+        >Update</div>
+
       </div>
 
 

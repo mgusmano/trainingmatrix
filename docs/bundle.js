@@ -29919,18 +29919,12 @@
 	};
 	const useAppState = () => react.exports.useContext(AppContext);
 
-	const Toolstrip = props => {
+	const Toolstrip = () => {
 	  const l = sessionStorage.getItem('userID');
-	  const appState = useAppState(); // const replaceMatrixData = () => {
-	  //   async function fetchData() {
-	  //     const certificationsnewResult = await axios("data/trainingmatrix/data/certificationsnew.json");
-	  //     setCertificationsData(certificationsnewResult.data)
-	  //   }
-	  //   fetchData();
-	  // }
-
+	  const appState = useAppState();
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
+	      boxSizing: 'border-box',
 	      display: 'flex',
 	      flexDirection: 'row',
 	      justifyContent: 'space-between',
@@ -29940,8 +29934,7 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      marginLeft: '10px',
-	      marginTop: '15px',
+	      margin: '7px 0 7px 10px',
 	      color: 'black',
 	      fontSize: '12px'
 	    }
@@ -29952,8 +29945,7 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      marginLeft: '1px',
-	      marginTop: '13px',
+	      margin: '7px 0 7px 1px',
 	      color: 'black',
 	      fontSize: '12px'
 	    }
@@ -29961,7 +29953,7 @@
 	    value: appState.groupID,
 	    style: {
 	      width: '250px',
-	      margin: '7px'
+	      margin: '0px'
 	    },
 	    onChange: event => {
 	      appState.setGroupID(event.target.value);
@@ -29973,14 +29965,14 @@
 	    }, group.groupID, "-", group.groupName);
 	  })), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '13px 0 7px 30px',
+	      margin: '7px 0 7px 30px',
 	      color: 'black',
 	      fontSize: '12px'
 	    }
 	  }, "matrix size:"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '13px 0 7px 5px',
-	      width: '60px',
+	      margin: '7px 0 7px 15px',
+	      width: '40px',
 	      fontSize: '12px',
 	      textDecoration: 'underline',
 	      cursor: 'pointer'
@@ -29990,8 +29982,8 @@
 	    }
 	  }, "smaller"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '13px 0 7px 0',
-	      width: '60px',
+	      margin: '7px 0 7px 15px',
+	      width: '40px',
 	      fontSize: '12px',
 	      textDecoration: 'underline',
 	      cursor: 'pointer'
@@ -30001,8 +29993,7 @@
 	    }
 	  }, "larger"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      marginLeft: '10px',
-	      marginTop: '13px',
+	      margin: '7px 0 7px 10px',
 	      color: 'black',
 	      fontSize: '12px'
 	    }
@@ -30013,7 +30004,7 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '13px 0 7px 1px',
+	      margin: '7px 0 7px 1px',
 	      width: '110px',
 	      fontSize: '12px',
 	      textDecoration: 'underline',
@@ -30024,11 +30015,11 @@
 	    }
 	  }, "Toggle Legend"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '13px 0 7px 10px',
+	      margin: '7px 0 7px 10px',
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2021-11-29-b")));
+	  }, "v2021-12-02-e")));
 	};
 
 	const SET_GROUPID = 'SET_GROUPID';
@@ -31900,9 +31891,10 @@
 	      });
 	    }
 
+	    var rev = doRev(skills);
 	    dispatch({
 	      type: SET_REVARRAY,
-	      payload: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+	      payload: rev
 	    });
 	    var bySkill = [];
 	    var byOperator = [];
@@ -31957,12 +31949,9 @@
 	    //const certificationsResult = await axios(`${localRoot}/certifications?groupID=${groupID}`);
 
 	    const skillsUrl = `${apiRoot}/PortalGroupSkillsOnly?groupid=${groupID}`;
-	    console.log(skillsUrl);
 	    const skills2Result = await axios(skillsUrl, auth);
 	    const operators2Result = await axios(`${apiRoot}/PortalGroupOperators?groupid=${groupID}`, auth);
-	    const certifications2Result = await axios(`${apiRoot}/PortalCertificationsRating?groupid=${groupID}`, auth); //console.log(skills2Result)
-	    //console.log(certifications2Result)
-	    //just for the webAPI data while it is broken
+	    const certifications2Result = await axios(`${apiRoot}/PortalCertificationsRating?groupid=${groupID}`, auth); //just for the webAPI data while it is broken
 
 	    var certifications2Resultdata = [];
 	    certifications2Result.data.map((certification, i) => {
@@ -31994,8 +31983,7 @@
 	      skills: skills2Result.data,
 	      operators: operators2Result.data,
 	      certifications: certifications2Resultdata
-	    }; //console.log(r)
-
+	    };
 	    return r;
 	  };
 
@@ -32079,6 +32067,11 @@
 	    for (let i = 0; i < certByRow.length; i++) {
 	      if (certByRow[i].row > currentRow) {
 	        currentRow = certByRow[i].row;
+
+	        if (certByRow[i].skill.goal === 0) {
+	          certByRow[i].skill.goal = 1;
+	        }
+
 	        rowCount = rowsArray.push([certByRow[i].skill.goal, 0, 0, 0]);
 	      }
 
@@ -32108,6 +32101,11 @@
 	    for (let i = 0; i < certByCol.length; i++) {
 	      if (certByCol[i].col > currentCol) {
 	        currentCol = certByCol[i].col;
+
+	        if (certByCol[i].operator.goal === 0) {
+	          certByCol[i].operator.goal = 1;
+	        }
+
 	        colCount = colsArray.push([certByCol[i].operator.goal, 0, 0, 0]);
 	      }
 
@@ -32127,6 +32125,15 @@
 	      rowsArray,
 	      colsArray
 	    };
+	  };
+
+	  const doRev = skills => {
+	    var rev = [];
+	    skills.map((skill, o) => {
+	      rev.push(skill.rev);
+	      return null;
+	    });
+	    return rev;
 	  };
 
 	  const doBySkill = (operators, skills, certifications) => {
@@ -32308,53 +32315,103 @@
 	  });
 	};
 	const updateSkillGoal = (dispatch, payload) => {
-	  var newSkills = payload.skills.slice();
-	  const lastSkillIndex = newSkills.findIndex(skill => skill.id === payload.id);
-	  var oldSkill = payload.skills[lastSkillIndex];
+	  console.log(payload.goal);
 
-	  if (lastSkillIndex !== -1) {
-	    newSkills[lastSkillIndex] = {
-	      "skillID": oldSkill.skillID,
-	      "groupID": oldSkill.groupID,
-	      "skillName": oldSkill.skillName,
-	      "goal": parseInt(payload.goal)
-	    };
-	  }
+	  if (isNaN(payload.goal) || payload.goal === '') {
+	    alert('Goal is not a number');
+	    dispatch({
+	      type: SET_ACTIVE,
+	      payload: false
+	    });
+	    return;
+	  } // var newSkills = payload.skills.slice();
+	  // const lastSkillIndex = newSkills.findIndex(
+	  //   (skill) => skill.id === payload.id
+	  // )
+	  // var oldSkill = payload.skills[lastSkillIndex]
+	  // if (lastSkillIndex !== -1) {
+	  //   newSkills[lastSkillIndex] = {
+	  //     "skillID": oldSkill.skillID,
+	  //     "groupID": oldSkill.groupID,
+	  //     "skillName": oldSkill.skillName,
+	  //     "goal": parseInt(payload.goal)
+	  //   }
+	  // }
+
 
 	  var j = {
-	    'skillID': payload.id,
+	    'skillID': payload.skillID,
 	    'goal': parseInt(payload.goal)
 	  };
-	  console.log('updateSkillGoal: ' + JSON.stringify(j)); //console.log(newSkills)
+	  console.log('updateSkillGoal: ' + JSON.stringify(j)); //doDBSkillGoal(payload);
 
-	  dispatch({
-	    type: UPDATE_SKILLGOAL,
-	    payload: {
-	      skills: newSkills
-	    }
-	  });
 	  setAll(dispatch, {
-	    //'first':true,
-	    //'skillsData':newSkills,
-	    //'operatorsData':payload.operators,
-	    //'certificationsData':payload.certifications,
-	    'groupID': oldSkill.groupID,
+	    'groupID': payload.groupID,
 	    'multiplier': payload.multiplier
-	  }); // API.graphql(graphqlOperation(updateSkill, { input: payload } ))
+	  }); // //console.log(newSkills)
+	  // dispatch({type: types.UPDATE_SKILLGOAL, payload: {skills:newSkills}});
+	  // setAll(dispatch,{
+	  //   //'first':true,
+	  //   //'skillsData':newSkills,
+	  //   //'operatorsData':payload.operators,
+	  //   //'certificationsData':payload.certifications,
+	  //   'groupID': oldSkill.groupID,
+	  //   'multiplier': payload.multiplier
+	  // })
+	  // API.graphql(graphqlOperation(updateSkill, { input: payload } ))
 	  // .then(() => {
 	  //   dispatch({type: types.UPDATE_SKILLGOAL, payload: payload});
 	  //   setAll(dispatch,false)
 	  // })
 	};
-	const updateOperatorGoal = async (dispatch, payload) => {
+	const updateSkillRev = (dispatch, payload) => {
+	  console.log(payload.rev);
+
+	  if (isNaN(payload.rev) || payload.rev === '') {
+	    alert('Rev# is not a number');
+	    dispatch({
+	      type: SET_ACTIVE,
+	      payload: false
+	    });
+	    return;
+	  }
+
 	  var j = {
-	    'operatorID': payload.id,
+	    'skillID': payload.skillID,
+	    'rev': parseInt(payload.rev)
+	  };
+	  console.log('updateSkillRev: ' + JSON.stringify(j)); //doDBSkillRev(payload);
+
+	  setAll(dispatch, {
+	    'groupID': payload.groupID,
+	    'multiplier': payload.multiplier
+	  });
+	};
+	const updateOperatorGoal = async (dispatch, payload) => {
+	  console.log(payload.goal);
+
+	  if (isNaN(payload.goal) || payload.goal === '') {
+	    alert('Goal is not a number');
+	    dispatch({
+	      type: SET_ACTIVE,
+	      payload: false
+	    });
+	    return;
+	  }
+
+	  var j = {
+	    'operatorID': payload.operatorID,
 	    'goal': parseInt(payload.goal)
 	  };
-	  console.log('updateOperatorGoal: ' + JSON.stringify(j));
-	  var groupID = 1;
-	  const operatorsResult = await axios(`data/trainingmatrix/data/${groupID}/operators.json`);
-	  var newOperators = operatorsResult.data; // const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api/';
+	  console.log('updateOperatorGoal: ' + JSON.stringify(j)); //doDBOperatorGoal(payload);
+
+	  setAll(dispatch, {
+	    'groupID': payload.groupID,
+	    'multiplier': payload.multiplier
+	  }); // var groupID = 1
+	  // const operatorsResult = await axios(`data/trainingmatrix/data/${groupID}/operators.json`);
+	  // var newOperators = operatorsResult.data;
+	  // const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api/';
 	  // const updateOperatorGoalResult = await axios.post(
 	  //   apiRoot + 'UpdateOperatorGoal?partnerid=448',
 	  //   {'operatorID':payload.id,'goal':parseInt(payload.goal)},
@@ -32377,14 +32434,14 @@
 	  // }
 	  // //console.log(newOperators)
 	  // dispatch({type: types.UPDATE_OPERATORGOAL, payload: {operators:newOperators}});
-
-	  setAll(dispatch, {
-	    'first': true,
-	    'skillsData': payload.skills,
-	    'operatorsData': newOperators,
-	    'certificationsData': payload.certifications,
-	    'multiplier': payload.multiplier
-	  }); // API.graphql(graphqlOperation(updateOperator, { input: payload } ))
+	  // setAll(dispatch,{
+	  //   'first':true,
+	  //   'skillsData':payload.skills,
+	  //   'operatorsData':newOperators,
+	  //   'certificationsData':payload.certifications,
+	  //   'multiplier': payload.multiplier
+	  // })
+	  // API.graphql(graphqlOperation(updateOperator, { input: payload } ))
 	  // .then(() => {
 	  //   dispatch({type: types.UPDATE_OPERATORGOAL, payload: payload});
 	  //   setAll(dispatch,false)
@@ -32880,9 +32937,11 @@
 	    setAll: payload => {
 	      setAll(dispatch, payload);
 	    },
-	    updateOperatorGoal: payload => updateOperatorGoal(dispatch, payload),
-	    setAuthenticatedUser: payload => setAuthenticatedUser(dispatch, payload),
 	    updateSkillGoal: payload => updateSkillGoal(dispatch, payload),
+	    updateSkillRev: payload => updateSkillRev(dispatch, payload),
+	    updateOperatorGoal: payload => updateOperatorGoal(dispatch, payload),
+	    updateCert: payload => updateCert(dispatch, payload),
+	    setAuthenticatedUser: payload => setAuthenticatedUser(dispatch, payload),
 	    setRightTotals: payload => setRightTotals(dispatch, payload),
 	    setBottomTotals: payload => setBottomTotals(dispatch, payload),
 	    setCurrentCertification: payload => setCurrentCertification(dispatch, payload),
@@ -32894,8 +32953,7 @@
 	    setSpecific: payload => setSpecific(dispatch, payload),
 	    setDimensions: payload => setDimensions(dispatch, payload),
 	    setOriginal: payload => setOriginal(dispatch, payload),
-	    toggleLegend: payload => toggleLegend(dispatch, payload),
-	    updateCert: payload => updateCert(dispatch, payload)
+	    toggleLegend: payload => toggleLegend(dispatch, payload)
 	  };
 	  const initialState = {
 	    groupID: null,
@@ -41346,10 +41404,11 @@
 
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
+	      boxSizing: 'border-box',
 	      display: 'flex',
 	      flexDirection: 'column',
 	      fontSize: '12px',
-	      padding: '0',
+	      padding: '0px',
 	      width: '100%',
 	      xheight: '500px',
 	      background: 'gainsboro'
@@ -41368,6 +41427,8 @@
 	    }
 	  }, "close"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
+	      boxSizing: 'border-box',
+	      padding: '10px 20px 20px 30px',
 	      fontSize: '20px',
 	      marginLeft: '0px',
 	      marginTop: '0',
@@ -41543,6 +41604,8 @@
 	  var link = `https://skillnetformsapp.azurewebsites.net?skillID=` + skill.skillID + `&operatorID=` + operator.operatorID + `&userID=` + userID;
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
+	      boxSizing: 'border-box',
+	      height: '500px',
 	      padding: '10px 0 0 40px',
 	      fontSize: '20px',
 	      display: 'flex',
@@ -41648,15 +41711,17 @@
 	    name: "cert"
 	  }), " 5 Master Trainer"))), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '120px 0 0 0',
+	      margin: '180px 0 0 0',
 	      display: 'flex',
 	      flexDirection: 'column'
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
+	    className: "values",
 	    style: {
-	      fontSize: '8px'
+	      fontSize: '8px',
+	      color: 'lightgray'
 	    }
-	  }, "certificationID: ", certificationID, " ", /*#__PURE__*/React$1.createElement("br", null), " skillID: ", skill.skillID, " ", /*#__PURE__*/React$1.createElement("br", null), " operatorID: ", operator.operatorID)));
+	  }, "certificationID: ", certificationID, " skillID: ", skill.skillID, " operatorID: ", operator.operatorID)));
 	}; // {/*
 	//           <div style={{display:'flex',flexDirection:'row'}}>
 	//             <div style={{margin:'15px 0 0 30px',display:'flex',flexDirection:'column'}}>
@@ -42458,7 +42523,6 @@
 	  };
 
 	  const clickItem = (event, index) => {
-	    //console.log(data.skill.data[index])
 	    if (oldtarget !== null) {
 	      oldtarget.style.background = 'white';
 	    }
@@ -42501,16 +42565,18 @@
 	        fontSize: '10px'
 	      }
 	    }, dataSort[index].skill.skillName));
-	  }; //            length={data.data.length}
+	  }; //{data.operatorName}
 
 
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
+	      boxSizing: 'border-box',
+	      height: '500px',
 	      display: 'flex',
 	      flexDirection: 'column',
 	      padding: '0px',
 	      xwidth: '100%',
-	      height: '100%'
+	      xheight: '100%'
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
@@ -42524,13 +42590,13 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      marginTop: '10px'
+	      margin: '10px 0 10px 0'
 	    }
-	  }, data.operatorName, " Stations:"), /*#__PURE__*/React$1.createElement("div", {
+	  }, "Stations:"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      overflow: 'auto',
 	      maxHeight: 500,
-	      border: '0px solid lightgray'
+	      border: '1px solid lightgray'
 	    }
 	  }, /*#__PURE__*/React$1.createElement(ReactList, {
 	    itemRenderer: renderItem,
@@ -42538,44 +42604,40 @@
 	    type: "uniform"
 	  })), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      marginTop: '10px'
-	    }
-	  }, "Goal:", /*#__PURE__*/React$1.createElement("input", {
-	    type: "text",
-	    value: goal,
-	    onChange: event => {
-	      updateGoal(event.target.value);
-	    },
-	    style: {
-	      marginLeft: '10px',
-	      marginTop: 5,
-	      width: '26px',
+	      margin: '10px 0 10px 0',
+	      display: 'flex',
+	      flexDirection: 'row',
 	      height: '15px'
 	    }
-	  }), /*#__PURE__*/React$1.createElement("button", {
-	    onClick: event => {
-	      matrixState.setActive(true); // var c = {
-	      //   id: certificationID,
-	      //   row: matrixState.celldata.row,
-	      //   col: matrixState.celldata.col,
-	      //   skill: skill,
-	      //   operator: operator,
-	      //   skillID: skill.id,
-	      //   operatorID: operator.id,
-	      //   currcertID: parseInt(event.target.value),
-	      //   meta: metaval,
-	      //   skills: matrixState.skills,
-	      //   operators: matrixState.operators,
-	      //   certifications: newCerts,
-	      //   multiplier: matrixState.dimensions.multiplier
-	      // }
-
+	  }, /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '2px 0 10px 0'
+	    }
+	  }, "Goal:"), /*#__PURE__*/React$1.createElement("input", {
+	    type: "text",
+	    value: goal,
+	    style: {
+	      margin: '0 0 0 10px',
+	      width: '26px',
+	      height: '15px'
+	    },
+	    onChange: event => {
+	      updateGoal(event.target.value);
+	    }
+	  }), /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '3px 0 7px 15px',
+	      width: '40px',
+	      fontSize: '12px',
+	      textDecoration: 'underline',
+	      cursor: 'pointer'
+	    },
+	    onClick: () => {
+	      matrixState.setActive(true);
 	      var payload = {
-	        id: operatorID,
+	        operatorID: operatorID,
 	        goal: goal,
-	        skills: matrixState.skills,
-	        operators: matrixState.operators,
-	        certifications: matrixState.certifications,
+	        groupID: matrixState.groupID,
 	        multiplier: matrixState.dimensions.multiplier
 	      };
 	      matrixState.updateOperatorGoal(payload);
@@ -42601,6 +42663,38 @@
 	//var img = 'https://examples.sencha.com/extjs/7.4.0/examples/kitchensink/resources/images/staff/' + data.id + '.jpg'
 	//var img = 'data/trainingmatrix/pictures/Aaron Cariaga.JPG'
 	// var img = 'data/trainingmatrix/pictures/' + data.picture + ''
+	//   <button
+	//   onClick={(event)=> {
+	//     matrixState.setActive(true)
+	//     // var c = {
+	//     //   id: certificationID,
+	//     //   row: matrixState.celldata.row,
+	//     //   col: matrixState.celldata.col,
+	//     //   skill: skill,
+	//     //   operator: operator,
+	//     //   skillID: skill.id,
+	//     //   operatorID: operator.id,
+	//     //   currcertID: parseInt(event.target.value),
+	//     //   meta: metaval,
+	//     //   skills: matrixState.skills,
+	//     //   operators: matrixState.operators,
+	//     //   certifications: newCerts,
+	//     //   multiplier: matrixState.dimensions.multiplier
+	//     // }
+	//     var payload = {
+	//       operatorID: operatorID,
+	//       goal: goal,
+	//       //skills: matrixState.skills,
+	//       //operators: matrixState.operators,
+	//       //certifications: matrixState.certifications,
+	//       groupID: matrixState.groupID,
+	//       multiplier: matrixState.dimensions.multiplier
+	//     }
+	//     matrixState.updateOperatorGoal(payload)
+	//   }}
+	// >
+	//   Update
+	// </button>
 
 	const MatrixOneRow = /*#__PURE__*/React$1.memo(props => {
 	  const {
@@ -42870,6 +42964,7 @@
 	  var fontsize = 14;
 	  react.exports.useEffect(() => {
 	    setGoal(props.data.skill.goal);
+	    setRev(props.data.skill.rev);
 	  }, [props]);
 
 	  const clickItem = (event, index) => {
@@ -42920,11 +43015,13 @@
 
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
+	      boxSizing: 'border-box',
+	      height: '500px',
 	      display: 'flex',
 	      flexDirection: 'column',
 	      padding: '0px',
 	      xwidth: '250px',
-	      height: '99%',
+	      xheight: '99%',
 	      borderRight: '0px solid red'
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
@@ -42939,13 +43036,13 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      marginTop: '10px'
+	      margin: '10px 0 10px 0'
 	    }
 	  }, " ", data.skill.skillName, " Operators:"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      overflow: 'auto',
-	      maxHeight: 500,
-	      border: '0px solid lightgray'
+	      height: '380px',
+	      border: '1px solid lightgray'
 	    }
 	  }, /*#__PURE__*/React$1.createElement(ReactList, {
 	    itemRenderer: renderItem,
@@ -42953,60 +43050,80 @@
 	    type: "uniform"
 	  })), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      marginTop: '10px'
+	      margin: '10px 0 10px 0',
+	      display: 'flex',
+	      flexDirection: 'row',
+	      height: '15px'
 	    }
-	  }, "Goal:", /*#__PURE__*/React$1.createElement("input", {
+	  }, /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '2px 0 10px 0'
+	    }
+	  }, "Goal:"), /*#__PURE__*/React$1.createElement("input", {
 	    type: "text",
 	    value: goal,
 	    style: {
-	      margin: '5px 0 0 14px',
+	      margin: '0 0 0 10px',
 	      width: '26px',
 	      height: '15px'
 	    },
 	    onChange: event => {
 	      setGoal(event.target.value);
 	    }
-	  }), /*#__PURE__*/React$1.createElement("button", {
-	    onClick: event => {
+	  }), /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '3px 0 7px 15px',
+	      width: '40px',
+	      fontSize: '12px',
+	      textDecoration: 'underline',
+	      cursor: 'pointer'
+	    },
+	    onClick: () => {
 	      matrixState.setActive(true);
 	      var payload = {
-	        id: skillID,
+	        skllID: skillID,
 	        goal: goal,
-	        skills: matrixState.skills,
-	        operators: matrixState.operators,
-	        certifications: matrixState.certifications,
+	        groupID: matrixState.groupID,
 	        multiplier: matrixState.dimensions.multiplier
 	      };
-	      matrixState.updateSkillGoal(payload); // var payload = {
-	      //   id: skillID,
-	      //   goal: goal
-	      // }
-	      // matrixState.updateSkillGoal(payload)
+	      matrixState.updateSkillGoal(payload);
 	    }
 	  }, "Update")), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      marginTop: '10px'
+	      margin: '10px 0 10px 0',
+	      display: 'flex',
+	      flexDirection: 'row',
+	      height: '15px'
 	    }
-	  }, "Rev#:", /*#__PURE__*/React$1.createElement("input", {
+	  }, /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '2px 0 10px 0'
+	    }
+	  }, "Rev#:"), /*#__PURE__*/React$1.createElement("input", {
 	    type: "text",
 	    value: rev,
 	    style: {
-	      margin: '5px 0 0 10px',
+	      margin: '0 0 0 10px',
 	      width: '26px',
 	      height: '15px'
 	    },
 	    onChange: event => {
 	      setRev(event.target.value);
 	    }
-	  }), /*#__PURE__*/React$1.createElement("button", {
-	    onClick: event => {
+	  }), /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '3px 0 7px 15px',
+	      width: '40px',
+	      fontSize: '12px',
+	      textDecoration: 'underline',
+	      cursor: 'pointer'
+	    },
+	    onClick: () => {
 	      matrixState.setActive(true);
 	      var payload = {
-	        id: skillID,
-	        goal: goal,
-	        skills: matrixState.skills,
-	        operators: matrixState.operators,
-	        certifications: matrixState.certifications,
+	        skillID: skillID,
+	        rev: rev,
+	        groupID: matrixState.groupID,
 	        multiplier: matrixState.dimensions.multiplier
 	      };
 	      matrixState.updateSkillRev(payload);
@@ -43768,7 +43885,7 @@
 	      display: 'flex',
 	      flexDirection: 'row',
 	      width: '100%',
-	      height: 'calc(100vh - 62px)'
+	      height: 'calc(100vh - 162px)'
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
@@ -43936,15 +44053,6 @@
 	  }, matrixState.main))))));
 	};
 
-	((function () {
-	    var array = [];
-	    for (var i = 0; i < 256; ++i) {
-	        array.push('%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase());
-	    }
-
-	    return array;
-	})());
-
 	const App = () => {
 	  const appState = useAppState();
 	  const appStateRef = react.exports.useRef(appState);
@@ -43954,7 +44062,8 @@
 	    setToken('token');
 
 	    async function fetchData() {
-	      const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
+	      const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api'; //const apiRoot2 = 'https://skillnetusersapi.azurewebsites.net';
+
 	      const auth = {
 	        auth: {
 	          username: 'skillnet',
@@ -44001,7 +44110,22 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      xposition: 'fixed',
+	      boxSizing: 'border-box',
+	      height: '69px',
+	      width: '100%',
+	      background: 'white',
+	      padding: '20px'
+	    }
+	  }, "SkillNet Header"), /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      boxSizing: 'border-box',
+	      height: '43px',
+	      width: '100%',
+	      background: '#337ab7',
+	      padding: '20px'
+	    }
+	  }), /*#__PURE__*/React$1.createElement("div", {
+	    style: {
 	      zIndex: '10000',
 	      width: '100%',
 	      background: 'white'
@@ -44142,10 +44266,9 @@
 		return WebComponent;
 	}
 
-	const Index = () => /*#__PURE__*/React$1.createElement(AppProvider, null, /*#__PURE__*/React$1.createElement(App, null)); //ReactDOM.render(<AppProvider><App/></AppProvider>,document.getElementById('root'));
+	const Index = () => /*#__PURE__*/React$1.createElement(AppProvider, null, /*#__PURE__*/React$1.createElement(App, null));
 
-
-	customElements.define('training-matrix', reactToWebComponent(Index, React$1, ReactDOM));
+	customElements.define('training-matrix', reactToWebComponent(Index, React$1, ReactDOM)); //ReactDOM.render(<AppProvider><App/></AppProvider>,document.getElementById('root'));
 
 })();
 //# sourceMappingURL=bundle.js.map
