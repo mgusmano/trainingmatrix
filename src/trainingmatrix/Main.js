@@ -151,7 +151,7 @@ export const Main = (props) => {
 
       {startDate !== null &&
       <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
-        <a target='_blank' rel='noreferrer' href={link}>Certification Form</a>
+        <a target='_blank' rel='noreferrer' href={link}>Training Chart</a>
       </div>
       }
 
@@ -166,6 +166,12 @@ export const Main = (props) => {
         Current Cert Date: {currcertDate.toLocaleDateString()}
       </div>
       }
+
+      {currcertDate !== null &&
+        <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
+          Due Date: {currcertDate.toLocaleDateString()}
+        </div>
+        }
 
       <div style={{margin:'15px 0 0 0',fontSize:'18px'}}>
         Certification:
@@ -189,7 +195,7 @@ export const Main = (props) => {
       </div>
 
       <div style={{margin:'180px 0 0 0',display:'flex',flexDirection:'column'}}>
-        <div className='values' style={{fontSize:'8px',color:'lightgray'}}>certificationID: {certificationID} skillID: {skill.skillID} operatorID: {operator.operatorID}</div>
+        <div className='values' style={{fontSize:'8px',color:'white'}}>certificationID: {certificationID} skillID: {skill.skillID} operatorID: {operator.operatorID}</div>
       </div>
 
     </div>

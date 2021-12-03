@@ -8,6 +8,7 @@ export const Top = React.memo(() => {
   if (matrixState.skillDialog === 'block' && matrixState.mainDialog === 'none') {
     show = false;
   }
+  var link = ''
 
   return (
     <div style={{boxSizing:'border-box',display:'flex',flexDirection:'column',fontSize:'12px',padding:'0px',width:'100%',xheight:'500px',background:'gainsboro'}}>
@@ -28,8 +29,15 @@ export const Top = React.memo(() => {
           <div style={{fontSize:'12px'}}>Title</div>
           <div style={{fontSize:'12px'}}>Plant Name</div>
           <div style={{fontSize:'12px'}}>Location</div>
+
+
           </>
         }
+        {show !== null &&
+          <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
+            <a target='_blank' rel='noreferrer' href={link}>Freshman Training Form</a>
+          </div>
+          }
       </div>
     </div>
   )

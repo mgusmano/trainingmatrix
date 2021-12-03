@@ -57,7 +57,7 @@ export const App = () => {
         // <div style={{xmarginTop:'100px',flex:'1',width:'100%',background:'lightgray'}}>
   return (
     <div style={{display:'flex',flexDirection:'column',height:'100%',width:'100%',overflow:'hidden'}}>
-      <div style={{boxSizing:'border-box',height:'69px',width:'100%',background:'white',padding:'20px'}}>
+      <div style={{boxSizing:'border-box',height:'69px',width:'100%',background:'white',padding:'20px',fontSize:'24px'}}>
         SkillNet Header
       </div>
       <div style={{boxSizing:'border-box',height:'43px',width:'100%',background:'#337ab7',padding:'20px'}}>

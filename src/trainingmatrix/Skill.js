@@ -70,7 +70,7 @@ export const Skill = React.memo((props) => {
         <div style={{fontSize:'20px'}}>{data.skill.skillName}</div>
       </div> */}
       <div style={{flex:'1', display:'flex',flexDirection:'column',marginLeft:'30px',marginTop:'0px', marginRight:'30px',overflow: 'hidden'}}>
-        <div style={{margin:'10px 0 10px 0'}}> {data.skill.skillName} Operators:</div>
+        <div style={{margin:'10px 0 10px 0',fontSize:'24px'}}> {data.skill.skillName} Operators:</div>
         <div style={{overflow:'auto',height: '380px',border:'1px solid lightgray'}}>
           <ReactList
             itemRenderer={renderItem}
@@ -80,7 +80,7 @@ export const Skill = React.memo((props) => {
         </div>
 
         <div style={{margin:'10px 0 10px 0',display:'flex',flexDirection:'row',height:'15px'}}>
-          <div style={{margin:'2px 0 10px 0'}}>Goal:</div>
+          <div style={{margin:'2px 0 10px 0',fontSize:'18px'}}>Goal:</div>
 
           <input type="text" value={goal}
             style={{margin:'0 0 0 10px',width:'26px',height:'15px'}}
@@ -108,7 +108,7 @@ export const Skill = React.memo((props) => {
 
         <div style={{margin:'10px 0 10px 0',display:'flex',flexDirection:'row',height:'15px'}}>
 
-        <div style={{margin:'2px 0 10px 0'}}>Rev#:</div>
+        <div style={{margin:'2px 0 10px 0',fontSize:'18px'}}>Rev#:</div>
 
         <input type="text" value={rev}
           style={{margin:'0 0 0 10px',width:'26px',height:'15px'}}

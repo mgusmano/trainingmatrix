@@ -358,11 +358,17 @@ export const doDBCert = async (payload) => {
   //const localRoot = 'https://my-json-server.typicode.com/mgusmano/toshibaserver';
   const auth = {auth:{username:'skillnet',password:'demo'}};
 
-  var url = `${apiRoot}/postOperatorFormInfo`;
+  //var url = `${apiRoot}/postOperatorFormInfo`;
+  var url = `${apiRoot}/PortalGroupUpdateOperatorCertification`;
   var j = {groupID:payload.groupID,skillID:payload.skillID,operatorID:payload.operatorID,currcertID:payload.currcertID}
-  console.log(url)
-  console.log(j)
-  const updateResult = await axios.post(url,j,auth);
+  var j2 = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&currcertID=${payload.currcertID}`
+
+  //console.log(url)
+  //console.log(j)
+  console.log(url+j2)
+  //const updateResult = await axios.post(url,j,auth);
+  const updateResult = await axios.post(url+j2,auth);
+
   console.log(updateResult)
 
 
@@ -413,6 +419,7 @@ export const doDBCert = async (payload) => {
 }
 
 export const updateCert = async (dispatch, payload) => {
+  dispatch({type: types.SET_ACTIVE, payload: true});
   doDBCert(payload);
   //dispatch({type: types.UPDATE_CERT, payload: payload});
   setAll(dispatch,{

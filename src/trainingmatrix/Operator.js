@@ -68,7 +68,7 @@ export const Operator = React.memo((props) => {
     <div style={{boxSizing:'border-box',height:'500px',display:'flex',flexDirection:'column',padding:'0px',xwidth:'100%',xheight:'100%'}}>
 
       <div style={{flex:'1',display:'flex',flexDirection:'column',marginLeft:'30px',marginTop:'0px',marginRight:'30px',overflow: 'hidden'}}>
-        <div style={{margin:'10px 0 10px 0'}}>Stations:</div>
+        <div style={{margin:'10px 0 10px 0',fontSize:'24px'}}>Stations:</div>
         <div style={{overflow:'auto',maxHeight: 500,border:'1px solid lightgray'}}>
           <ReactList
             itemRenderer={renderItem}
@@ -78,7 +78,7 @@ export const Operator = React.memo((props) => {
         </div>
 
         <div style={{margin:'10px 0 10px 0',display:'flex',flexDirection:'row',height:'15px'}}>
-          <div style={{margin:'2px 0 10px 0'}}>Goal:</div>
+          <div style={{margin:'2px 0 10px 0',fontSize:'18px'}}>Goal:</div>
           <input type="text" value={goal}
             style={{margin:'0 0 0 10px',width:'26px',height:'15px'}}
             onChange={(event)=> {

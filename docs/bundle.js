@@ -29921,7 +29921,8 @@
 
 	const Toolstrip = () => {
 	  const l = sessionStorage.getItem('userID');
-	  const appState = useAppState();
+	  const appState = useAppState(); // <div style={{margin:'7px 0 7px 10px',color:'black',fontSize:'12px'}}>{appState.multiplier}</div>
+
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      boxSizing: 'border-box',
@@ -29944,6 +29945,12 @@
 	      flexDirection: 'row'
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '7px 10px 7px 10px',
+	      color: 'black',
+	      fontSize: '20px'
+	    }
+	  }, "TRAINING MATRIX"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      margin: '7px 0 7px 1px',
 	      color: 'black',
@@ -29991,13 +29998,7 @@
 	    onClick: () => {
 	      appState.setMultiplier(appState.multiplier + 1);
 	    }
-	  }, "larger"), /*#__PURE__*/React$1.createElement("div", {
-	    style: {
-	      margin: '7px 0 7px 10px',
-	      color: 'black',
-	      fontSize: '12px'
-	    }
-	  }, appState.multiplier)), /*#__PURE__*/React$1.createElement("div", {
+	  }, "larger")), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      display: 'flex',
 	      flexDirection: 'row'
@@ -30019,7 +30020,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2021-12-02-e")));
+	  }, "v2021-12-03-a")));
 	};
 
 	const SET_GROUPID = 'SET_GROUPID';
@@ -32249,17 +32250,21 @@
 	      username: 'skillnet',
 	      password: 'demo'
 	    }
-	  };
-	  var url = `${apiRoot}/postOperatorFormInfo`;
-	  var j = {
+	  }; //var url = `${apiRoot}/postOperatorFormInfo`;
+
+	  var url = `${apiRoot}/PortalGroupUpdateOperatorCertification`;
+	  ({
 	    groupID: payload.groupID,
 	    skillID: payload.skillID,
 	    operatorID: payload.operatorID,
 	    currcertID: payload.currcertID
-	  };
-	  console.log(url);
-	  console.log(j);
-	  const updateResult = await axios.post(url, j, auth);
+	  });
+	  var j2 = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&currcertID=${payload.currcertID}`; //console.log(url)
+	  //console.log(j)
+
+	  console.log(url + j2); //const updateResult = await axios.post(url,j,auth);
+
+	  const updateResult = await axios.post(url + j2, auth);
 	  console.log(updateResult); // var url = `${apiRoot}/PortalGroupUpdateOperatorCertification?skillID=${payload.skillID}&operatorID=${payload.operatorID}&groupID=${payload.groupID}&currcertID=${payload.currcertID}`
 	  // console.log(url)
 	  // const updateResult = await axios.post(url,auth);
@@ -32303,6 +32308,10 @@
 	  // }
 	};
 	const updateCert = async (dispatch, payload) => {
+	  dispatch({
+	    type: SET_ACTIVE,
+	    payload: true
+	  });
 	  doDBCert(payload); //dispatch({type: types.UPDATE_CERT, payload: payload});
 
 	  setAll(dispatch, {
@@ -41402,6 +41411,7 @@
 	    show = false;
 	  }
 
+	  var link = '';
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      boxSizing: 'border-box',
@@ -41461,7 +41471,16 @@
 	    style: {
 	      fontSize: '12px'
 	    }
-	  }, "Location"))));
+	  }, "Location")), show !== null && /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '5px 0 0 0',
+	      fontSize: '12px'
+	    }
+	  }, /*#__PURE__*/React$1.createElement("a", {
+	    target: "_blank",
+	    rel: "noreferrer",
+	    href: link
+	  }, "Freshman Training Form"))));
 	});
 
 	const Main = props => {
@@ -41625,7 +41644,7 @@
 	    target: "_blank",
 	    rel: "noreferrer",
 	    href: link
-	  }, "Certification Form")), startDate !== null && /*#__PURE__*/React$1.createElement("div", {
+	  }, "Training Chart")), startDate !== null && /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      margin: '5px 0 0 0',
 	      fontSize: '12px'
@@ -41635,7 +41654,12 @@
 	      margin: '5px 0 0 0',
 	      fontSize: '12px'
 	    }
-	  }, "Current Cert Date: ", currcertDate.toLocaleDateString()), /*#__PURE__*/React$1.createElement("div", {
+	  }, "Current Cert Date: ", currcertDate.toLocaleDateString()), currcertDate !== null && /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '5px 0 0 0',
+	      fontSize: '12px'
+	    }
+	  }, "Due Date: ", currcertDate.toLocaleDateString()), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      margin: '15px 0 0 0',
 	      fontSize: '18px'
@@ -41719,7 +41743,7 @@
 	    className: "values",
 	    style: {
 	      fontSize: '8px',
-	      color: 'lightgray'
+	      color: 'white'
 	    }
 	  }, "certificationID: ", certificationID, " skillID: ", skill.skillID, " operatorID: ", operator.operatorID)));
 	}; // {/*
@@ -42590,7 +42614,8 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '10px 0 10px 0'
+	      margin: '10px 0 10px 0',
+	      fontSize: '24px'
 	    }
 	  }, "Stations:"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
@@ -42611,7 +42636,8 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '2px 0 10px 0'
+	      margin: '2px 0 10px 0',
+	      fontSize: '18px'
 	    }
 	  }, "Goal:"), /*#__PURE__*/React$1.createElement("input", {
 	    type: "text",
@@ -43036,7 +43062,8 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '10px 0 10px 0'
+	      margin: '10px 0 10px 0',
+	      fontSize: '24px'
 	    }
 	  }, " ", data.skill.skillName, " Operators:"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
@@ -43057,7 +43084,8 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '2px 0 10px 0'
+	      margin: '2px 0 10px 0',
+	      fontSize: '18px'
 	    }
 	  }, "Goal:"), /*#__PURE__*/React$1.createElement("input", {
 	    type: "text",
@@ -43097,7 +43125,8 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      margin: '2px 0 10px 0'
+	      margin: '2px 0 10px 0',
+	      fontSize: '18px'
 	    }
 	  }, "Rev#:"), /*#__PURE__*/React$1.createElement("input", {
 	    type: "text",
@@ -44114,7 +44143,8 @@
 	      height: '69px',
 	      width: '100%',
 	      background: 'white',
-	      padding: '20px'
+	      padding: '20px',
+	      fontSize: '24px'
 	    }
 	  }, "SkillNet Header"), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
