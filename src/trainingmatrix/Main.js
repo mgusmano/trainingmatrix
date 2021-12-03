@@ -138,9 +138,9 @@ export const Main = (props) => {
     }
   }
 
-  var userID = '12345'
+
   //var link = `https://skillnetformsapp.azurewebsites.net?skillID=&{skill.skillID}&operatorID=12345&userID=12345`
-  var link = `https://skillnetformsapp.azurewebsites.net?skillID=` + skill.skillID + `&operatorID=` + operator.operatorID + `&userID=` + userID
+  var link = `https://skillnetformsapp.azurewebsites.net?skillID=` + skill.skillID + `&operatorID=` + operator.operatorID
 
   return (
     <div style={{boxSizing:'border-box',height:'500px',padding:'10px 0 0 40px',fontSize:'20px',display:'flex',flexDirection:'column'}}>
