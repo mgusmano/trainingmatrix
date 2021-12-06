@@ -12,6 +12,8 @@ export const setAll = async (dispatch, payload) => {
     var skills = data.skills
     var operators = data.operators
     var certificationsInit = data.certifications
+    var c = certificationsInit.slice()
+    console.log(c)
 
     var certifications = createCertifications(skills, operators, certificationsInit)
 
@@ -360,14 +362,14 @@ export const doDBCert = async (payload) => {
 
   //var url = `${apiRoot}/postOperatorFormInfo`;
   var url = `${apiRoot}/PortalGroupUpdateOperatorCertification`;
-  var j = {groupID:payload.groupID,skillID:payload.skillID,operatorID:payload.operatorID,currcertID:payload.currcertID}
-  var j2 = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&currcertID=${payload.currcertID}`
+  //var j = {groupID:payload.groupID,skillID:payload.skillID,operatorID:payload.operatorID,currcertID:payload.currcertID}
+  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&currcertID=${payload.currcertID}`
 
   //console.log(url)
   //console.log(j)
-  console.log(url+j2)
+  console.log(url+j)
   //const updateResult = await axios.post(url,j,auth);
-  const updateResult = await axios.post(url+j2,auth);
+  const updateResult = await axios.post(url+j,auth);
 
   console.log(updateResult)
 
@@ -432,8 +434,18 @@ export const updateCert = async (dispatch, payload) => {
   })
 }
 
+export const doDBSkillGoal = async (payload) => {
+  const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
+  const auth = {auth:{username:'skillnet',password:'demo'}};
+  var url = `${apiRoot}/UpdateSkillGoal`;
+  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&goal=${payload.goal}`
+  console.log(url+j)
+  const updateResult = await axios.post(url+j,auth);
+  console.log(updateResult)
+}
+
 export const updateSkillGoal = (dispatch, payload) => {
-  console.log(payload.goal)
+  console.log(payload)
   if (isNaN(payload.goal) || payload.goal === '') {
     alert('Goal is not a number')
     dispatch({type: types.SET_ACTIVE, payload: false});
@@ -455,7 +467,7 @@ export const updateSkillGoal = (dispatch, payload) => {
 
   var j = {'skillID':payload.skillID,'goal':parseInt(payload.goal)}
   console.log('updateSkillGoal: ' + JSON.stringify(j))
-  //doDBSkillGoal(payload);
+  doDBSkillGoal(payload);
 
   setAll(dispatch,{
     'groupID': payload.groupID,
@@ -481,6 +493,16 @@ export const updateSkillGoal = (dispatch, payload) => {
   // })
 }
 
+export const doDBSkillRev = async (payload) => {
+  const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
+  const auth = {auth:{username:'skillnet',password:'demo'}};
+  var url = `${apiRoot}/UpdateSkillRev`;
+  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&rev=${payload.rev}`
+  console.log(url+j)
+  const updateResult = await axios.post(url+j,auth);
+  console.log(updateResult)
+}
+
 export const updateSkillRev = (dispatch, payload) => {
   console.log(payload.rev)
   if (isNaN(payload.rev) || payload.rev === '') {
@@ -490,12 +512,22 @@ export const updateSkillRev = (dispatch, payload) => {
   }
   var j = {'skillID':payload.skillID,'rev':parseInt(payload.rev)}
   console.log('updateSkillRev: ' + JSON.stringify(j))
-  //doDBSkillRev(payload);
+  doDBSkillRev(payload);
 
   setAll(dispatch,{
     'groupID': payload.groupID,
     'multiplier': payload.multiplier
   })
+}
+
+export const doDBOperatorGoal = async (payload) => {
+  const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
+  const auth = {auth:{username:'skillnet',password:'demo'}};
+  var url = `${apiRoot}/Updateoperatorgoal`;
+  var j = `?groupID=${payload.groupID}&operatorID=${payload.operatorID}&goal=${payload.goal}`
+  console.log(url+j)
+  const updateResult = await axios.post(url+j,auth);
+  console.log(updateResult)
 }
 
 export const updateOperatorGoal = async (dispatch,payload) => {
@@ -508,7 +540,7 @@ export const updateOperatorGoal = async (dispatch,payload) => {
 
   var j = {'operatorID':payload.operatorID,'goal':parseInt(payload.goal)}
   console.log('updateOperatorGoal: ' + JSON.stringify(j))
-  //doDBOperatorGoal(payload);
+  doDBOperatorGoal(payload);
 
   setAll(dispatch,{
     'groupID': payload.groupID,

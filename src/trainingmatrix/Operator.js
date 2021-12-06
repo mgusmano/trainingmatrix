@@ -22,7 +22,7 @@ export const Operator = React.memo((props) => {
   const [goal, setGoal] = useState(0);
   const [oldtarget, setOldTarget] = useState(null);
 
-  const operatorID = data.id;
+  const operatorID = data.operatorID;
   var bandX=30;
 
   useEffect(() => {

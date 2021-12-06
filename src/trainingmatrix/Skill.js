@@ -23,7 +23,7 @@ export const Skill = React.memo((props) => {
   });
   //console.log(dataSort)
 
-  const skillID = props.data.skill.id;
+  const skillID = props.data.skill.skillID;
   var bandX=30;
   var bandY=30;
   var fontsize=14;
@@ -94,7 +94,7 @@ export const Skill = React.memo((props) => {
             onClick={()=>{
               matrixState.setActive(true)
               var payload = {
-                skllID: skillID,
+                skillID: skillID,
                 goal: goal,
                 groupID: matrixState.groupID,
                 multiplier: matrixState.dimensions.multiplier
