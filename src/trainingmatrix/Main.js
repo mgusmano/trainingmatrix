@@ -56,7 +56,7 @@ export const Main = (props) => {
     // if (meta.startDate !== null) {
     //   setStartDate(new Date(meta.startDate))
     // }
-    
+
     if (meta.currcertDate !== null) {
       setCurrcertDate(new Date(meta.currcertDate))
     }
@@ -142,7 +142,8 @@ export const Main = (props) => {
   var disabled = false;
   var color = 'black'
   if (metadata !== null) {
-    if (metadata.certstate === 'disabled') {
+    //if (metadata.certstate === 'disabled') {
+    if (metadata.trainingStartDate === null) {
       disabled = true;
       color = 'lightgray'
     }
