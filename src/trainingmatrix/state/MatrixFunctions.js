@@ -12,7 +12,7 @@ export const setAll = async (dispatch, payload) => {
     var skills = data.skills
     var operators = data.operators
     var certificationsInit = data.certifications
-    var c = certificationsInit.slice()
+    //var c = certificationsInit.slice()
     //console.log(c)
 
     var certifications = createCertifications(skills, operators, certificationsInit)
@@ -588,6 +588,45 @@ export const updateOperatorGoal = async (dispatch,payload) => {
   //   dispatch({type: types.UPDATE_OPERATORGOAL, payload: payload});
   //   setAll(dispatch,false)
   // })
+}
+
+export const doDBDueDate = async (payload) => {
+  const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
+  const auth = {auth:{username:'skillnet',password:'demo'}};
+  var url = `${apiRoot}/UpdateDueDate`;
+  var j = `?groupID=${payload.groupID}&operatorID=${payload.operatorID}&dueDate=${payload.dueDate}&userID=${payload.userID}`
+  console.log(url+j)
+  const updateResult = await axios.post(url+j,auth);
+  console.log(updateResult)
+}
+
+export const updateDueDate = async (dispatch,payload) => {
+  console.log(payload.dueDate)
+
+  var d2 = new Date(payload.dueDate)
+  //console.log(d2)
+  let textDate = d2.toLocaleDateString();
+  console.log(textDate)
+
+  var isDate = payload.dueDate instanceof Date && !isNaN(payload.dueDate.valueOf());
+  if (!isDate || payload.dueDate === null) {
+    alert('Due Date is not a Date')
+    dispatch({type: types.SET_ACTIVE, payload: false});
+    return
+  }
+
+  payload.dueDate = textDate
+  var j = {'operatorID':payload.operatorID,'dueDate':payload.dueDate}
+  console.log('updateDueDate: ' + JSON.stringify(j))
+  doDBDueDate(payload);
+
+  setAll(dispatch,{
+    'partnerID': payload.partnerID,
+    'userID': payload.userID,
+    'groupID': payload.groupID,
+    'multiplier': payload.multiplier
+  })
+
 }
 
 export const setPartnerID = (dispatch, payload) => {

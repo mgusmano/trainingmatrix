@@ -36,7 +36,7 @@ export const Main = (props) => {
     }
     var data = matrixState.celldata.data
     var meta = matrixState.celldata.meta
-    console.log(meta)
+
     if (typeof data === 'string') {
       data = JSON.parse(data)
     }
@@ -177,7 +177,37 @@ export const Main = (props) => {
 
       {currcertDate !== null &&
       <div style={{display:'flex',flexDirection:'row',margin:'5px 0 0 0',fontSize:'12px'}}>
-        <div style={{margin:'5px 10px 0 0',width:'70px'}}>Due Date:</div> <DatePicker className='datepicker' width={'10px'} selected={dueDate} onChange={(date) => setDueDate(date)} />
+        <div style={{margin:'5px 1px 0 0',width:'60px'}}>Due Date:</div>
+        <div style={{width:'70px'}}>
+          <DatePicker className='datepicker' width={'10px'} selected={dueDate} onChange={(date) => {
+
+            //var d2 = new Date(date)
+            //console.log(d2)
+            //let text = d2.toLocaleDateString();
+            //var d = d2.ToShortDateString()
+            //console.log(text)
+            //console.log(d)
+            console.log(date)
+            setDueDate(date)
+          }} />
+        </div>
+        <div
+          style={{margin:'3px 0 7px 20px',width:'40px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}}
+          onClick={()=>{
+            matrixState.setActive(true)
+            console.log(dueDate)
+            var payload = {
+              skillID: skill.skillID,
+              operatorID: operator.operatorID,
+              dueDate: dueDate,
+              partnerID: matrixState.partnerID,
+              userID: matrixState.userID,
+              groupID: matrixState.groupID,
+              multiplier: matrixState.dimensions.multiplier
+            }
+            matrixState.updateDueDate(payload)
+          }}
+        >Update</div>
       </div>
       }
 

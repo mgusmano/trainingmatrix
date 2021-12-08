@@ -34,6 +34,8 @@ export const MatrixProvider = (props) => {
     updateSkillGoal: (payload) => functions.updateSkillGoal(dispatch, payload),
     updateSkillRev: (payload) => functions.updateSkillRev(dispatch, payload),
     updateOperatorGoal: (payload) => functions.updateOperatorGoal(dispatch, payload),
+    updateDueDate: (payload) => functions.updateDueDate(dispatch, payload),
+
     updateCert: (payload) => functions.updateCert(dispatch, payload),
 
     setAuthenticatedUser: (payload) => functions.setAuthenticatedUser(dispatch, payload),
