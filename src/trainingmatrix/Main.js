@@ -52,6 +52,9 @@ export const Main = (props) => {
     if (meta.trainingStartDate !== null) {
       setStartDate(new Date(meta.trainingStartDate))
     }
+    else {
+      setStartDate(null)
+    }
 
     // if (meta.startDate !== null) {
     //   setStartDate(new Date(meta.startDate))
@@ -59,6 +62,9 @@ export const Main = (props) => {
 
     if (meta.currcertDate !== null) {
       setCurrcertDate(new Date(meta.currcertDate))
+    }
+    else {
+      setCurrcertDate(null)
     }
   },[matrixState.celldata.meta,matrixState.celldata.data])
 
