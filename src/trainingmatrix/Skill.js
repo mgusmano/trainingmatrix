@@ -96,6 +96,8 @@ export const Skill = React.memo((props) => {
               var payload = {
                 skillID: skillID,
                 goal: goal,
+                partnerID: matrixState.partnerID,
+                userID: matrixState.userID,
                 groupID: matrixState.groupID,
                 multiplier: matrixState.dimensions.multiplier
               }
@@ -124,6 +126,8 @@ export const Skill = React.memo((props) => {
             var payload = {
               skillID: skillID,
               rev: rev,
+              partnerID: matrixState.partnerID,
+              userID: matrixState.userID,
               groupID: matrixState.groupID,
               multiplier: matrixState.dimensions.multiplier
             }

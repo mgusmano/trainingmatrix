@@ -1,3 +1,5 @@
+export const SET_PARTNERID = 'SET_PARTNERID';
+export const SET_USERID = 'SET_USERID';
 export const SET_GROUPID = 'SET_GROUPID';
 export const SET_ROWSARRAY = 'SET_ROWSARRAY';
 export const SET_COLSARRAY = 'SET_COLSARRAY';

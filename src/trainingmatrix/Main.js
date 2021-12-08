@@ -1,6 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import { useMatrixState } from './state/MatrixProvider';
 import { Diamond } from './Diamond';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const Main = (props) => {
   const matrixState = useMatrixState();
@@ -11,6 +13,7 @@ export const Main = (props) => {
   const [certification, setCertification] = useState(null)
   const [startDate, setStartDate] = useState(null);
   const [currcertDate, setCurrcertDate] = useState(null);
+  const [dueDate, setDueDate] = useState(null);
 
   var operator = {}
   var skill = {}
@@ -33,7 +36,7 @@ export const Main = (props) => {
     }
     var data = matrixState.celldata.data
     var meta = matrixState.celldata.meta
-    //console.log(meta)
+    console.log(meta)
     if (typeof data === 'string') {
       data = JSON.parse(data)
     }
@@ -45,9 +48,13 @@ export const Main = (props) => {
     setMetaData(meta)
     setCertification(meta.currcertID)
 
-    if (meta.startDate !== null) {
-      setStartDate(new Date(meta.startDate))
+    if (meta.trainingstartdate !== null) {
+      setStartDate(new Date(meta.trainingStartDate))
     }
+
+    // if (meta.startDate !== null) {
+    //   setStartDate(new Date(meta.startDate))
+    // }
     if (meta.currcertDate !== null) {
       setCurrcertDate(new Date(meta.currcertDate))
     }
@@ -70,6 +77,7 @@ export const Main = (props) => {
       skillID: skill.skillID,
       operatorID: operator.operatorID,
       currcertID: parseInt(event.target.value),
+      userID: matrixState.userID,
       groupID: matrixState.groupID,
       multiplier: matrixState.dimensions.multiplier
     }
@@ -150,38 +158,40 @@ export const Main = (props) => {
       </div>
 
       {startDate !== null &&
-      <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
+      <div style={{margin:'5px 0 10px 0',fontSize:'12px'}}>
         <a target='_blank' rel='noreferrer' href={link}>Training Chart</a>
       </div>
       }
 
       {startDate !== null &&
       <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
-        Start Date: {startDate.toLocaleDateString()}
+        Training Start Date: {startDate.toLocaleDateString()}
       </div>
       }
 
       {currcertDate !== null &&
       <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
-        Current Cert Date: {currcertDate.toLocaleDateString()}
+        Certification Date: {currcertDate.toLocaleDateString()}
       </div>
       }
 
       {currcertDate !== null &&
-        <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
-          Due Date: {currcertDate.toLocaleDateString()}
-        </div>
-        }
+      <div style={{display:'flex',flexDirection:'row',margin:'5px 0 0 0',fontSize:'12px'}}>
+        <div style={{margin:'5px 10px 0 0',width:'70px'}}>Due Date:</div> <DatePicker className='datepicker' width={'10px'} selected={dueDate} onChange={(date) => setDueDate(date)} />
+      </div>
+      }
 
       <div style={{margin:'15px 0 0 0',fontSize:'18px'}}>
         Certification:
       </div>
 
+      <div>
       <svg style={{margin:'5px 0 0 0'}} width="50" height="50">
         {diamonddata !== null && metadata !== null &&
         <Diamond meta={metadata} data={diamonddata} boxSize={40} padding={25}/>
         }
       </svg>
+      </div>
 
       <div style={{margin:'0 0 0 0',display:'flex',fontSize:'12px',flexDirection:'column'}}>
       <div>

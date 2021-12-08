@@ -13,7 +13,7 @@ export const setAll = async (dispatch, payload) => {
     var operators = data.operators
     var certificationsInit = data.certifications
     var c = certificationsInit.slice()
-    console.log(c)
+    //console.log(c)
 
     var certifications = createCertifications(skills, operators, certificationsInit)
 
@@ -360,14 +360,8 @@ export const doDBCert = async (payload) => {
   //const localRoot = 'https://my-json-server.typicode.com/mgusmano/toshibaserver';
   const auth = {auth:{username:'skillnet',password:'demo'}};
 
-  //var url = `${apiRoot}/postOperatorFormInfo`;
   var url = `${apiRoot}/PortalGroupUpdateOperatorCertification`;
-  //var j = {groupID:payload.groupID,skillID:payload.skillID,operatorID:payload.operatorID,currcertID:payload.currcertID}
-  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&currcertID=${payload.currcertID}`
-
-  //console.log(url)
-  //console.log(j)
-  console.log(url+j)
+  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&currcertID=${payload.currcertID}&userID=${payload.userID}`
   //const updateResult = await axios.post(url,j,auth);
   const updateResult = await axios.post(url+j,auth);
 
@@ -425,10 +419,8 @@ export const updateCert = async (dispatch, payload) => {
   doDBCert(payload);
   //dispatch({type: types.UPDATE_CERT, payload: payload});
   setAll(dispatch,{
-    //'first':true,
-    //'operatorsData':payload.operators,
-    //'skillsData':payload.skills,
-    //'certificationsData':payload.certifications,
+    'partnerID': payload.partnerID,
+    'userID': payload.userID,
     'groupID': payload.groupID,
     'multiplier': payload.multiplier
   })
@@ -438,7 +430,7 @@ export const doDBSkillGoal = async (payload) => {
   const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
   const auth = {auth:{username:'skillnet',password:'demo'}};
   var url = `${apiRoot}/UpdateSkillGoal`;
-  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&goal=${payload.goal}`
+  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&goal=${payload.goal}&userID=${payload.userID}`
   console.log(url+j)
   const updateResult = await axios.post(url+j,auth);
   console.log(updateResult)
@@ -470,6 +462,8 @@ export const updateSkillGoal = (dispatch, payload) => {
   doDBSkillGoal(payload);
 
   setAll(dispatch,{
+    'partnerID': payload.partnerID,
+    'userID': payload.userID,
     'groupID': payload.groupID,
     'multiplier': payload.multiplier
   })
@@ -497,7 +491,7 @@ export const doDBSkillRev = async (payload) => {
   const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
   const auth = {auth:{username:'skillnet',password:'demo'}};
   var url = `${apiRoot}/UpdateSkillRev`;
-  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&rev=${payload.rev}`
+  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&rev=${payload.rev}&userID=${payload.userID}`
   console.log(url+j)
   const updateResult = await axios.post(url+j,auth);
   console.log(updateResult)
@@ -515,6 +509,8 @@ export const updateSkillRev = (dispatch, payload) => {
   doDBSkillRev(payload);
 
   setAll(dispatch,{
+    'partnerID': payload.partnerID,
+    'userID': payload.userID,
     'groupID': payload.groupID,
     'multiplier': payload.multiplier
   })
@@ -524,7 +520,7 @@ export const doDBOperatorGoal = async (payload) => {
   const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
   const auth = {auth:{username:'skillnet',password:'demo'}};
   var url = `${apiRoot}/Updateoperatorgoal`;
-  var j = `?groupID=${payload.groupID}&operatorID=${payload.operatorID}&goal=${payload.goal}`
+  var j = `?groupID=${payload.groupID}&operatorID=${payload.operatorID}&goal=${payload.goal}&userID=${payload.userID}`
   console.log(url+j)
   const updateResult = await axios.post(url+j,auth);
   console.log(updateResult)
@@ -543,6 +539,8 @@ export const updateOperatorGoal = async (dispatch,payload) => {
   doDBOperatorGoal(payload);
 
   setAll(dispatch,{
+    'partnerID': payload.partnerID,
+    'userID': payload.userID,
     'groupID': payload.groupID,
     'multiplier': payload.multiplier
   })
@@ -592,6 +590,12 @@ export const updateOperatorGoal = async (dispatch,payload) => {
   // })
 }
 
+export const setPartnerID = (dispatch, payload) => {
+  dispatch({type: types.SET_PARTNERID, payload: payload});
+}
+export const setUserID = (dispatch, payload) => {
+  dispatch({type: types.SET_USERID, payload: payload});
+}
 export const setGroupID = (dispatch, payload) => {
   dispatch({type: types.SET_GROUPID, payload: payload});
 }

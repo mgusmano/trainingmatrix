@@ -32,6 +32,8 @@ export const MatrixReducer = (state, action) => {
     //   }
     //   return s
 
+    case types.SET_PARTNERID: return {...state,partnerID:payload}
+    case types.SET_USERID: return {...state,userID:payload}
     case types.SET_GROUPID: return {...state,groupID:payload}
     case types.SET_ROWSARRAY: return {...state,rowsArray:payload}
     case types.SET_COLSARRAY: return {...state,colsArray:payload}

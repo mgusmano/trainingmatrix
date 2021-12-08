@@ -14,6 +14,7 @@ export const App = () => {
     //setToken(getParameterByName('token'));
     setToken('token');
 
+
     async function fetchData() {
       const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
       //const apiRoot2 = 'https://skillnetusersapi.azurewebsites.net';
@@ -36,7 +37,10 @@ export const App = () => {
       // const tokenResult = await axios(apiRoot + '/decodetoken?token=KpXYQ1m4PmT6UYZv9IlrLQ==', auth);
       // console.log(tokenResult)
 
-      const portalGroupsResult = await axios(apiRoot + '/portalgroups?partnerid=448', auth);
+      //const portalGroupsResult = await axios(apiRoot + '/portalgroups?partnerid=448', auth);
+      var url = apiRoot + '/portalgroups?partnerid=' + sessionStorage.getItem('partnerID')
+      //console.log(url)
+      const portalGroupsResult = await axios(url, auth);
       appStateRef.current.setGroups(portalGroupsResult.data);
     }
     fetchData();
@@ -55,14 +59,17 @@ export const App = () => {
         // </div>
 
         // <div style={{xmarginTop:'100px',flex:'1',width:'100%',background:'lightgray'}}>
+
+      // <div style={{boxSizing:'border-box',height:'69px',width:'100%',background:'white',padding:'20px',fontSize:'24px'}}>
+      //   SkillNet Header
+      // </div>
+      // <div style={{boxSizing:'border-box',height:'43px',width:'100%',background:'#337ab7',padding:'20px'}}></div>
+
   return (
     <div style={{display:'flex',flexDirection:'column',height:'100%',width:'100%',overflow:'hidden'}}>
-      <div style={{boxSizing:'border-box',height:'69px',width:'100%',background:'white',padding:'20px',fontSize:'24px'}}>
-        SkillNet Header
-      </div>
-      <div style={{boxSizing:'border-box',height:'43px',width:'100%',background:'#337ab7',padding:'20px'}}>
 
-    </div>
+
+
       <div style={{zIndex:'10000',width:'100%',background:'white'}}>
         <Toolstrip/>
       </div>

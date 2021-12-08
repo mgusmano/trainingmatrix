@@ -9,6 +9,8 @@ const MatrixContext = createContext();
 export const MatrixProvider = (props) => {
 
   const getFunctions = {
+    setPartnerID: (payload) => functions.setPartnerID(dispatch, payload),
+    setUserID: (payload) => functions.setUserID(dispatch, payload),
     setGroupID: (payload) => functions.setGroupID(dispatch, payload),
     setRowsArray: (payload) => functions.setRowsArray(dispatch, payload),
     setColsArray: (payload) => functions.setColsArray(dispatch, payload),
@@ -52,6 +54,7 @@ export const MatrixProvider = (props) => {
   }
 
   const initialState = {
+    userID: null,
     groupID: null,
     rowsArray: null,
     colsArray: null,

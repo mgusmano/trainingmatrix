@@ -8,4 +8,6 @@ import './index.css'
 //const Index = () => (<AppProvider><App/></AppProvider>);
 //customElements.define('training-matrix', reactToWebComponent(Index, React, ReactDOM));
 
+sessionStorage.setItem('userID',12345)
+sessionStorage.setItem('partnerID',448)
 ReactDOM.render(<AppProvider><App/></AppProvider>,document.getElementById('root'));

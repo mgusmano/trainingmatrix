@@ -8,7 +8,7 @@ export const Top = React.memo(() => {
   if (matrixState.skillDialog === 'block' && matrixState.mainDialog === 'none') {
     show = false;
   }
-  var link = ''
+  var link = 'https://skillnetformsapp.azurewebsites.net/'
 
   return (
     <div style={{boxSizing:'border-box',display:'flex',flexDirection:'column',fontSize:'12px',padding:'0px',width:'100%',xheight:'500px',background:'gainsboro'}}>
@@ -25,12 +25,9 @@ export const Top = React.memo(() => {
         {show &&
           <>
           <img alt="pic" src={img} style={{borderRadius: '50%', x: '125px', y: '250px', width: '80px', height: '80px'}}/>
-          <div style={{marginTop:'10px'}}>{matrixState.celldata.operatorName}</div>
+          <div style={{marginTop:'2px'}}>{matrixState.celldata.operatorName}</div>
           <div style={{fontSize:'12px'}}>Title</div>
-          <div style={{fontSize:'12px'}}>Plant Name</div>
-          <div style={{fontSize:'12px'}}>Location</div>
-
-
+          <div style={{fontSize:'12px'}}>Plant Name - Location</div>
           </>
         }
         {show !== null &&

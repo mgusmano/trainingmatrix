@@ -30,13 +30,17 @@ const MainMatrixProvider = (props) => {
   //var certificationsData = props.props.certificationsData
   var groupID = props.props.groupID
   var multiplier = props.props.multiplier
+
   useResizeEvent()
 
   useEffect(() => {
     if (multiplier === '') return
     matrixStateRef.current.setActive(true)
+    matrixStateRef.current.setUserID(sessionStorage.getItem('userID'))
+    matrixStateRef.current.setPartnerID(sessionStorage.getItem('partnerID'))
     matrixStateRef.current.setAll({
-      //'first':true,
+      'partnerID': sessionStorage.getItem('partnerID'),
+      'userID': sessionStorage.getItem('userID'),
       'groupID': groupID,
       'multiplier':multiplier
     })
@@ -67,10 +71,9 @@ const MainMatrixProvider = (props) => {
 
   return (
 
-<>
 
 
-    <div style={{display:'flex',flexDirection:'row',width:'100%',height: 'calc(100vh - 162px)'}}>
+    <div style={{display:'flex',flexDirection:'row',width:'100%',height: 'calc(100vh - 152px)'}}>
 
 
 
@@ -178,7 +181,6 @@ const MainMatrixProvider = (props) => {
 
     </div>
 
-    </>
   )
 }
 

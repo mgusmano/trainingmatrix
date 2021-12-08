@@ -15,3 +15,7 @@ codex {
 .values:hover{
   color:black;
 }
+
+.datepicker {
+  width:70px
+}

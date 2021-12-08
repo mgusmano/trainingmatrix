@@ -1,20 +1,23 @@
 import React from 'react';
 import { useAppState } from './state/AppProvider';
 export const Toolstrip = () => {
-  const l = sessionStorage.getItem('userID');
+  //const l = sessionStorage.getItem('userID');
   const appState = useAppState();
 
   // <div style={{margin:'7px 0 7px 10px',color:'black',fontSize:'12px'}}>{appState.multiplier}</div>
+//   <div style={{margin:'7px 0 7px 10px',color:'black',fontSize:'12px'}}>
+//   TOSHIBA INTERNATIONAL CORPORATION - HEV PLANT - {l}
+// </div>
 
   return (
     <div style={{boxSizing:'border-box',display:'flex',flexDirection:'row',justifyContent:'space-between',height:'40px',padding:'5px',background:'#E1E9EF'}}>
-      <div style={{margin:'7px 0 7px 10px',color:'black',fontSize:'12px'}}>
-        TOSHIBA INTERNATIONAL CORPORATION - HEV PLANT - {l}
-      </div>
+
       <div style={{display:'flex',flexDirection:'row'}}>
-        <div style={{margin:'7px 10px 7px 10px',color:'black',fontSize:'20px'}}>
+        <div style={{margin:'5px 10px 7px 10px',color:'black',fontSize:'20px'}}>
           TRAINING MATRIX
         </div>
+      </div>
+      <div style={{display:'flex',flexDirection:'row'}}>
         <div style={{margin:'7px 0 7px 1px',color:'black',fontSize:'12px'}}>group:</div>
         <select value={appState.groupID} style={{width:'250px',margin:'0px'}}
           onChange={(event) => {
@@ -32,7 +35,7 @@ export const Toolstrip = () => {
       </div>
       <div style={{display:'flex',flexDirection:'row'}}>
         <div style={{margin:'7px 0 7px 1px',width:'110px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}} onClick={()=>{ appState.setLegend(!appState.legend)}}>Toggle Legend</div>
-        <div style={{margin:'7px 0 7px 10px',color:'black',fontSize:'12px'}}>v2021-12-06-a</div>
+        <div style={{margin:'7px 0 7px 10px',color:'black',fontSize:'12px'}}>v2021-12-08-c</div>
       </div>
     </div>
   )

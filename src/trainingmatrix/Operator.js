@@ -92,6 +92,8 @@ export const Operator = React.memo((props) => {
               var payload = {
                 operatorID: operatorID,
                 goal: goal,
+                partnerID: matrixState.partnerID,
+                userID: matrixState.userID,
                 groupID: matrixState.groupID,
                 multiplier: matrixState.dimensions.multiplier
               }
