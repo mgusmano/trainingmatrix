@@ -131,16 +131,27 @@ export const setAll = async (dispatch, payload) => {
           "operatorID": operators[o].operatorID,
           "currcertID": 0,
           "meta": {
-            "type":"solid",
-            "currcertID": 0,
-            "startDate": null, //new Date().toUTCString(),
-            "currcertDate": null, //new Date().toUTCString(),
-            "currcertStatus": 0,
-            "certification":"notapplicable",
-            "strokecolor":"black",
-            "letter":"",
-            //"start":"",
-            "certstate": "disabled"
+            certifiedDate: null,
+            certstatus: null,
+            currcertDate: null,
+            currcertID: 0,
+            currcertStatus: 0,
+            letter: "",
+            startDate: null,
+            trainingStartDate: null,
+            type: "solid"
+
+
+            // "type":"solid",
+            // "currcertID": 0,
+            // "startDate": null, //new Date().toUTCString(),
+            // "currcertDate": null, //new Date().toUTCString(),
+            // "currcertStatus": 0,
+            // "certification":"notapplicable",
+            // "strokecolor":"black",
+            // "letter":"",
+            // //"start":"",
+            // "certstate": "disabled"
           },
           "data": []
         })

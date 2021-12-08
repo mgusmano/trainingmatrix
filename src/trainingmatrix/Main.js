@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export const Main = (props) => {
+  console.log(props.data.meta)
   const matrixState = useMatrixState();
   //const matrixStateRef = useRef(matrixState);
 
@@ -48,13 +49,14 @@ export const Main = (props) => {
     setMetaData(meta)
     setCertification(meta.currcertID)
 
-    if (meta.trainingstartdate !== null) {
+    if (meta.trainingStartDate !== null) {
       setStartDate(new Date(meta.trainingStartDate))
     }
 
     // if (meta.startDate !== null) {
     //   setStartDate(new Date(meta.startDate))
     // }
+    
     if (meta.currcertDate !== null) {
       setCurrcertDate(new Date(meta.currcertDate))
     }
