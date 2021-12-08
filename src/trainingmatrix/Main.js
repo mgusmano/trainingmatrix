@@ -166,7 +166,7 @@ export const Main = (props) => {
         {skill.skillName}
       </div>
 
-      {startDate !== null &&
+      {skill !== {} &&
       <div style={{margin:'5px 0 10px 0',fontSize:'12px'}}>
         <a target='_blank' rel='noreferrer' href={link}>Training Chart</a>
       </div>
