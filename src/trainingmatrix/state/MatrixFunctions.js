@@ -16,6 +16,17 @@ export const setAll = async (dispatch, payload) => {
     //console.log(c)
 
     var certifications = createCertifications(skills, operators, certificationsInit)
+    if (payload2.cellData.meta !== undefined) {
+      if (payload2.cellData.meta.skill.skillID !== undefined) {
+        console.log(payload2.cellData)
+        const filteredcertifications = certifications.filter(item => item.skill.skillID === payload2.cellData.skill.skillID && item.operator.operatorID === payload2.cellData.operator.operatorID);
+        console.log(filteredcertifications)
+        payload2.cellData.meta = filteredcertifications[0].meta
+        dispatch({type: types.SET_CELLDATA, payload: payload2.cellData});
+      }
+    }
+
+
 
     var totals = calcTotals(certifications, dispatch)
 
@@ -44,6 +55,8 @@ export const setAll = async (dispatch, payload) => {
     var oLen = operators.length
     setInit({sLen,oLen,multiplier})
 
+
+
     var payload = {
       bySkill: bySkill,
       byOperator: byOperator,
@@ -62,32 +75,30 @@ export const setAll = async (dispatch, payload) => {
     //const localRoot = 'https://my-json-server.typicode.com/mgusmano/toshibaserver';
     const auth = {auth:{username:'skillnet',password:'demo'}};
 
-    //const skillsResult = await axios(`data/trainingmatrix/data/${groupID}/skills.json`);
-    // const operatorsResult = await axios(`data/trainingmatrix/data/${groupID}/operators.json`);
-    // const certificationsResult = await axios(`data/trainingmatrix/data/${groupID}/certifications.json`);
-
-    //const skillsResult = await axios(`${localRoot}/skills?groupID=${groupID}`);
-    //const operatorsResult = await axios(`${localRoot}/operators?groupID=${groupID}`);
-    //const certificationsResult = await axios(`${localRoot}/certifications?groupID=${groupID}`);
-
     const skillsUrl = `${apiRoot}/PortalGroupSkillsOnly?groupid=${groupID}`
     const skills2Result = await axios(skillsUrl,auth);
-    const operators2Result = await axios(`${apiRoot}/PortalGroupOperators?groupid=${groupID}`,auth);
-    const certifications2Result = await axios(`${apiRoot}/PortalCertificationsRating?groupid=${groupID}`,auth);
+    const operatorsUrl = `${apiRoot}/PortalGroupOperators?groupid=${groupID}`
+    const operators2Result = await axios(operatorsUrl,auth);
+    const certificationsUrl = `${apiRoot}/PortalCertificationsRating?groupid=${groupID}`
+    const certifications2Result = await axios(certificationsUrl,auth);
 
-    //just for the webAPI data while it is broken
-    var certifications2Resultdata = []
-    certifications2Result.data.map((certification,i) => {
-      //console.log(certification)
-      var o = certification
-      o.meta.startDate = o.meta.start
-      o.meta.currcertDate = new Date().toUTCString()
-      o.meta.currcertStatus = 1
-      delete o.meta.start;
-      certifications2Resultdata.push(o)
-      return null
-    })
-    //console.log(certifications2Resultdata)
+    console.log(skillsUrl)
+    console.log(operatorsUrl)
+    console.log(certificationsUrl)
+
+    // //just for the webAPI data while it is broken
+    // var certifications2Resultdata = []
+    // certifications2Result.data.map((certification,i) => {
+    //   //console.log(certification)
+    //   var o = certification
+    //   o.meta.startDate = o.meta.start
+    //   o.meta.currcertDate = new Date().toUTCString()
+    //   o.meta.currcertStatus = 1
+    //   delete o.meta.start;
+    //   certifications2Resultdata.push(o)
+    //   return null
+    // })
+    // //console.log(certifications2Resultdata)
 
     // //just for the webAPI data while it is broken
     // var operatorsResultdata = []
@@ -109,7 +120,7 @@ export const setAll = async (dispatch, payload) => {
     var r = {
       skills: skills2Result.data,
       operators: operators2Result.data,
-      certifications: certifications2Resultdata
+      certifications: certifications2Result.data
     }
     return r
   }
@@ -362,6 +373,11 @@ export const setAll = async (dispatch, payload) => {
     dispatch({type: types.SET_DIMENSIONS, payload: d});
   }
 
+
+  if (payload.cellData.meta !== undefined) {
+    console.log('has data')
+    console.log(payload.cellData)
+  }
   callAll(dispatch, payload)
 }
 
@@ -373,63 +389,26 @@ export const doDBCert = async (payload) => {
 
   var url = `${apiRoot}/PortalGroupUpdateOperatorCertification`;
   var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&currcertID=${payload.currcertID}&userID=${payload.userID}`
-  //const updateResult = await axios.post(url,j,auth);
-  const updateResult = await axios.post(url+j,auth);
-
-  console.log(updateResult)
-
-
-  // var url = `${apiRoot}/PortalGroupUpdateOperatorCertification?skillID=${payload.skillID}&operatorID=${payload.operatorID}&groupID=${payload.groupID}&currcertID=${payload.currcertID}`
-  // console.log(url)
-  // const updateResult = await axios.post(url,auth);
-  // console.log(updateResult)
-  return
-
-  // var headers = {headers: {'content-type': 'application/json'}};
-  // var p = {
-  //   "skillID": parseInt(payload.skillID),
-  //   "operatorID": parseInt(payload.operatorID),
-  //   "groupID": payload.groupID,
-  //   "meta": {
-  //     "type": "solid",
-  //     "currcertID": payload.currcertID,
-  //     "letter": "",
-  //     "start": "8/3/2021"
-  //   },
-  //   "data": []
-  // }
-  // //console.log('updateCert: ' + JSON.stringify(p))
-  // console.log('updateCert: ')
-  // console.log(p)
-  // var id = (payload.skillID*10)+payload.operatorID
-
-  // try {
-  //   await axios.put(`${localRoot}/certifications/${id}`,p,headers);
-  //   //`${localRoot}/certifications?skillID=${payload.skillID}&operatorID=${payload.operatorID}&groupID=${payload.groupID}`
-  //   //await axios.put(`${localRoot}/certifications`,p,headers);
-  //   console.log('update successful')
-  // }
-  // catch(error) {
-  //   //console.dir(error)
-  //   try {
-  //     //p.id = id
-  //     await axios.post(`${localRoot}/certifications`,p,headers);
-  //     console.log('add successful')
-  //     console.log(p)
-  //   }
-  //   catch(error) {
-  //     //console.log('second error')
-  //     console.dir(error)
-  //   }
-  // }
-
+  console.log(url+j)
+  //const updateResult =
+  //await axios.post(url+j,auth);
+  try {
+    const updateResult = await axios.post(url+j,auth);
+    //console.log(updateResult)
+    if (updateResult.status !== 200) {
+      alert(updateResult.statusText)
+    }
+  }
+  catch(e) {
+    alert(e)
+  }
 }
 
 export const updateCert = async (dispatch, payload) => {
   dispatch({type: types.SET_ACTIVE, payload: true});
   doDBCert(payload);
-  //dispatch({type: types.UPDATE_CERT, payload: payload});
   setAll(dispatch,{
+    'cellData': payload.cellData,
     'partnerID': payload.partnerID,
     'userID': payload.userID,
     'groupID': payload.groupID,
@@ -443,8 +422,15 @@ export const doDBSkillGoal = async (payload) => {
   var url = `${apiRoot}/UpdateSkillGoal`;
   var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&goal=${payload.goal}&userID=${payload.userID}`
   console.log(url+j)
-  const updateResult = await axios.post(url+j,auth);
-  console.log(updateResult)
+  try {
+    const updateResult = await axios.post(url+j,auth);
+    if (updateResult.status !== 200) {
+      alert(updateResult.statusText)
+    }
+  }
+  catch(e) {
+    alert(e)
+  }
 }
 
 export const updateSkillGoal = (dispatch, payload) => {
@@ -473,6 +459,7 @@ export const updateSkillGoal = (dispatch, payload) => {
   doDBSkillGoal(payload);
 
   setAll(dispatch,{
+    'cellData': payload.cellData,
     'partnerID': payload.partnerID,
     'userID': payload.userID,
     'groupID': payload.groupID,
@@ -504,8 +491,17 @@ export const doDBSkillRev = async (payload) => {
   var url = `${apiRoot}/UpdateSkillRev`;
   var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&rev=${payload.rev}&userID=${payload.userID}`
   console.log(url+j)
-  const updateResult = await axios.post(url+j,auth);
-  console.log(updateResult)
+  //const updateResult = await axios.post(url+j,auth);
+  //console.log(updateResult)
+  try {
+    const updateResult = await axios.post(url+j,auth);
+    if (updateResult.status !== 200) {
+      alert(updateResult.statusText)
+    }
+  }
+  catch(e) {
+    alert(e)
+  }
 }
 
 export const updateSkillRev = (dispatch, payload) => {
@@ -520,6 +516,7 @@ export const updateSkillRev = (dispatch, payload) => {
   doDBSkillRev(payload);
 
   setAll(dispatch,{
+    'cellData': payload.cellData,
     'partnerID': payload.partnerID,
     'userID': payload.userID,
     'groupID': payload.groupID,
@@ -533,8 +530,17 @@ export const doDBOperatorGoal = async (payload) => {
   var url = `${apiRoot}/Updateoperatorgoal`;
   var j = `?groupID=${payload.groupID}&operatorID=${payload.operatorID}&goal=${payload.goal}&userID=${payload.userID}`
   console.log(url+j)
-  const updateResult = await axios.post(url+j,auth);
-  console.log(updateResult)
+  //const updateResult = await axios.post(url+j,auth);
+  //console.log(updateResult)
+  try {
+    const updateResult = await axios.post(url+j,auth);
+    if (updateResult.status !== 200) {
+      alert(updateResult.statusText)
+    }
+  }
+  catch(e) {
+    alert(e)
+  }
 }
 
 export const updateOperatorGoal = async (dispatch,payload) => {
@@ -550,6 +556,7 @@ export const updateOperatorGoal = async (dispatch,payload) => {
   doDBOperatorGoal(payload);
 
   setAll(dispatch,{
+    'cellData': payload.cellData,
     'partnerID': payload.partnerID,
     'userID': payload.userID,
     'groupID': payload.groupID,
@@ -605,10 +612,19 @@ export const doDBDueDate = async (payload) => {
   const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
   const auth = {auth:{username:'skillnet',password:'demo'}};
   var url = `${apiRoot}/UpdateDueDate`;
-  var j = `?groupID=${payload.groupID}&operatorID=${payload.operatorID}&dueDate=${payload.dueDate}&userID=${payload.userID}`
+  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&dueDate=${payload.dueDate}&userID=${payload.userID}`
   console.log(url+j)
-  const updateResult = await axios.post(url+j,auth);
-  console.log(updateResult)
+  // const updateResult = await axios.post(url+j,auth);
+  // console.log(updateResult)
+  try {
+    const updateResult = await axios.post(url+j,auth);
+    if (updateResult.status !== 200) {
+      alert(updateResult.statusText)
+    }
+  }
+  catch(e) {
+    alert(e)
+  }
 }
 
 export const updateDueDate = async (dispatch,payload) => {
@@ -632,6 +648,7 @@ export const updateDueDate = async (dispatch,payload) => {
   doDBDueDate(payload);
 
   setAll(dispatch,{
+    'cellData': payload.cellData,
     'partnerID': payload.partnerID,
     'userID': payload.userID,
     'groupID': payload.groupID,

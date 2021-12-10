@@ -4,9 +4,14 @@ import { MatrixReducer } from './MatrixReducer';
 import {getValues } from './Util'
 import { styles } from '../styles';
 
+
 const MatrixContext = createContext();
+export const useMatrixState = () => useContext(MatrixContext);
 
 export const MatrixProvider = (props) => {
+  // const matrixState = useMatrixState();
+  // console.log(useMatrixState)
+  // console.log(matrixState)
 
   const getFunctions = {
     setPartnerID: (payload) => functions.setPartnerID(dispatch, payload),
@@ -29,6 +34,8 @@ export const MatrixProvider = (props) => {
     setUserName: (payload) => functions.setUserName(dispatch, payload),
     setActive: (payload) => functions.setActive(dispatch, payload),
     setAll: (payload) => {
+      //console.log(state.cellData)
+      //payload.cellData = matrixState.cellData;
       functions.setAll(dispatch, payload)
     },
     updateSkillGoal: (payload) => functions.updateSkillGoal(dispatch, payload),
@@ -36,7 +43,10 @@ export const MatrixProvider = (props) => {
     updateOperatorGoal: (payload) => functions.updateOperatorGoal(dispatch, payload),
     updateDueDate: (payload) => functions.updateDueDate(dispatch, payload),
 
-    updateCert: (payload) => functions.updateCert(dispatch, payload),
+    updateCert: (payload) => {
+      console.log(state.cellData)
+      functions.updateCert(dispatch, payload)
+    },
 
     setAuthenticatedUser: (payload) => functions.setAuthenticatedUser(dispatch, payload),
     setRightTotals: (payload) => functions.setRightTotals(dispatch, payload),
@@ -68,7 +78,7 @@ export const MatrixProvider = (props) => {
     operatorDialog: 'none',
     mainDialog: 'none',
     secondaryDialog: 'none',
-    celldata: {},
+    cellData: {},
     userName: 'initmatrix',
     authenticateduser: '',
     operatorgoal: 0,
@@ -100,4 +110,4 @@ export const MatrixProvider = (props) => {
     </MatrixContext.Provider>
   );
 }
-export const useMatrixState = () => useContext(MatrixContext);
+//export const useMatrixState = () => useContext(MatrixContext);

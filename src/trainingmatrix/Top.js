@@ -3,7 +3,8 @@ import { useMatrixState } from './state/MatrixProvider';
 
 export const Top = React.memo(() => {
   const matrixState = useMatrixState();
-  var img = '' + matrixState.celldata.picture + ''
+
+  var img = '' + matrixState.cellData.picture + ''
   var show = true;
   if (matrixState.skillDialog === 'block' && matrixState.mainDialog === 'none') {
     show = false;
@@ -25,9 +26,9 @@ export const Top = React.memo(() => {
         {show &&
           <>
           <img alt="pic" src={img} style={{borderRadius: '50%', x: '125px', y: '250px', width: '80px', height: '80px'}}/>
-          <div style={{marginTop:'2px'}}>{matrixState.celldata.operatorName}</div>
-          <div style={{fontSize:'12px'}}>Title</div>
-          <div style={{fontSize:'12px'}}>Plant Name - Location</div>
+          <div style={{marginTop:'2px'}}>{matrixState.cellData.operatorName}</div>
+          <div style={{fontSize:'12px'}}>{matrixState.cellData.title}</div>
+          <div style={{fontSize:'12px'}}>{matrixState.cellData.plantName} - {matrixState.cellData.location}</div>
           </>
         }
         {show !== null &&

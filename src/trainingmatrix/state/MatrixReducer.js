@@ -45,7 +45,7 @@ export const MatrixReducer = (state, action) => {
     case types.SET_SHOWOPERATORDIALOG: return {...state,operatorDialog:payload}
     case types.SET_SHOWMAINDIALOG: return {...state,mainDialog:payload}
     case types.SET_SHOWSECONDARYDIALOG: return {...state,secondaryDialog:payload}
-    case types.SET_CELLDATA: return {...state,celldata:payload}
+    case types.SET_CELLDATA: return {...state,cellData:payload}
 
     case types.SET_USERNAME: return {...state,userName:payload}
     case types.SET_AUTHENTICATEDUSER: return {...state,authenticateduser:payload}

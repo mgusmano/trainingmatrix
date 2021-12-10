@@ -80,20 +80,21 @@ export const Skill = React.memo((props) => {
         </div>
 
         <div style={{margin:'10px 0 10px 0',display:'flex',flexDirection:'row',height:'15px'}}>
-          <div style={{margin:'2px 0 10px 0',fontSize:'18px'}}>Goal:</div>
+          <div style={{margin:'2px 2px 10px 0',fontSize:'18px'}}>Goal:</div>
 
           <input type="text" value={goal}
-            style={{margin:'0 0 0 10px',width:'26px',height:'15px'}}
+            style={{margin:'5px 0 0 10px',width:'26px',height:'20px'}}
             onChange={(event)=> {
               setGoal(event.target.value)
             }}
           />
 
           <div
-            style={{margin:'3px 0 7px 15px',width:'40px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}}
+            style={{margin:'5px 0 7px 15px',width:'40px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}}
             onClick={()=>{
               matrixState.setActive(true)
               var payload = {
+                cellData: matrixState.cellData,
                 skillID: skillID,
                 goal: goal,
                 partnerID: matrixState.partnerID,
@@ -113,17 +114,18 @@ export const Skill = React.memo((props) => {
         <div style={{margin:'2px 0 10px 0',fontSize:'18px'}}>Rev#:</div>
 
         <input type="text" value={rev}
-          style={{margin:'0 0 0 10px',width:'26px',height:'15px'}}
+          style={{margin:'5px 0 0 10px',width:'26px',height:'20px'}}
           onChange={(event)=> {
             setRev(event.target.value)
           }}
         />
 
         <div
-          style={{margin:'3px 0 7px 15px',width:'40px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}}
+          style={{margin:'5px 0 7px 15px',width:'40px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}}
           onClick={()=>{
             matrixState.setActive(true)
             var payload = {
+              cellData: matrixState.cellData,
               skillID: skillID,
               rev: rev,
               partnerID: matrixState.partnerID,

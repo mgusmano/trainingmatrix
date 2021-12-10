@@ -1,12 +1,15 @@
 import React, { useState, useEffect} from 'react';
 import { useMatrixState } from './state/MatrixProvider';
 import { Diamond } from './Diamond';
-import DatePicker from "react-datepicker";
+//import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export const Main = (props) => {
-  console.log(props.data.meta)
+export const Main = () => {
+  //console.log(props.data.meta)
   const matrixState = useMatrixState();
+  //var cellData = matrixState.cellData;
+  //console.log(cellData)
+  //console.log(props.data)
   //const matrixStateRef = useRef(matrixState);
 
   const [diamonddata, setDiamondData] = useState(null)
@@ -20,23 +23,23 @@ export const Main = (props) => {
   var skill = {}
   var certificationID = "0"
 
-  if (matrixState.celldata.meta !== undefined) {
-    operator = matrixState.celldata.operator
-    skill = matrixState.celldata.skill
-    certificationID = matrixState.celldata.certificationID
+  if (matrixState.cellData.meta !== undefined) {
+    operator = matrixState.cellData.operator
+    skill = matrixState.cellData.skill
+    certificationID = matrixState.cellData.certificationID
   }
 
-  //console.log(matrixState.celldata.meta)
+  //console.log(matrixState.cellData.meta)
   useEffect(() => {
-    //console.log(matrixState.celldata.meta)
-    if (matrixState.celldata.meta === undefined) {
+    //console.log(matrixState.cellData.meta)
+    if (matrixState.cellData.meta === undefined) {
       setDiamondData(null)
       setMetaData(null)
       setCertification(null)
       return
     }
-    var data = matrixState.celldata.data
-    var meta = matrixState.celldata.meta
+    var data = matrixState.cellData.data
+    var meta = matrixState.cellData.meta
 
     if (typeof data === 'string') {
       data = JSON.parse(data)
@@ -66,7 +69,7 @@ export const Main = (props) => {
     else {
       setCurrcertDate(null)
     }
-  },[matrixState.celldata.meta,matrixState.celldata.data])
+  },[matrixState.cellData.meta,matrixState.cellData.data])
 
   const onChangeValue = (event) => {
     //console.log(event.target.value);
@@ -75,13 +78,14 @@ export const Main = (props) => {
       "type":"solid",
       "currcertID":parseInt(event.target.value),
       //"certification":event.target.title,
-      "strokecolor":matrixState.celldata.meta.strokecolor,
-      "letter":matrixState.celldata.meta.letter,
-      "start":matrixState.celldata.meta.start,
-      "certstate":matrixState.celldata.meta.certstate
+      "strokecolor":matrixState.cellData.meta.strokecolor,
+      "letter":matrixState.cellData.meta.letter,
+      "start":matrixState.cellData.meta.start,
+      "certstate":matrixState.cellData.meta.certstate
     }
     setMetaData(metaval)
     var c = {
+      cellData: matrixState.cellData,
       skillID: skill.skillID,
       operatorID: operator.operatorID,
       currcertID: parseInt(event.target.value),
@@ -98,10 +102,10 @@ export const Main = (props) => {
   //       "type":"solid",
   //       "currcertID":parseInt(event.target.value),
   //       "certification":event.target.title,
-  //       "strokecolor":matrixState.celldata.meta.strokecolor,
-  //       "letter":matrixState.celldata.meta.letter,
-  //       "start":matrixState.celldata.meta.start,
-  //       "certstate":matrixState.celldata.meta.certstate
+  //       "strokecolor":matrixState.cellData.meta.strokecolor,
+  //       "letter":matrixState.cellData.meta.letter,
+  //       "start":matrixState.cellData.meta.start,
+  //       "certstate":matrixState.cellData.meta.certstate
   //     }
 
   //     // var newCerts = matrixState.certifications.slice();
@@ -111,8 +115,8 @@ export const Main = (props) => {
   //     // if (lastCertIndex !== -1) {
   //     //   newCerts[lastCertIndex] = {
   //     //     "id": certificationID,
-  //     //     "row": matrixState.celldata.row,
-  //     //     "col": matrixState.celldata.col,
+  //     //     "row": matrixState.cellData.row,
+  //     //     "col": matrixState.cellData.col,
   //     //     "skill": skill,
   //     //     "operator": operator,
   //     //     "skillID": skill.id,
@@ -127,8 +131,8 @@ export const Main = (props) => {
   //     setCertification(parseInt(event.target.value))
   //     var c = {
   //       //id: certificationID,
-  //       //row: matrixState.celldata.row,
-  //       //col: matrixState.celldata.col,
+  //       //row: matrixState.cellData.row,
+  //       //col: matrixState.cellData.col,
   //       //skill: skill,
   //       //operator: operator,
   //       skillID: skill.skillID,
@@ -159,6 +163,20 @@ export const Main = (props) => {
   //var link = `https://skillnetformsapp.azurewebsites.net?skillID=&{skill.skillID}&operatorID=12345&userID=12345`
   var link = `https://skillnetformsapp.azurewebsites.net?skillID=` + skill.skillID + `&operatorID=` + operator.operatorID
 
+  // <DatePicker className='datepicker' width={'10px'} selected={dueDate} onChange={(date) => {
+
+  //   //var d2 = new Date(date)
+  //   //console.log(d2)
+  //   //let text = d2.toLocaleDateString();
+  //   //var d = d2.ToShortDateString()
+  //   //console.log(text)
+  //   //console.log(d)
+  //   console.log(date)
+  //   setDueDate(date)
+  // }} />
+
+
+
   return (
     <div style={{boxSizing:'border-box',height:'500px',padding:'10px 0 0 40px',fontSize:'20px',display:'flex',flexDirection:'column'}}>
 
@@ -187,18 +205,21 @@ export const Main = (props) => {
       {currcertDate !== null &&
       <div style={{display:'flex',flexDirection:'row',margin:'5px 0 0 0',fontSize:'12px'}}>
         <div style={{margin:'5px 1px 0 0',width:'60px'}}>Due Date:</div>
-        <div style={{width:'70px'}}>
-          <DatePicker className='datepicker' width={'10px'} selected={dueDate} onChange={(date) => {
+        <div style={{width:'170px'}}>
+        <input type="date"
 
-            //var d2 = new Date(date)
-            //console.log(d2)
-            //let text = d2.toLocaleDateString();
-            //var d = d2.ToShortDateString()
-            //console.log(text)
-            //console.log(d)
-            console.log(date)
-            setDueDate(date)
-          }} />
+          //value={dueDate}
+
+          onChange={(e) => {
+            console.log(e)
+            console.log(e.target.value)
+            console.log(e.target.valueAsDate)
+            var newDate = new Date(e.target.value + 'T00:00');
+            console.log(newDate)
+            setDueDate(newDate)
+          }}
+        />
+
         </div>
         <div
           style={{margin:'3px 0 7px 20px',width:'40px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}}
@@ -206,6 +227,7 @@ export const Main = (props) => {
             matrixState.setActive(true)
             console.log(dueDate)
             var payload = {
+              cellData: matrixState.cellData,
               skillID: skill.skillID,
               operatorID: operator.operatorID,
               dueDate: dueDate,

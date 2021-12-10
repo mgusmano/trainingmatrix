@@ -35,7 +35,7 @@ export const Toolstrip = () => {
       </div>
       <div style={{display:'flex',flexDirection:'row'}}>
         <div style={{margin:'7px 0 7px 1px',width:'110px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}} onClick={()=>{ appState.setLegend(!appState.legend)}}>Toggle Legend</div>
-        <div style={{margin:'7px 0 7px 10px',color:'black',fontSize:'12px'}}>v2021-12-08-h</div>
+        <div style={{margin:'7px 0 7px 10px',color:'black',fontSize:'12px'}}>v2021-12-10-a</div>
       </div>
     </div>
   )
