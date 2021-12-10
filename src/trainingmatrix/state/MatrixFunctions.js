@@ -84,9 +84,9 @@ export const setAll = async (dispatch, payload) => {
     const certificationsUrl = `${apiRoot}/PortalCertificationsRating?groupid=${groupID}`
     const certifications2Result = await axios(certificationsUrl,auth);
 
-    console.log(skillsUrl)
-    console.log(operatorsUrl)
-    console.log(certificationsUrl)
+    //console.log(skillsUrl)
+    //console.log(operatorsUrl)
+    //console.log(certificationsUrl)
 
     // //just for the webAPI data while it is broken
     // var certifications2Resultdata = []
@@ -391,12 +391,9 @@ export const doDBCert = async (payload) => {
 
   var url = `${apiRoot}/PortalGroupUpdateOperatorCertification`;
   var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&currcertID=${payload.currcertID}&userID=${payload.userID}`
-  console.log(url+j)
-  //const updateResult =
-  //await axios.post(url+j,auth);
+  //console.log(url+j)
   try {
     const updateResult = await axios.post(url+j,auth);
-    //console.log(updateResult)
     if (updateResult.status !== 200) {
       alert(updateResult.statusText)
     }
@@ -423,7 +420,7 @@ export const doDBSkillGoal = async (payload) => {
   const auth = {auth:{username:'skillnet',password:'demo'}};
   var url = `${apiRoot}/UpdateSkillGoal`;
   var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&goal=${payload.goal}&userID=${payload.userID}`
-  console.log(url+j)
+  //console.log(url+j)
   try {
     const updateResult = await axios.post(url+j,auth);
     if (updateResult.status !== 200) {
@@ -492,9 +489,7 @@ export const doDBSkillRev = async (payload) => {
   const auth = {auth:{username:'skillnet',password:'demo'}};
   var url = `${apiRoot}/UpdateSkillRev`;
   var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&rev=${payload.rev}&userID=${payload.userID}`
-  console.log(url+j)
-  //const updateResult = await axios.post(url+j,auth);
-  //console.log(updateResult)
+  //console.log(url+j)
   try {
     const updateResult = await axios.post(url+j,auth);
     if (updateResult.status !== 200) {
@@ -531,9 +526,7 @@ export const doDBOperatorGoal = async (payload) => {
   const auth = {auth:{username:'skillnet',password:'demo'}};
   var url = `${apiRoot}/Updateoperatorgoal`;
   var j = `?groupID=${payload.groupID}&operatorID=${payload.operatorID}&goal=${payload.goal}&userID=${payload.userID}`
-  console.log(url+j)
-  //const updateResult = await axios.post(url+j,auth);
-  //console.log(updateResult)
+  //console.log(url+j)
   try {
     const updateResult = await axios.post(url+j,auth);
     if (updateResult.status !== 200) {
@@ -564,50 +557,6 @@ export const updateOperatorGoal = async (dispatch,payload) => {
     'groupID': payload.groupID,
     'multiplier': payload.multiplier
   })
-
-
-  // var groupID = 1
-  // const operatorsResult = await axios(`data/trainingmatrix/data/${groupID}/operators.json`);
-  // var newOperators = operatorsResult.data;
-
-  // const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api/';
-  // const updateOperatorGoalResult = await axios.post(
-  //   apiRoot + 'UpdateOperatorGoal?partnerid=448',
-  //   {'operatorID':payload.id,'goal':parseInt(payload.goal)},
-  //   {auth:{username:'skillnet',password:'demo'}}
-  // );
-  // var newOperators = updateOperatorGoalResult.data;
-
-  // var newOperators = payload.operators.slice();
-  // const lastOperatorIndex = newOperators.findIndex(
-  //   (operator) => operator.id === payload.id
-  // )
-  // var oldOperator = payload.operators[lastOperatorIndex]
-  // if (lastOperatorIndex !== -1) {
-  //   newOperators[lastOperatorIndex] = {
-  //     "id": oldOperator.id,
-  //     "groupID": oldOperator.groupID,
-  //     "operatorName": oldOperator.operatorName,
-  //     "picture": oldOperator.picture,
-  //     "goal": parseInt(payload.goal)
-  //   }
-  // }
-  // //console.log(newOperators)
-  // dispatch({type: types.UPDATE_OPERATORGOAL, payload: {operators:newOperators}});
-
-  // setAll(dispatch,{
-  //   'first':true,
-  //   'skillsData':payload.skills,
-  //   'operatorsData':newOperators,
-  //   'certificationsData':payload.certifications,
-  //   'multiplier': payload.multiplier
-  // })
-
-  // API.graphql(graphqlOperation(updateOperator, { input: payload } ))
-  // .then(() => {
-  //   dispatch({type: types.UPDATE_OPERATORGOAL, payload: payload});
-  //   setAll(dispatch,false)
-  // })
 }
 
 export const doDBDueDate = async (payload) => {
@@ -615,9 +564,7 @@ export const doDBDueDate = async (payload) => {
   const auth = {auth:{username:'skillnet',password:'demo'}};
   var url = `${apiRoot}/UpdateDueDate`;
   var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&dueDate=${payload.dueDate}&userID=${payload.userID}`
-  console.log(url+j)
-  // const updateResult = await axios.post(url+j,auth);
-  // console.log(updateResult)
+  //console.log(url+j)
   try {
     const updateResult = await axios.post(url+j,auth);
     if (updateResult.status !== 200) {

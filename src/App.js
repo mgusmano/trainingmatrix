@@ -17,29 +17,22 @@ export const App = () => {
 
     async function fetchData() {
       const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
-      //const apiRoot2 = 'https://skillnetusersapi.azurewebsites.net';
       const auth = {auth:{username:'skillnet',password:'demo'}};
-
 
       // var url = `${apiRoot2}/token`;
       // var j = {"userName": "gabriel.porizan@nordlogic.com","grant_type": "password"}
       // const tokenPostResult = await axios.post(url,qs.stringify(j),auth);
-
-
 
       //console.log(tokenPostResult)
 
       //http://skillnetusersapi.azurewebsites.net/token(post) will return you a access token.
       //{"userName": "gabriel.porizan@nordlogic.com","grant_type": "password"}
 
-
-
       // const tokenResult = await axios(apiRoot + '/decodetoken?token=KpXYQ1m4PmT6UYZv9IlrLQ==', auth);
       // console.log(tokenResult)
 
-      //const portalGroupsResult = await axios(apiRoot + '/portalgroups?partnerid=448', auth);
       var url = apiRoot + '/portalgroups?partnerid=' + sessionStorage.getItem('partnerID')
-      console.log(url)
+      //console.log(url)
       const portalGroupsResult = await axios(url, auth);
       appStateRef.current.setGroups(portalGroupsResult.data);
     }

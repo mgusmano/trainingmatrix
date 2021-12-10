@@ -30022,7 +30022,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2021-12-10-b")));
+	  }, "v2021-12-10-c")));
 	};
 
 	const SET_PARTNERID = 'SET_PARTNERID';
@@ -31970,10 +31970,10 @@
 	    const operatorsUrl = `${apiRoot}/PortalGroupOperators?groupid=${groupID}`;
 	    const operators2Result = await axios(operatorsUrl, auth);
 	    const certificationsUrl = `${apiRoot}/PortalCertificationsRating?groupid=${groupID}`;
-	    const certifications2Result = await axios(certificationsUrl, auth);
-	    console.log(skillsUrl);
-	    console.log(operatorsUrl);
-	    console.log(certificationsUrl); // //just for the webAPI data while it is broken
+	    const certifications2Result = await axios(certificationsUrl, auth); //console.log(skillsUrl)
+	    //console.log(operatorsUrl)
+	    //console.log(certificationsUrl)
+	    // //just for the webAPI data while it is broken
 	    // var certifications2Resultdata = []
 	    // certifications2Result.data.map((certification,i) => {
 	    //   //console.log(certification)
@@ -32285,12 +32285,10 @@
 	    }
 	  };
 	  var url = `${apiRoot}/PortalGroupUpdateOperatorCertification`;
-	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&currcertID=${payload.currcertID}&userID=${payload.userID}`;
-	  console.log(url + j); //const updateResult =
-	  //await axios.post(url+j,auth);
+	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&currcertID=${payload.currcertID}&userID=${payload.userID}`; //console.log(url+j)
 
 	  try {
-	    const updateResult = await axios.post(url + j, auth); //console.log(updateResult)
+	    const updateResult = await axios.post(url + j, auth);
 
 	    if (updateResult.status !== 200) {
 	      alert(updateResult.statusText);
@@ -32322,8 +32320,7 @@
 	    }
 	  };
 	  var url = `${apiRoot}/UpdateSkillGoal`;
-	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&goal=${payload.goal}&userID=${payload.userID}`;
-	  console.log(url + j);
+	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&goal=${payload.goal}&userID=${payload.userID}`; //console.log(url+j)
 
 	  try {
 	    const updateResult = await axios.post(url + j, auth);
@@ -32397,9 +32394,7 @@
 	    }
 	  };
 	  var url = `${apiRoot}/UpdateSkillRev`;
-	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&rev=${payload.rev}&userID=${payload.userID}`;
-	  console.log(url + j); //const updateResult = await axios.post(url+j,auth);
-	  //console.log(updateResult)
+	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&rev=${payload.rev}&userID=${payload.userID}`; //console.log(url+j)
 
 	  try {
 	    const updateResult = await axios.post(url + j, auth);
@@ -32446,9 +32441,7 @@
 	    }
 	  };
 	  var url = `${apiRoot}/Updateoperatorgoal`;
-	  var j = `?groupID=${payload.groupID}&operatorID=${payload.operatorID}&goal=${payload.goal}&userID=${payload.userID}`;
-	  console.log(url + j); //const updateResult = await axios.post(url+j,auth);
-	  //console.log(updateResult)
+	  var j = `?groupID=${payload.groupID}&operatorID=${payload.operatorID}&goal=${payload.goal}&userID=${payload.userID}`; //console.log(url+j)
 
 	  try {
 	    const updateResult = await axios.post(url + j, auth);
@@ -32484,44 +32477,7 @@
 	    'userID': payload.userID,
 	    'groupID': payload.groupID,
 	    'multiplier': payload.multiplier
-	  }); // var groupID = 1
-	  // const operatorsResult = await axios(`data/trainingmatrix/data/${groupID}/operators.json`);
-	  // var newOperators = operatorsResult.data;
-	  // const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api/';
-	  // const updateOperatorGoalResult = await axios.post(
-	  //   apiRoot + 'UpdateOperatorGoal?partnerid=448',
-	  //   {'operatorID':payload.id,'goal':parseInt(payload.goal)},
-	  //   {auth:{username:'skillnet',password:'demo'}}
-	  // );
-	  // var newOperators = updateOperatorGoalResult.data;
-	  // var newOperators = payload.operators.slice();
-	  // const lastOperatorIndex = newOperators.findIndex(
-	  //   (operator) => operator.id === payload.id
-	  // )
-	  // var oldOperator = payload.operators[lastOperatorIndex]
-	  // if (lastOperatorIndex !== -1) {
-	  //   newOperators[lastOperatorIndex] = {
-	  //     "id": oldOperator.id,
-	  //     "groupID": oldOperator.groupID,
-	  //     "operatorName": oldOperator.operatorName,
-	  //     "picture": oldOperator.picture,
-	  //     "goal": parseInt(payload.goal)
-	  //   }
-	  // }
-	  // //console.log(newOperators)
-	  // dispatch({type: types.UPDATE_OPERATORGOAL, payload: {operators:newOperators}});
-	  // setAll(dispatch,{
-	  //   'first':true,
-	  //   'skillsData':payload.skills,
-	  //   'operatorsData':newOperators,
-	  //   'certificationsData':payload.certifications,
-	  //   'multiplier': payload.multiplier
-	  // })
-	  // API.graphql(graphqlOperation(updateOperator, { input: payload } ))
-	  // .then(() => {
-	  //   dispatch({type: types.UPDATE_OPERATORGOAL, payload: payload});
-	  //   setAll(dispatch,false)
-	  // })
+	  });
 	};
 	const doDBDueDate = async payload => {
 	  const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
@@ -32532,9 +32488,7 @@
 	    }
 	  };
 	  var url = `${apiRoot}/UpdateDueDate`;
-	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&dueDate=${payload.dueDate}&userID=${payload.userID}`;
-	  console.log(url + j); // const updateResult = await axios.post(url+j,auth);
-	  // console.log(updateResult)
+	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&dueDate=${payload.dueDate}&userID=${payload.userID}`; //console.log(url+j)
 
 	  try {
 	    const updateResult = await axios.post(url + j, auth);
@@ -41646,7 +41600,7 @@
 	  const [metadata, setMetaData] = react.exports.useState(null);
 	  const [certification, setCertification] = react.exports.useState(null);
 	  const [startDate, setStartDate] = react.exports.useState(null);
-	  const [currcertDate, setCurrcertDate] = react.exports.useState(null);
+	  const [certifiedDate, setCurrcertDate] = react.exports.useState(null);
 	  const [dueDate, setDueDate] = react.exports.useState(null);
 	  var operator = {};
 	  var skill = {};
@@ -41679,6 +41633,7 @@
 	      meta = JSON.parse(meta);
 	    }
 
+	    console.log(meta);
 	    setDiamondData(data);
 	    setMetaData(meta);
 	    setCertification(meta.currcertID);
@@ -41692,8 +41647,8 @@
 	    // }
 
 
-	    if (meta.currcertDate !== null) {
-	      setCurrcertDate(new Date(meta.currcertDate));
+	    if (meta.certifiedDate !== null) {
+	      setCurrcertDate(new Date(meta.certifiedDate));
 	    } else {
 	      setCurrcertDate(null);
 	    }
@@ -41703,13 +41658,19 @@
 	    //console.log(event.target.value);
 	    setCertification(parseInt(event.target.value));
 	    var metaval = {
-	      "type": "solid",
-	      "currcertID": parseInt(event.target.value),
-	      //"certification":event.target.title,
-	      "strokecolor": matrixState.cellData.meta.strokecolor,
-	      "letter": matrixState.cellData.meta.letter,
-	      "start": matrixState.cellData.meta.start,
-	      "certstate": matrixState.cellData.meta.certstate
+	      certificationDueDate: matrixState.cellData.meta.certificationDueDate,
+	      certifiedDate: matrixState.cellData.meta.certifiedDate,
+	      currcertID: parseInt(event.target.value),
+	      letter: matrixState.cellData.meta.letter,
+	      trainingStartDate: matrixState.cellData.meta.trainingStartDate,
+	      type: "solid" // "type":"solid",
+	      // "currcertID":parseInt(event.target.value),
+	      // //"certification":event.target.title,
+	      // "strokecolor":matrixState.cellData.meta.strokecolor,
+	      // "letter":matrixState.cellData.meta.letter,
+	      // "trainingStartDate":matrixState.cellData.meta.start,
+	      // "certstate":matrixState.cellData.meta.certstate
+
 	    };
 	    setMetaData(metaval);
 	    var c = {
@@ -41776,6 +41737,7 @@
 
 	  var disabled = false;
 	  var color = 'black';
+	  console.log(metadata);
 
 	  if (metadata !== null) {
 	    //if (metadata.certstate === 'disabled') {
@@ -41825,12 +41787,22 @@
 	      margin: '5px 0 0 0',
 	      fontSize: '12px'
 	    }
-	  }, "Training Start Date: ", startDate.toLocaleDateString()), currcertDate !== null && /*#__PURE__*/React$1.createElement("div", {
+	  }, "Training Start Date: ", startDate.toLocaleDateString()), startDate === null && /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      margin: '5px 0 0 0',
 	      fontSize: '12px'
 	    }
-	  }, "Certification Date: ", currcertDate.toLocaleDateString()), currcertDate !== null && /*#__PURE__*/React$1.createElement("div", {
+	  }, "No Training Start Date"), certifiedDate !== null && /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '5px 0 0 0',
+	      fontSize: '12px'
+	    }
+	  }, "Certification Date: ", certifiedDate.toLocaleDateString()), certifiedDate === null && /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '5px 0 0 0',
+	      fontSize: '12px'
+	    }
+	  }, "No Certification Date"), certifiedDate !== null && /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      display: 'flex',
 	      flexDirection: 'row',
@@ -41847,14 +41819,13 @@
 	      width: '170px'
 	    }
 	  }, /*#__PURE__*/React$1.createElement("input", {
-	    type: "date" //value={dueDate}
-	    ,
+	    type: "date",
 	    onChange: e => {
-	      console.log(e);
-	      console.log(e.target.value);
-	      console.log(e.target.valueAsDate);
-	      var newDate = new Date(e.target.value + 'T00:00');
-	      console.log(newDate);
+	      //console.log(e)
+	      //console.log(e.target.value)
+	      //console.log(e.target.valueAsDate)
+	      var newDate = new Date(e.target.value + 'T00:00'); //console.log(newDate)
+
 	      setDueDate(newDate);
 	    }
 	  })), /*#__PURE__*/React$1.createElement("div", {
@@ -41866,8 +41837,8 @@
 	      cursor: 'pointer'
 	    },
 	    onClick: () => {
-	      matrixState.setActive(true);
-	      console.log(dueDate);
+	      matrixState.setActive(true); //console.log(dueDate)
+
 	      var payload = {
 	        cellData: matrixState.cellData,
 	        skillID: skill.skillID,
@@ -44336,8 +44307,7 @@
 	    setToken('token');
 
 	    async function fetchData() {
-	      const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api'; //const apiRoot2 = 'https://skillnetusersapi.azurewebsites.net';
-
+	      const apiRoot = 'https://skillnetusersapi.azurewebsites.net/api';
 	      const auth = {
 	        auth: {
 	          username: 'skillnet',
@@ -44351,10 +44321,9 @@
 	      //{"userName": "gabriel.porizan@nordlogic.com","grant_type": "password"}
 	      // const tokenResult = await axios(apiRoot + '/decodetoken?token=KpXYQ1m4PmT6UYZv9IlrLQ==', auth);
 	      // console.log(tokenResult)
-	      //const portalGroupsResult = await axios(apiRoot + '/portalgroups?partnerid=448', auth);
 
-	      var url = apiRoot + '/portalgroups?partnerid=' + sessionStorage.getItem('partnerID');
-	      console.log(url);
+	      var url = apiRoot + '/portalgroups?partnerid=' + sessionStorage.getItem('partnerID'); //console.log(url)
+
 	      const portalGroupsResult = await axios(url, auth);
 	      appStateRef.current.setGroups(portalGroupsResult.data);
 	    }

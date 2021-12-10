@@ -16,7 +16,7 @@ export const Main = () => {
   const [metadata, setMetaData] = useState(null)
   const [certification, setCertification] = useState(null)
   const [startDate, setStartDate] = useState(null);
-  const [currcertDate, setCurrcertDate] = useState(null);
+  const [certifiedDate, setCurrcertDate] = useState(null);
   const [dueDate, setDueDate] = useState(null);
 
   var operator = {}
@@ -47,6 +47,7 @@ export const Main = () => {
     if (typeof meta === 'string') {
       meta = JSON.parse(meta)
     }
+    console.log(meta)
 
     setDiamondData(data)
     setMetaData(meta)
@@ -63,8 +64,8 @@ export const Main = () => {
     //   setStartDate(new Date(meta.startDate))
     // }
 
-    if (meta.currcertDate !== null) {
-      setCurrcertDate(new Date(meta.currcertDate))
+    if (meta.certifiedDate !== null) {
+      setCurrcertDate(new Date(meta.certifiedDate))
     }
     else {
       setCurrcertDate(null)
@@ -75,13 +76,21 @@ export const Main = () => {
     //console.log(event.target.value);
     setCertification(parseInt(event.target.value))
     var metaval = {
-      "type":"solid",
-      "currcertID":parseInt(event.target.value),
-      //"certification":event.target.title,
-      "strokecolor":matrixState.cellData.meta.strokecolor,
-      "letter":matrixState.cellData.meta.letter,
-      "start":matrixState.cellData.meta.start,
-      "certstate":matrixState.cellData.meta.certstate
+      certificationDueDate: matrixState.cellData.meta.certificationDueDate,
+      certifiedDate: matrixState.cellData.meta.certifiedDate,
+      currcertID: parseInt(event.target.value),
+      letter: matrixState.cellData.meta.letter,
+      trainingStartDate: matrixState.cellData.meta.trainingStartDate,
+      type: "solid"
+
+
+      // "type":"solid",
+      // "currcertID":parseInt(event.target.value),
+      // //"certification":event.target.title,
+      // "strokecolor":matrixState.cellData.meta.strokecolor,
+      // "letter":matrixState.cellData.meta.letter,
+      // "trainingStartDate":matrixState.cellData.meta.start,
+      // "certstate":matrixState.cellData.meta.certstate
     }
     setMetaData(metaval)
     var c = {
@@ -151,6 +160,7 @@ export const Main = () => {
 
   var disabled = false;
   var color = 'black'
+  console.log(metadata)
   if (metadata !== null) {
     //if (metadata.certstate === 'disabled') {
     if (metadata.trainingStartDate === null) {
@@ -195,37 +205,43 @@ export const Main = () => {
         Training Start Date: {startDate.toLocaleDateString()}
       </div>
       }
-
-      {currcertDate !== null &&
+      {startDate === null &&
       <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
-        Certification Date: {currcertDate.toLocaleDateString()}
+        No Training Start Date
       </div>
       }
 
-      {currcertDate !== null &&
+      {certifiedDate !== null &&
+      <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
+        Certification Date: {certifiedDate.toLocaleDateString()}
+      </div>
+      }
+      {certifiedDate === null &&
+      <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
+        No Certification Date
+      </div>
+      }
+
+      {certifiedDate !== null &&
       <div style={{display:'flex',flexDirection:'row',margin:'5px 0 0 0',fontSize:'12px'}}>
         <div style={{margin:'5px 1px 0 0',width:'60px'}}>Due Date:</div>
         <div style={{width:'170px'}}>
-        <input type="date"
-
-          //value={dueDate}
-
-          onChange={(e) => {
-            console.log(e)
-            console.log(e.target.value)
-            console.log(e.target.valueAsDate)
-            var newDate = new Date(e.target.value + 'T00:00');
-            console.log(newDate)
-            setDueDate(newDate)
-          }}
-        />
-
+          <input type="date"
+            onChange={(e) => {
+              //console.log(e)
+              //console.log(e.target.value)
+              //console.log(e.target.valueAsDate)
+              var newDate = new Date(e.target.value + 'T00:00');
+              //console.log(newDate)
+              setDueDate(newDate)
+            }}
+          />
         </div>
         <div
           style={{margin:'3px 0 7px 20px',width:'40px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}}
           onClick={()=>{
             matrixState.setActive(true)
-            console.log(dueDate)
+            //console.log(dueDate)
             var payload = {
               cellData: matrixState.cellData,
               skillID: skill.skillID,
