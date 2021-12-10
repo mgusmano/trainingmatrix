@@ -30022,7 +30022,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2021-12-09-b")));
+	  }, "v2021-12-10-b")));
 	};
 
 	const SET_PARTNERID = 'SET_PARTNERID';
@@ -31877,6 +31877,22 @@
 	    //console.log(c)
 
 	    var certifications = createCertifications(skills, operators, certificationsInit);
+
+	    if (payload2.cellData.meta !== undefined) {
+	      if (payload2.cellData.meta.skill !== undefined) {
+	        if (payload2.cellData.meta.skill.skillID !== undefined) {
+	          console.log(payload2.cellData);
+	          const filteredcertifications = certifications.filter(item => item.skill.skillID === payload2.cellData.skill.skillID && item.operator.operatorID === payload2.cellData.operator.operatorID);
+	          console.log(filteredcertifications);
+	          payload2.cellData.meta = filteredcertifications[0].meta;
+	          dispatch({
+	            type: SET_CELLDATA,
+	            payload: payload2.cellData
+	          });
+	        }
+	      }
+	    }
+
 	    var totals = calcTotals(certifications);
 	    dispatch({
 	      type: SET_ROWSARRAY,
@@ -31948,29 +31964,28 @@
 	        username: 'skillnet',
 	        password: 'demo'
 	      }
-	    }; //const skillsResult = await axios(`data/trainingmatrix/data/${groupID}/skills.json`);
-	    // const operatorsResult = await axios(`data/trainingmatrix/data/${groupID}/operators.json`);
-	    // const certificationsResult = await axios(`data/trainingmatrix/data/${groupID}/certifications.json`);
-	    //const skillsResult = await axios(`${localRoot}/skills?groupID=${groupID}`);
-	    //const operatorsResult = await axios(`${localRoot}/operators?groupID=${groupID}`);
-	    //const certificationsResult = await axios(`${localRoot}/certifications?groupID=${groupID}`);
-
+	    };
 	    const skillsUrl = `${apiRoot}/PortalGroupSkillsOnly?groupid=${groupID}`;
 	    const skills2Result = await axios(skillsUrl, auth);
-	    const operators2Result = await axios(`${apiRoot}/PortalGroupOperators?groupid=${groupID}`, auth);
-	    const certifications2Result = await axios(`${apiRoot}/PortalCertificationsRating?groupid=${groupID}`, auth); //just for the webAPI data while it is broken
-
-	    var certifications2Resultdata = [];
-	    certifications2Result.data.map((certification, i) => {
-	      //console.log(certification)
-	      var o = certification;
-	      o.meta.startDate = o.meta.start;
-	      o.meta.currcertDate = new Date().toUTCString();
-	      o.meta.currcertStatus = 1;
-	      delete o.meta.start;
-	      certifications2Resultdata.push(o);
-	      return null;
-	    }); //console.log(certifications2Resultdata)
+	    const operatorsUrl = `${apiRoot}/PortalGroupOperators?groupid=${groupID}`;
+	    const operators2Result = await axios(operatorsUrl, auth);
+	    const certificationsUrl = `${apiRoot}/PortalCertificationsRating?groupid=${groupID}`;
+	    const certifications2Result = await axios(certificationsUrl, auth);
+	    console.log(skillsUrl);
+	    console.log(operatorsUrl);
+	    console.log(certificationsUrl); // //just for the webAPI data while it is broken
+	    // var certifications2Resultdata = []
+	    // certifications2Result.data.map((certification,i) => {
+	    //   //console.log(certification)
+	    //   var o = certification
+	    //   o.meta.startDate = o.meta.start
+	    //   o.meta.currcertDate = new Date().toUTCString()
+	    //   o.meta.currcertStatus = 1
+	    //   delete o.meta.start;
+	    //   certifications2Resultdata.push(o)
+	    //   return null
+	    // })
+	    // //console.log(certifications2Resultdata)
 	    // //just for the webAPI data while it is broken
 	    // var operatorsResultdata = []
 	    // operatorsResult.data.map((operator,i) => {
@@ -31989,7 +32004,7 @@
 	    var r = {
 	      skills: skills2Result.data,
 	      operators: operators2Result.data,
-	      certifications: certifications2Resultdata
+	      certifications: certifications2Result.data
 	    };
 	    return r;
 	  };
@@ -32252,6 +32267,11 @@
 	    });
 	  };
 
+	  if (payload.cellData.meta !== undefined) {
+	    console.log('has data');
+	    console.log(payload.cellData);
+	  }
+
 	  callAll(dispatch, payload);
 	};
 	const doDBCert = async payload => {
@@ -32265,59 +32285,28 @@
 	    }
 	  };
 	  var url = `${apiRoot}/PortalGroupUpdateOperatorCertification`;
-	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&currcertID=${payload.currcertID}&userID=${payload.userID}`; //const updateResult = await axios.post(url,j,auth);
+	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&currcertID=${payload.currcertID}&userID=${payload.userID}`;
+	  console.log(url + j); //const updateResult =
+	  //await axios.post(url+j,auth);
 
-	  const updateResult = await axios.post(url + j, auth);
-	  console.log(updateResult); // var url = `${apiRoot}/PortalGroupUpdateOperatorCertification?skillID=${payload.skillID}&operatorID=${payload.operatorID}&groupID=${payload.groupID}&currcertID=${payload.currcertID}`
-	  // console.log(url)
-	  // const updateResult = await axios.post(url,auth);
-	  // console.log(updateResult)
+	  try {
+	    const updateResult = await axios.post(url + j, auth); //console.log(updateResult)
 
-	  return; // var headers = {headers: {'content-type': 'application/json'}};
-	  // var p = {
-	  //   "skillID": parseInt(payload.skillID),
-	  //   "operatorID": parseInt(payload.operatorID),
-	  //   "groupID": payload.groupID,
-	  //   "meta": {
-	  //     "type": "solid",
-	  //     "currcertID": payload.currcertID,
-	  //     "letter": "",
-	  //     "start": "8/3/2021"
-	  //   },
-	  //   "data": []
-	  // }
-	  // //console.log('updateCert: ' + JSON.stringify(p))
-	  // console.log('updateCert: ')
-	  // console.log(p)
-	  // var id = (payload.skillID*10)+payload.operatorID
-	  // try {
-	  //   await axios.put(`${localRoot}/certifications/${id}`,p,headers);
-	  //   //`${localRoot}/certifications?skillID=${payload.skillID}&operatorID=${payload.operatorID}&groupID=${payload.groupID}`
-	  //   //await axios.put(`${localRoot}/certifications`,p,headers);
-	  //   console.log('update successful')
-	  // }
-	  // catch(error) {
-	  //   //console.dir(error)
-	  //   try {
-	  //     //p.id = id
-	  //     await axios.post(`${localRoot}/certifications`,p,headers);
-	  //     console.log('add successful')
-	  //     console.log(p)
-	  //   }
-	  //   catch(error) {
-	  //     //console.log('second error')
-	  //     console.dir(error)
-	  //   }
-	  // }
+	    if (updateResult.status !== 200) {
+	      alert(updateResult.statusText);
+	    }
+	  } catch (e) {
+	    alert(e);
+	  }
 	};
 	const updateCert = async (dispatch, payload) => {
 	  dispatch({
 	    type: SET_ACTIVE,
 	    payload: true
 	  });
-	  doDBCert(payload); //dispatch({type: types.UPDATE_CERT, payload: payload});
-
+	  doDBCert(payload);
 	  setAll(dispatch, {
+	    'cellData': payload.cellData,
 	    'partnerID': payload.partnerID,
 	    'userID': payload.userID,
 	    'groupID': payload.groupID,
@@ -32335,8 +32324,16 @@
 	  var url = `${apiRoot}/UpdateSkillGoal`;
 	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&goal=${payload.goal}&userID=${payload.userID}`;
 	  console.log(url + j);
-	  const updateResult = await axios.post(url + j, auth);
-	  console.log(updateResult);
+
+	  try {
+	    const updateResult = await axios.post(url + j, auth);
+
+	    if (updateResult.status !== 200) {
+	      alert(updateResult.statusText);
+	    }
+	  } catch (e) {
+	    alert(e);
+	  }
 	};
 	const updateSkillGoal = (dispatch, payload) => {
 	  console.log(payload);
@@ -32370,6 +32367,7 @@
 	  console.log('updateSkillGoal: ' + JSON.stringify(j));
 	  doDBSkillGoal(payload);
 	  setAll(dispatch, {
+	    'cellData': payload.cellData,
 	    'partnerID': payload.partnerID,
 	    'userID': payload.userID,
 	    'groupID': payload.groupID,
@@ -32400,9 +32398,18 @@
 	  };
 	  var url = `${apiRoot}/UpdateSkillRev`;
 	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&rev=${payload.rev}&userID=${payload.userID}`;
-	  console.log(url + j);
-	  const updateResult = await axios.post(url + j, auth);
-	  console.log(updateResult);
+	  console.log(url + j); //const updateResult = await axios.post(url+j,auth);
+	  //console.log(updateResult)
+
+	  try {
+	    const updateResult = await axios.post(url + j, auth);
+
+	    if (updateResult.status !== 200) {
+	      alert(updateResult.statusText);
+	    }
+	  } catch (e) {
+	    alert(e);
+	  }
 	};
 	const updateSkillRev = (dispatch, payload) => {
 	  console.log(payload.rev);
@@ -32423,6 +32430,7 @@
 	  console.log('updateSkillRev: ' + JSON.stringify(j));
 	  doDBSkillRev(payload);
 	  setAll(dispatch, {
+	    'cellData': payload.cellData,
 	    'partnerID': payload.partnerID,
 	    'userID': payload.userID,
 	    'groupID': payload.groupID,
@@ -32439,9 +32447,18 @@
 	  };
 	  var url = `${apiRoot}/Updateoperatorgoal`;
 	  var j = `?groupID=${payload.groupID}&operatorID=${payload.operatorID}&goal=${payload.goal}&userID=${payload.userID}`;
-	  console.log(url + j);
-	  const updateResult = await axios.post(url + j, auth);
-	  console.log(updateResult);
+	  console.log(url + j); //const updateResult = await axios.post(url+j,auth);
+	  //console.log(updateResult)
+
+	  try {
+	    const updateResult = await axios.post(url + j, auth);
+
+	    if (updateResult.status !== 200) {
+	      alert(updateResult.statusText);
+	    }
+	  } catch (e) {
+	    alert(e);
+	  }
 	};
 	const updateOperatorGoal = async (dispatch, payload) => {
 	  console.log(payload.goal);
@@ -32462,6 +32479,7 @@
 	  console.log('updateOperatorGoal: ' + JSON.stringify(j));
 	  doDBOperatorGoal(payload);
 	  setAll(dispatch, {
+	    'cellData': payload.cellData,
 	    'partnerID': payload.partnerID,
 	    'userID': payload.userID,
 	    'groupID': payload.groupID,
@@ -32514,10 +32532,19 @@
 	    }
 	  };
 	  var url = `${apiRoot}/UpdateDueDate`;
-	  var j = `?groupID=${payload.groupID}&operatorID=${payload.operatorID}&dueDate=${payload.dueDate}&userID=${payload.userID}`;
-	  console.log(url + j);
-	  const updateResult = await axios.post(url + j, auth);
-	  console.log(updateResult);
+	  var j = `?groupID=${payload.groupID}&skillID=${payload.skillID}&operatorID=${payload.operatorID}&dueDate=${payload.dueDate}&userID=${payload.userID}`;
+	  console.log(url + j); // const updateResult = await axios.post(url+j,auth);
+	  // console.log(updateResult)
+
+	  try {
+	    const updateResult = await axios.post(url + j, auth);
+
+	    if (updateResult.status !== 200) {
+	      alert(updateResult.statusText);
+	    }
+	  } catch (e) {
+	    alert(e);
+	  }
 	};
 	const updateDueDate = async (dispatch, payload) => {
 	  console.log(payload.dueDate);
@@ -32544,6 +32571,7 @@
 	  console.log('updateDueDate: ' + JSON.stringify(j));
 	  doDBDueDate(payload);
 	  setAll(dispatch, {
+	    'cellData': payload.cellData,
 	    'partnerID': payload.partnerID,
 	    'userID': payload.userID,
 	    'groupID': payload.groupID,
@@ -32837,7 +32865,7 @@
 
 	    case SET_CELLDATA:
 	      return { ...state,
-	        celldata: payload
+	        cellData: payload
 	      };
 
 	    case SET_USERNAME:
@@ -33043,7 +33071,11 @@
 	};
 
 	const MatrixContext = /*#__PURE__*/react.exports.createContext();
+	const useMatrixState = () => react.exports.useContext(MatrixContext);
 	const MatrixProvider = props => {
+	  // const matrixState = useMatrixState();
+	  // console.log(useMatrixState)
+	  // console.log(matrixState)
 	  const getFunctions = {
 	    setPartnerID: payload => setPartnerID(dispatch, payload),
 	    setUserID: payload => setUserID(dispatch, payload),
@@ -33062,13 +33094,18 @@
 	    setUserName: payload => setUserName(dispatch, payload),
 	    setActive: payload => setActive(dispatch, payload),
 	    setAll: payload => {
+	      //console.log(state.cellData)
+	      //payload.cellData = matrixState.cellData;
 	      setAll(dispatch, payload);
 	    },
 	    updateSkillGoal: payload => updateSkillGoal(dispatch, payload),
 	    updateSkillRev: payload => updateSkillRev(dispatch, payload),
 	    updateOperatorGoal: payload => updateOperatorGoal(dispatch, payload),
 	    updateDueDate: payload => updateDueDate(dispatch, payload),
-	    updateCert: payload => updateCert(dispatch, payload),
+	    updateCert: payload => {
+	      console.log(state.cellData);
+	      updateCert(dispatch, payload);
+	    },
 	    setAuthenticatedUser: payload => setAuthenticatedUser(dispatch, payload),
 	    setRightTotals: payload => setRightTotals(dispatch, payload),
 	    setBottomTotals: payload => setBottomTotals(dispatch, payload),
@@ -33096,7 +33133,7 @@
 	    operatorDialog: 'none',
 	    mainDialog: 'none',
 	    secondaryDialog: 'none',
-	    celldata: {},
+	    cellData: {},
 	    userName: 'initmatrix',
 	    authenticateduser: '',
 	    operatorgoal: 0,
@@ -33122,8 +33159,7 @@
 	      ...getFunctions
 	    }
 	  }, props.children);
-	};
-	const useMatrixState = () => react.exports.useContext(MatrixContext);
+	}; //export const useMatrixState = () => useContext(MatrixContext);
 
 	var LoadingOverlay = {};
 
@@ -41524,7 +41560,7 @@
 
 	const Top = /*#__PURE__*/React$1.memo(() => {
 	  const matrixState = useMatrixState();
-	  var img = '' + matrixState.celldata.picture + '';
+	  var img = '' + matrixState.cellData.picture + '';
 	  var show = true;
 
 	  if (matrixState.skillDialog === 'block' && matrixState.mainDialog === 'none') {
@@ -41579,15 +41615,15 @@
 	    style: {
 	      marginTop: '2px'
 	    }
-	  }, matrixState.celldata.operatorName), /*#__PURE__*/React$1.createElement("div", {
+	  }, matrixState.cellData.operatorName), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      fontSize: '12px'
 	    }
-	  }, "Title"), /*#__PURE__*/React$1.createElement("div", {
+	  }, matrixState.cellData.title), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      fontSize: '12px'
 	    }
-	  }, "Plant Name - Location")), show !== null && /*#__PURE__*/React$1.createElement("div", {
+	  }, matrixState.cellData.plantName, " - ", matrixState.cellData.location)), show !== null && /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      margin: '5px 0 0 0',
 	      fontSize: '12px'
@@ -41599,9 +41635,12 @@
 	  }, "Freshman Training Form"))));
 	});
 
-	const Main = props => {
-	  console.log(props.data.meta);
-	  const matrixState = useMatrixState(); //const matrixStateRef = useRef(matrixState);
+	const Main = () => {
+	  //console.log(props.data.meta)
+	  const matrixState = useMatrixState(); //var cellData = matrixState.cellData;
+	  //console.log(cellData)
+	  //console.log(props.data)
+	  //const matrixStateRef = useRef(matrixState);
 
 	  const [diamonddata, setDiamondData] = react.exports.useState(null);
 	  const [metadata, setMetaData] = react.exports.useState(null);
@@ -41613,24 +41652,24 @@
 	  var skill = {};
 	  var certificationID = "0";
 
-	  if (matrixState.celldata.meta !== undefined) {
-	    operator = matrixState.celldata.operator;
-	    skill = matrixState.celldata.skill;
-	    certificationID = matrixState.celldata.certificationID;
-	  } //console.log(matrixState.celldata.meta)
+	  if (matrixState.cellData.meta !== undefined) {
+	    operator = matrixState.cellData.operator;
+	    skill = matrixState.cellData.skill;
+	    certificationID = matrixState.cellData.certificationID;
+	  } //console.log(matrixState.cellData.meta)
 
 
 	  react.exports.useEffect(() => {
-	    //console.log(matrixState.celldata.meta)
-	    if (matrixState.celldata.meta === undefined) {
+	    //console.log(matrixState.cellData.meta)
+	    if (matrixState.cellData.meta === undefined) {
 	      setDiamondData(null);
 	      setMetaData(null);
 	      setCertification(null);
 	      return;
 	    }
 
-	    var data = matrixState.celldata.data;
-	    var meta = matrixState.celldata.meta;
+	    var data = matrixState.cellData.data;
+	    var meta = matrixState.cellData.meta;
 
 	    if (typeof data === 'string') {
 	      data = JSON.parse(data);
@@ -41658,7 +41697,7 @@
 	    } else {
 	      setCurrcertDate(null);
 	    }
-	  }, [matrixState.celldata.meta, matrixState.celldata.data]);
+	  }, [matrixState.cellData.meta, matrixState.cellData.data]);
 
 	  const onChangeValue = event => {
 	    //console.log(event.target.value);
@@ -41667,13 +41706,14 @@
 	      "type": "solid",
 	      "currcertID": parseInt(event.target.value),
 	      //"certification":event.target.title,
-	      "strokecolor": matrixState.celldata.meta.strokecolor,
-	      "letter": matrixState.celldata.meta.letter,
-	      "start": matrixState.celldata.meta.start,
-	      "certstate": matrixState.celldata.meta.certstate
+	      "strokecolor": matrixState.cellData.meta.strokecolor,
+	      "letter": matrixState.cellData.meta.letter,
+	      "start": matrixState.cellData.meta.start,
+	      "certstate": matrixState.cellData.meta.certstate
 	    };
 	    setMetaData(metaval);
 	    var c = {
+	      cellData: matrixState.cellData,
 	      skillID: skill.skillID,
 	      operatorID: operator.operatorID,
 	      currcertID: parseInt(event.target.value),
@@ -41688,10 +41728,10 @@
 	  //       "type":"solid",
 	  //       "currcertID":parseInt(event.target.value),
 	  //       "certification":event.target.title,
-	  //       "strokecolor":matrixState.celldata.meta.strokecolor,
-	  //       "letter":matrixState.celldata.meta.letter,
-	  //       "start":matrixState.celldata.meta.start,
-	  //       "certstate":matrixState.celldata.meta.certstate
+	  //       "strokecolor":matrixState.cellData.meta.strokecolor,
+	  //       "letter":matrixState.cellData.meta.letter,
+	  //       "start":matrixState.cellData.meta.start,
+	  //       "certstate":matrixState.cellData.meta.certstate
 	  //     }
 	  //     // var newCerts = matrixState.certifications.slice();
 	  //     // const lastCertIndex = newCerts.findIndex(
@@ -41700,8 +41740,8 @@
 	  //     // if (lastCertIndex !== -1) {
 	  //     //   newCerts[lastCertIndex] = {
 	  //     //     "id": certificationID,
-	  //     //     "row": matrixState.celldata.row,
-	  //     //     "col": matrixState.celldata.col,
+	  //     //     "row": matrixState.cellData.row,
+	  //     //     "col": matrixState.cellData.col,
 	  //     //     "skill": skill,
 	  //     //     "operator": operator,
 	  //     //     "skillID": skill.id,
@@ -41715,8 +41755,8 @@
 	  //     setCertification(parseInt(event.target.value))
 	  //     var c = {
 	  //       //id: certificationID,
-	  //       //row: matrixState.celldata.row,
-	  //       //col: matrixState.celldata.col,
+	  //       //row: matrixState.cellData.row,
+	  //       //col: matrixState.cellData.col,
 	  //       //skill: skill,
 	  //       //operator: operator,
 	  //       skillID: skill.skillID,
@@ -41829,6 +41869,7 @@
 	      matrixState.setActive(true);
 	      console.log(dueDate);
 	      var payload = {
+	        cellData: matrixState.cellData,
 	        skillID: skill.skillID,
 	        operatorID: operator.operatorID,
 	        dueDate: dueDate,
@@ -42701,7 +42742,8 @@
 	const Operator = /*#__PURE__*/React$1.memo(props => {
 	  const {
 	    data
-	  } = props;
+	  } = props; //console.log(data)
+
 	  var dataSort = Array.from(data.data);
 	  dataSort.sort(function (x, y) {
 	    var n = y.meta.currcertID - x.meta.currcertID;
@@ -42841,6 +42883,7 @@
 	    onClick: () => {
 	      matrixState.setActive(true);
 	      var payload = {
+	        cellData: matrixState.cellData,
 	        operatorID: operatorID,
 	        goal: goal,
 	        partnerID: matrixState.partnerID,
@@ -43291,6 +43334,7 @@
 	    onClick: () => {
 	      matrixState.setActive(true);
 	      var payload = {
+	        cellData: matrixState.cellData,
 	        skillID: skillID,
 	        goal: goal,
 	        partnerID: matrixState.partnerID,
@@ -43334,6 +43378,7 @@
 	    onClick: () => {
 	      matrixState.setActive(true);
 	      var payload = {
+	        cellData: matrixState.cellData,
 	        skillID: skillID,
 	        rev: rev,
 	        partnerID: matrixState.partnerID,
@@ -44065,6 +44110,7 @@
 	    matrixStateRef.current.setUserID(sessionStorage.getItem('userID'));
 	    matrixStateRef.current.setPartnerID(sessionStorage.getItem('partnerID'));
 	    matrixStateRef.current.setAll({
+	      'cellData': matrixStateRef.current.cellData,
 	      'partnerID': sessionStorage.getItem('partnerID'),
 	      'userID': sessionStorage.getItem('userID'),
 	      'groupID': groupID,
@@ -44096,9 +44142,19 @@
 	    if (matrixState.mainDialog === 'block') {
 	      dialogWidth = '720px';
 	    }
-	  }
+	  } //'calc(100vh - 152px)'
 
-	  return /*#__PURE__*/React$1.createElement("div", {
+
+	  return /*#__PURE__*/React$1.createElement(default_1, {
+	    style: {
+	      width: '100%',
+	      height: 'calc(100vh - 1px)',
+	      zIndex: '100000'
+	    },
+	    active: matrixState.active,
+	    spinner: true,
+	    text: "Training Matrix is Loading..."
+	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      display: 'flex',
 	      flexDirection: 'row',
@@ -44178,7 +44234,7 @@
 	      height: '100%',
 	      zIndex: '10'
 	    },
-	    active: matrixState.active,
+	    active: false,
 	    spinner: true,
 	    text: "Loading..."
 	  }, /*#__PURE__*/React$1.createElement(Row2Col2, {
@@ -44268,7 +44324,7 @@
 	      xpadding: '10px',
 	      xboxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)'
 	    }
-	  }, matrixState.main)))));
+	  }, matrixState.main))))));
 	};
 
 	const App = () => {
@@ -44297,8 +44353,8 @@
 	      // console.log(tokenResult)
 	      //const portalGroupsResult = await axios(apiRoot + '/portalgroups?partnerid=448', auth);
 
-	      var url = apiRoot + '/portalgroups?partnerid=' + sessionStorage.getItem('partnerID'); //console.log(url)
-
+	      var url = apiRoot + '/portalgroups?partnerid=' + sessionStorage.getItem('partnerID');
+	      console.log(url);
 	      const portalGroupsResult = await axios(url, auth);
 	      appStateRef.current.setGroups(portalGroupsResult.data);
 	    }

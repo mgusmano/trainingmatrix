@@ -17,12 +17,14 @@ export const setAll = async (dispatch, payload) => {
 
     var certifications = createCertifications(skills, operators, certificationsInit)
     if (payload2.cellData.meta !== undefined) {
-      if (payload2.cellData.meta.skill.skillID !== undefined) {
-        console.log(payload2.cellData)
-        const filteredcertifications = certifications.filter(item => item.skill.skillID === payload2.cellData.skill.skillID && item.operator.operatorID === payload2.cellData.operator.operatorID);
-        console.log(filteredcertifications)
-        payload2.cellData.meta = filteredcertifications[0].meta
-        dispatch({type: types.SET_CELLDATA, payload: payload2.cellData});
+      if (payload2.cellData.meta.skill !== undefined) {
+        if (payload2.cellData.meta.skill.skillID !== undefined) {
+          console.log(payload2.cellData)
+          const filteredcertifications = certifications.filter(item => item.skill.skillID === payload2.cellData.skill.skillID && item.operator.operatorID === payload2.cellData.operator.operatorID);
+          console.log(filteredcertifications)
+          payload2.cellData.meta = filteredcertifications[0].meta
+          dispatch({type: types.SET_CELLDATA, payload: payload2.cellData});
+        }
       }
     }
 
