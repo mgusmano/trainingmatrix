@@ -30022,7 +30022,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2021-12-13-a")));
+	  }, "v2021-12-13-c")));
 	};
 
 	const SET_PARTNERID = 'SET_PARTNERID';
@@ -32025,6 +32025,7 @@
 	          "operator": operators[o],
 	          "skillID": skills[s].skillID,
 	          "operatorID": operators[o].operatorID,
+	          "plantName": operators[o].plantName,
 	          "currcertID": 0,
 	          "meta": {
 	            certifiedDate: null,
@@ -41653,6 +41654,12 @@
 	    } else {
 	      setCurrcertDate(null);
 	    }
+
+	    if (meta.certificationDueDate !== null) {
+	      setDueDate(new Date(meta.certificationDueDate));
+	    } else {
+	      setCurrcertDate(null);
+	    }
 	  }, [matrixState.cellData.meta, matrixState.cellData.data]);
 
 	  const onChangeValue = event => {
@@ -41737,8 +41744,7 @@
 
 
 	  var disabled = false;
-	  var color = 'black';
-	  console.log(metadata);
+	  var color = 'black'; //console.log(metadata)
 
 	  if (metadata !== null) {
 	    //if (metadata.certstate === 'disabled') {
@@ -41759,6 +41765,15 @@
 	  //   console.log(date)
 	  //   setDueDate(date)
 	  // }} />
+
+	  if (dueDate !== null) {
+	    console.log(dueDate);
+	    var d = Date.parse(dueDate); //var timestamp = Date.parse("11/30/2011");
+
+	    var dateObject = new Date(d);
+	    console.log(dateObject);
+	    console.log(dateObject.getDay());
+	  }
 
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
@@ -41821,6 +41836,7 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("input", {
 	    type: "date",
+	    value: dueDate,
 	    onChange: e => {
 	      //console.log(e)
 	      //console.log(e.target.value)
@@ -41935,7 +41951,7 @@
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    className: "values",
 	    style: {
-	      fontSize: '8px',
+	      fontSize: '12px',
 	      color: 'white'
 	    }
 	  }, "certificationID: ", certificationID, " skillID: ", skill.skillID, " operatorID: ", operator.operatorID)));
@@ -43692,6 +43708,9 @@
 	    }));
 	    data.operatorName = data.operator.operatorName;
 	    data.picture = data.operator.picture;
+	    data.plantName = data.operator.plantName;
+	    data.title = data.operator.title;
+	    data.location = data.operator.location;
 	    matrixState.setCellData(data);
 	    matrixState.showMainDialog('block');
 	    matrixState.showSkillDialog('none');
