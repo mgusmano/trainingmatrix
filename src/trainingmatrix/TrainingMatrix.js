@@ -35,7 +35,16 @@ const MainMatrixProvider = (props) => {
 
   useEffect(() => {
     if (multiplier === '') return
+
     matrixStateRef.current.setActive(true)
+
+    //matrixStateRef.current.setCellData(null)
+    matrixStateRef.current.showMainDialog('none')
+    matrixStateRef.current.showSkillDialog('none')
+    matrixStateRef.current.showOperatorDialog('none')
+    matrixStateRef.current.setTop('')
+    matrixStateRef.current.showTopDialog('none')
+
     matrixStateRef.current.setUserID(sessionStorage.getItem('userID'))
     matrixStateRef.current.setPartnerID(sessionStorage.getItem('partnerID'))
     matrixStateRef.current.setAll({

@@ -124,6 +124,7 @@ export const setAll = async (dispatch, payload) => {
       operators: operators2Result.data,
       certifications: certifications2Result.data
     }
+    console.log(r)
     return r
   }
 

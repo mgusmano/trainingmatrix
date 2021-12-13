@@ -30022,7 +30022,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2021-12-10-c")));
+	  }, "v2021-12-13-a")));
 	};
 
 	const SET_PARTNERID = 'SET_PARTNERID';
@@ -32006,6 +32006,7 @@
 	      operators: operators2Result.data,
 	      certifications: certifications2Result.data
 	    };
+	    console.log(r);
 	    return r;
 	  };
 
@@ -44077,7 +44078,13 @@
 	  useResizeEvent();
 	  react.exports.useEffect(() => {
 	    if (multiplier === '') return;
-	    matrixStateRef.current.setActive(true);
+	    matrixStateRef.current.setActive(true); //matrixStateRef.current.setCellData(null)
+
+	    matrixStateRef.current.showMainDialog('none');
+	    matrixStateRef.current.showSkillDialog('none');
+	    matrixStateRef.current.showOperatorDialog('none');
+	    matrixStateRef.current.setTop('');
+	    matrixStateRef.current.showTopDialog('none');
 	    matrixStateRef.current.setUserID(sessionStorage.getItem('userID'));
 	    matrixStateRef.current.setPartnerID(sessionStorage.getItem('partnerID'));
 	    matrixStateRef.current.setAll({
