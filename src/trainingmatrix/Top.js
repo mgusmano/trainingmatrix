@@ -11,6 +11,8 @@ export const Top = React.memo(() => {
   }
   var link = 'https://skillnetformsapp.azurewebsites.net/'
 
+  console.log(matrixState.cellData)
+
   return (
     <div style={{boxSizing:'border-box',display:'flex',flexDirection:'column',fontSize:'12px',padding:'0px',width:'100%',xheight:'500px',background:'gainsboro'}}>
       <div style={{width:'50px',textDecoration:'underline',cursor: 'pointer'}}

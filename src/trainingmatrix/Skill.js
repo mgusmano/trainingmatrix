@@ -44,6 +44,9 @@ export const Skill = React.memo((props) => {
     const found = dataSort.find(element => element.certificationID === val);
     found.operatorName = found.operator.operatorName
     found.picture = found.operator.picture
+    found.plantName = found.operator.plantName;
+    found.title = found.operator.title
+    found.location = found.operator.location
     matrixState.setCellData(found)
     matrixState.setMain(<Main data={found}/>)
     matrixState.showMainDialog('block')

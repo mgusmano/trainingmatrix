@@ -35,6 +35,7 @@ export const Operator = React.memo((props) => {
   }
 
   const clickItem = (event,index) => {
+    console.log('clickItem')
     if (oldtarget !== null) {
       oldtarget.style.background = 'white'
     }
@@ -44,6 +45,10 @@ export const Operator = React.memo((props) => {
     const found = dataSort.find(element => element.certificationID === val);
     found.operatorName = found.operator.operatorName
     found.picture = found.operator.picture
+    found.plantName = found.operator.plantName;
+    found.title = found.operator.title
+    found.location = found.operator.location
+    console.log(found)
     matrixState.setCellData(found)
     matrixState.setMain(<Main data={found}/>)
     matrixState.showMainDialog('block')

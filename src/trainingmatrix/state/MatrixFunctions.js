@@ -144,6 +144,8 @@ export const setAll = async (dispatch, payload) => {
           "skillID": skills[s].skillID,
           "operatorID": operators[o].operatorID,
           "plantName": operators[o].plantName,
+          "title": operators[o].title,
+          "location": operators[o].location,
           "currcertID": 0,
           "meta": {
             certifiedDate: null,
@@ -182,10 +184,12 @@ export const setAll = async (dispatch, payload) => {
         // console.log(certificationsData[o].operatorID)
         if (element.skillID === certificationsData[o].skillID && element.operatorID === certificationsData[o].operatorID) {
           c = certificationsData[o]
+          c.plantName = 'c' //certificationsData[o].plantName
+          c.title = 'c' //certificationsData[o].title
+          c.location = 'c' //certificationsData[o].location
         }
         return c
       });
-      //console.log(found)
       //console.log(found)
       if (found !== undefined) {
         found.meta = certificationsData[o].meta
