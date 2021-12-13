@@ -70,6 +70,13 @@ export const Main = () => {
     else {
       setCurrcertDate(null)
     }
+
+    if (meta.certificationDueDate !== null) {
+      setDueDate(new Date(meta.certificationDueDate))
+    }
+    else {
+      setCurrcertDate(null)
+    }
   },[matrixState.cellData.meta,matrixState.cellData.data])
 
   const onChangeValue = (event) => {
@@ -160,7 +167,7 @@ export const Main = () => {
 
   var disabled = false;
   var color = 'black'
-  console.log(metadata)
+  //console.log(metadata)
   if (metadata !== null) {
     //if (metadata.certstate === 'disabled') {
     if (metadata.trainingStartDate === null) {
@@ -185,7 +192,14 @@ export const Main = () => {
   //   setDueDate(date)
   // }} />
 
-
+  if (dueDate !== null) {
+console.log(dueDate)
+var d = Date.parse(dueDate)
+//var timestamp = Date.parse("11/30/2011");
+var dateObject = new Date(d);
+console.log(dateObject)
+console.log(dateObject.getDay())
+  }
 
   return (
     <div style={{boxSizing:'border-box',height:'500px',padding:'10px 0 0 40px',fontSize:'20px',display:'flex',flexDirection:'column'}}>
@@ -226,7 +240,7 @@ export const Main = () => {
       <div style={{display:'flex',flexDirection:'row',margin:'5px 0 0 0',fontSize:'12px'}}>
         <div style={{margin:'5px 1px 0 0',width:'60px'}}>Due Date:</div>
         <div style={{width:'170px'}}>
-          <input type="date"
+          <input type="date" value={dueDate}
             onChange={(e) => {
               //console.log(e)
               //console.log(e.target.value)
@@ -282,7 +296,7 @@ export const Main = () => {
       </div>
 
       <div style={{margin:'180px 0 0 0',display:'flex',flexDirection:'column'}}>
-        <div className='values' style={{fontSize:'8px',color:'white'}}>certificationID: {certificationID} skillID: {skill.skillID} operatorID: {operator.operatorID}</div>
+        <div className='values' style={{fontSize:'12px',color:'black'}}>certificationID: {certificationID} skillID: {skill.skillID} operatorID: {operator.operatorID}</div>
       </div>
 
     </div>

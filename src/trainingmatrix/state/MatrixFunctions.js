@@ -143,6 +143,7 @@ export const setAll = async (dispatch, payload) => {
           "operator":operators[o],
           "skillID": skills[s].skillID,
           "operatorID": operators[o].operatorID,
+          "plantName": operators[o].plantName,
           "currcertID": 0,
           "meta": {
             certifiedDate: null,

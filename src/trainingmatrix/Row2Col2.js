@@ -50,6 +50,12 @@ export const Row2Col2 = (props) => {
 
     data.operatorName = data.operator.operatorName
     data.picture = data.operator.picture
+    data.plantName = data.operator.plantName
+    data.title = data.operator.title
+    data.location = data.operator.location
+
+
+
     matrixState.setCellData(data)
     matrixState.showMainDialog('block')
     matrixState.showSkillDialog('none')
