@@ -124,7 +124,7 @@ export const setAll = async (dispatch, payload) => {
       operators: operators2Result.data,
       certifications: certifications2Result.data
     }
-    console.log(r)
+    //console.log(r)
     return r
   }
 
@@ -585,17 +585,25 @@ export const doDBDueDate = async (payload) => {
 export const updateDueDate = async (dispatch,payload) => {
   console.log(payload.dueDate)
 
-  var d2 = new Date(payload.dueDate)
+  //var newDate = new Date(dueDate + 'T00:00');
+  var d2 = new Date(payload.dueDate + 'T00:00')
   //console.log(d2)
   let textDate = d2.toLocaleDateString();
   console.log(textDate)
 
-  var isDate = payload.dueDate instanceof Date && !isNaN(payload.dueDate.valueOf());
-  if (!isDate || payload.dueDate === null) {
+  var isDate = d2 instanceof Date && !isNaN(d2.valueOf());
+  if (!isDate || d2 === null) {
     alert('Due Date is not a Date')
     dispatch({type: types.SET_ACTIVE, payload: false});
     return
   }
+
+  // var isDate = payload.dueDate instanceof Date && !isNaN(payload.dueDate.valueOf());
+  // if (!isDate || payload.dueDate === null) {
+  //   alert('Due Date is not a Date')
+  //   dispatch({type: types.SET_ACTIVE, payload: false});
+  //   return
+  // }
 
   payload.dueDate = textDate
   var j = {'operatorID':payload.operatorID,'dueDate':payload.dueDate}

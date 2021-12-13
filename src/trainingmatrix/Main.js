@@ -71,12 +71,27 @@ export const Main = () => {
       setCurrcertDate(null)
     }
 
+    // if (meta.certificationDueDate !== null) {
+    //   setDueDate(new Date(meta.certificationDueDate))
+    // }
+    // else {
+    //   setCurrcertDate(null)
+    // }
+
     if (meta.certificationDueDate !== null) {
-      setDueDate(new Date(meta.certificationDueDate))
+      console.log(meta.certificationDueDate)
+      //var newDate = new Date(dueDate + 'T00:00');
+      var newDate = new Date(meta.certificationDueDate);
+      console.log(newDate)
+      var MyDateString = newDate.getFullYear() + '-' + ('0' + (newDate.getMonth()+1)).slice(-2) + '-' + ('0' + newDate.getDate()).slice(-2)
+      console.log(MyDateString)
+      setDueDate(MyDateString)
+
     }
-    else {
-      setCurrcertDate(null)
-    }
+
+
+
+
   },[matrixState.cellData.meta,matrixState.cellData.data])
 
   const onChangeValue = (event) => {
@@ -192,14 +207,7 @@ export const Main = () => {
   //   setDueDate(date)
   // }} />
 
-  if (dueDate !== null) {
-console.log(dueDate)
-var d = Date.parse(dueDate)
-//var timestamp = Date.parse("11/30/2011");
-var dateObject = new Date(d);
-console.log(dateObject)
-console.log(dateObject.getDay())
-  }
+
 
   return (
     <div style={{boxSizing:'border-box',height:'500px',padding:'10px 0 0 40px',fontSize:'20px',display:'flex',flexDirection:'column'}}>
@@ -246,8 +254,19 @@ console.log(dateObject.getDay())
               //console.log(e.target.value)
               //console.log(e.target.valueAsDate)
               var newDate = new Date(e.target.value + 'T00:00');
-              //console.log(newDate)
-              setDueDate(newDate)
+              console.log(newDate)
+              // var y = newDate.getFullYear()
+              // var m = newDate.getMonth()+1
+              // var d = newDate.getDay()+1
+              // var ydm = y + '-' + m + '-' + d
+              // console.log(ydm)
+
+              var MyDateString = newDate.getFullYear() + '-' + ('0' + (newDate.getMonth()+1)).slice(-2) + '-' + ('0' + newDate.getDate()).slice(-2)
+
+             //+ newDate.getFullYear();
+              //var dt = '2021-12-12'
+              //setDueDate(newDate)
+              setDueDate(MyDateString)
             }}
           />
         </div>
