@@ -30022,7 +30022,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2021-12-13-c")));
+	  }, "v2021-12-15-a")));
 	};
 
 	const SET_PARTNERID = 'SET_PARTNERID';
@@ -32005,8 +32005,8 @@
 	      skills: skills2Result.data,
 	      operators: operators2Result.data,
 	      certifications: certifications2Result.data
-	    };
-	    console.log(r);
+	    }; //console.log(r)
+
 	    return r;
 	  };
 
@@ -32026,6 +32026,8 @@
 	          "skillID": skills[s].skillID,
 	          "operatorID": operators[o].operatorID,
 	          "plantName": operators[o].plantName,
+	          "title": operators[o].title,
+	          "location": operators[o].location,
 	          "currcertID": 0,
 	          "meta": {
 	            certifiedDate: null,
@@ -32062,11 +32064,15 @@
 
 	        if (element.skillID === certificationsData[o].skillID && element.operatorID === certificationsData[o].operatorID) {
 	          c = certificationsData[o];
+	          c.plantName = 'c'; //certificationsData[o].plantName
+
+	          c.title = 'c'; //certificationsData[o].title
+
+	          c.location = 'c'; //certificationsData[o].location
 	        }
 
 	        return c;
 	      }); //console.log(found)
-	      //console.log(found)
 
 	      if (found !== undefined) {
 	        found.meta = certificationsData[o].meta;
@@ -32503,21 +32509,28 @@
 	  }
 	};
 	const updateDueDate = async (dispatch, payload) => {
-	  console.log(payload.dueDate);
-	  var d2 = new Date(payload.dueDate); //console.log(d2)
+	  console.log(payload.dueDate); //var newDate = new Date(dueDate + 'T00:00');
+
+	  var d2 = new Date(payload.dueDate + 'T00:00'); //console.log(d2)
 
 	  let textDate = d2.toLocaleDateString();
 	  console.log(textDate);
-	  var isDate = payload.dueDate instanceof Date && !isNaN(payload.dueDate.valueOf());
+	  var isDate = d2 instanceof Date && !isNaN(d2.valueOf());
 
-	  if (!isDate || payload.dueDate === null) {
+	  if (!isDate || d2 === null) {
 	    alert('Due Date is not a Date');
 	    dispatch({
 	      type: SET_ACTIVE,
 	      payload: false
 	    });
 	    return;
-	  }
+	  } // var isDate = payload.dueDate instanceof Date && !isNaN(payload.dueDate.valueOf());
+	  // if (!isDate || payload.dueDate === null) {
+	  //   alert('Due Date is not a Date')
+	  //   dispatch({type: types.SET_ACTIVE, payload: false});
+	  //   return
+	  // }
+
 
 	  payload.dueDate = textDate;
 	  var j = {
@@ -41516,6 +41529,7 @@
 
 	const Top = /*#__PURE__*/React$1.memo(() => {
 	  const matrixState = useMatrixState();
+	  console.log(matrixState.cellData);
 	  var img = '' + matrixState.cellData.picture + '';
 	  var show = true;
 
@@ -41523,7 +41537,17 @@
 	    show = false;
 	  }
 
-	  var link = 'https://skillnetformsapp.azurewebsites.net/';
+	  var operatorID = '';
+	  console.log(matrixState.cellData.operatorID);
+
+	  if (matrixState.cellData.operatorID === undefined) {
+	    if (matrixState.cellData.operator !== undefined) operatorID = matrixState.cellData.operator.operatorID;
+	  } else {
+	    operatorID = matrixState.cellData.operatorID;
+	  }
+
+	  var link = `https://skillnetformsapp.azurewebsites.net/?operatorID=${operatorID}`;
+	  console.log(matrixState.cellData);
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      boxSizing: 'border-box',
@@ -41653,12 +41677,22 @@
 	      setCurrcertDate(new Date(meta.certifiedDate));
 	    } else {
 	      setCurrcertDate(null);
-	    }
+	    } // if (meta.certificationDueDate !== null) {
+	    //   setDueDate(new Date(meta.certificationDueDate))
+	    // }
+	    // else {
+	    //   setCurrcertDate(null)
+	    // }
+
 
 	    if (meta.certificationDueDate !== null) {
-	      setDueDate(new Date(meta.certificationDueDate));
-	    } else {
-	      setCurrcertDate(null);
+	      console.log(meta.certificationDueDate); //var newDate = new Date(dueDate + 'T00:00');
+
+	      var newDate = new Date(meta.certificationDueDate);
+	      console.log(newDate);
+	      var MyDateString = newDate.getFullYear() + '-' + ('0' + (newDate.getMonth() + 1)).slice(-2) + '-' + ('0' + newDate.getDate()).slice(-2);
+	      console.log(MyDateString);
+	      setDueDate(MyDateString);
 	    }
 	  }, [matrixState.cellData.meta, matrixState.cellData.data]);
 
@@ -41748,7 +41782,7 @@
 
 	  if (metadata !== null) {
 	    //if (metadata.certstate === 'disabled') {
-	    if (metadata.trainingStartDate === null) {
+	    if (metadata.certifiedDate === null) {
 	      disabled = true;
 	      color = 'lightgray';
 	    }
@@ -41765,15 +41799,6 @@
 	  //   console.log(date)
 	  //   setDueDate(date)
 	  // }} />
-
-	  if (dueDate !== null) {
-	    console.log(dueDate);
-	    var d = Date.parse(dueDate); //var timestamp = Date.parse("11/30/2011");
-
-	    var dateObject = new Date(d);
-	    console.log(dateObject);
-	    console.log(dateObject.getDay());
-	  }
 
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
@@ -41841,9 +41866,18 @@
 	      //console.log(e)
 	      //console.log(e.target.value)
 	      //console.log(e.target.valueAsDate)
-	      var newDate = new Date(e.target.value + 'T00:00'); //console.log(newDate)
+	      var newDate = new Date(e.target.value + 'T00:00');
+	      console.log(newDate); // var y = newDate.getFullYear()
+	      // var m = newDate.getMonth()+1
+	      // var d = newDate.getDay()+1
+	      // var ydm = y + '-' + m + '-' + d
+	      // console.log(ydm)
 
-	      setDueDate(newDate);
+	      var MyDateString = newDate.getFullYear() + '-' + ('0' + (newDate.getMonth() + 1)).slice(-2) + '-' + ('0' + newDate.getDate()).slice(-2); //+ newDate.getFullYear();
+	      //var dt = '2021-12-12'
+	      //setDueDate(newDate)
+
+	      setDueDate(MyDateString);
 	    }
 	  })), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
@@ -42757,6 +42791,8 @@
 	  };
 
 	  const clickItem = (event, index) => {
+	    console.log('clickItem');
+
 	    if (oldtarget !== null) {
 	      oldtarget.style.background = 'white';
 	    }
@@ -42767,6 +42803,10 @@
 	    const found = dataSort.find(element => element.certificationID === val);
 	    found.operatorName = found.operator.operatorName;
 	    found.picture = found.operator.picture;
+	    found.plantName = found.operator.plantName;
+	    found.title = found.operator.title;
+	    found.location = found.operator.location;
+	    console.log(found);
 	    matrixState.setCellData(found);
 	    matrixState.setMain( /*#__PURE__*/React$1.createElement(Main, {
 	      data: found
@@ -43218,6 +43258,9 @@
 	    const found = dataSort.find(element => element.certificationID === val);
 	    found.operatorName = found.operator.operatorName;
 	    found.picture = found.operator.picture;
+	    found.plantName = found.operator.plantName;
+	    found.title = found.operator.title;
+	    found.location = found.operator.location;
 	    matrixState.setCellData(found);
 	    matrixState.setMain( /*#__PURE__*/React$1.createElement(Main, {
 	      data: found

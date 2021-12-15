@@ -10,7 +10,6 @@ console.log(matrixState.cellData)
     show = false;
   }
   var operatorID = '';
-  console.log(matrixState.cellData.operatorID)
   if (matrixState.cellData.operatorID === undefined) {
     if (matrixState.cellData.operator !== undefined)
     operatorID = matrixState.cellData.operator.operatorID;
@@ -19,6 +18,11 @@ console.log(matrixState.cellData)
     operatorID = matrixState.cellData.operatorID
   }
   var link = `https://skillnetformsapp.azurewebsites.net/?operatorID=${operatorID}`
+
+  var formText = 'Freshman Training Form';
+  if (matrixState.cellData.freshmanTrainingCompleted === 1) {
+    var formText = 'Freshman Training Form (Completed)';
+  }
 
   console.log(matrixState.cellData)
 
@@ -44,7 +48,7 @@ console.log(matrixState.cellData)
         }
         {show !== null &&
           <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
-            <a target='_blank' rel='noreferrer' href={link}>Freshman Training Form</a>
+            <a target='_blank' rel='noreferrer' href={link}>{formText} </a>
           </div>
           }
       </div>
