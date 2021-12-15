@@ -185,7 +185,7 @@ export const Main = () => {
   //console.log(metadata)
   if (metadata !== null) {
     //if (metadata.certstate === 'disabled') {
-    if (metadata.trainingStartDate === null) {
+    if (metadata.certifiedDate === null) {
       disabled = true;
       color = 'lightgray'
     }

@@ -3,13 +3,22 @@ import { useMatrixState } from './state/MatrixProvider';
 
 export const Top = React.memo(() => {
   const matrixState = useMatrixState();
-
+console.log(matrixState.cellData)
   var img = '' + matrixState.cellData.picture + ''
   var show = true;
   if (matrixState.skillDialog === 'block' && matrixState.mainDialog === 'none') {
     show = false;
   }
-  var link = 'https://skillnetformsapp.azurewebsites.net/'
+  var operatorID = '';
+  console.log(matrixState.cellData.operatorID)
+  if (matrixState.cellData.operatorID === undefined) {
+    if (matrixState.cellData.operator !== undefined)
+    operatorID = matrixState.cellData.operator.operatorID;
+  }
+  else {
+    operatorID = matrixState.cellData.operatorID
+  }
+  var link = `https://skillnetformsapp.azurewebsites.net/?operatorID=${operatorID}`
 
   console.log(matrixState.cellData)
 
