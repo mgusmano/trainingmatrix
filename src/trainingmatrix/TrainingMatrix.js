@@ -168,7 +168,7 @@ const MainMatrixProvider = (props) => {
           {/* right area - details - start */}
           <div className='right' style={{marginTop:'10px',marginLeft:'10px',position:'fixed',display:'flex',flexDirection:'column',overflow: 'visible',padding:'0px', background:'white', boxSizing:'border-box',boxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)'}}>
 
-            <div style={{height:'200px',display: matrixState.topDialog}}>
+            <div style={{height:'150px',display: matrixState.topDialog}}>
               {matrixState.top}
             </div>
 
