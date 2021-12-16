@@ -21,8 +21,10 @@ console.log(matrixState.cellData)
   var link = `https://skillnetformsapp.azurewebsites.net/?operatorID=${operatorID}`
 
   var formText = 'Freshman Training Form';
+  var checkmark = false;
   if (matrixState.cellData.freshmanTrainingCompleted === 1) {
-    var formText = 'Freshman Training Form (Completed)';
+    formText = 'Freshman Training Form (Completed)';
+    checkmark = true //'&#10004;'
   }
 
   console.log(matrixState.cellData)
@@ -52,7 +54,7 @@ console.log(matrixState.cellData)
         }
         {show === true &&
           <div style={{margin:'5px 0 0 0',fontSize:'12px'}}>
-            <a target='_blank' rel='noreferrer' href={link}>{formText} </a>
+            <a target='_blank' rel='noreferrer' href={link}>{formText} </a> {checkmark === true && <span>&#10004;</span>}
           </div>
           }
       </div>
