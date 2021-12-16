@@ -338,7 +338,7 @@ export const setAll = async (dispatch, payload) => {
     const fontsize = 3;
     const bandX = 5;
     const bandY = 5;
-    var col1 = 45;
+    var col1 = 55;
     var col1a = 5;
     var col2 = bandX * x;
     var col3 =(bandX*4);

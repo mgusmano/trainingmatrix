@@ -29349,7 +29349,7 @@
 	    scheduleRoot:  scheduleRoot ,
 	    setRefreshHandler:  setRefreshHandler ,
 	    // Enables DevTools to append owner stacks to error messages in DEV mode.
-	    getCurrentFiber:  getCurrentFiberForDevTools 
+	    getCurrentFiber:  getCurrentFiberForDevTools
 	  });
 	}
 
@@ -30022,7 +30022,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2021-12-15-a")));
+	  }, "v2021-12-15-b")));
 	};
 
 	const SET_PARTNERID = 'SET_PARTNERID';
@@ -32005,8 +32005,8 @@
 	      skills: skills2Result.data,
 	      operators: operators2Result.data,
 	      certifications: certifications2Result.data
-	    }; //console.log(r)
-
+	    };
+	    console.log(r);
 	    return r;
 	  };
 
@@ -32228,7 +32228,7 @@
 	    const fontsize = 3;
 	    const bandX = 5;
 	    const bandY = 5;
-	    var col1 = 45;
+	    var col1 = 50;
 	    var col1a = 5;
 	    var col2 = bandX * x;
 	    var col3 = bandX * 4;
@@ -38842,7 +38842,7 @@
 	        onMouseDown: this.onMouseDown,
 	        onMouseUp: this.onMouseUp,
 	        // onTouchStart is added on `componentDidMount` so they can be added with
-	        // {passive: false}, which allows it to cancel. See 
+	        // {passive: false}, which allows it to cancel. See
 	        // https://developers.google.com/web/updates/2017/01/scrolling-intervention
 	        onTouchEnd: this.onTouchEnd
 	      });
@@ -41538,7 +41538,6 @@
 	  }
 
 	  var operatorID = '';
-	  console.log(matrixState.cellData.operatorID);
 
 	  if (matrixState.cellData.operatorID === undefined) {
 	    if (matrixState.cellData.operator !== undefined) operatorID = matrixState.cellData.operator.operatorID;
@@ -41547,6 +41546,12 @@
 	  }
 
 	  var link = `https://skillnetformsapp.azurewebsites.net/?operatorID=${operatorID}`;
+	  var formText = 'Freshman Training Form';
+
+	  if (matrixState.cellData.freshmanTrainingCompleted === 1) {
+	    var formText = 'Freshman Training Form (Completed)';
+	  }
+
 	  console.log(matrixState.cellData);
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
@@ -41612,7 +41617,7 @@
 	    target: "_blank",
 	    rel: "noreferrer",
 	    href: link
-	  }, "Freshman Training Form"))));
+	  }, formText, " "))));
 	});
 
 	const Main = () => {
