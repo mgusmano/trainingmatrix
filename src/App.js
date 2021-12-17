@@ -34,6 +34,7 @@ export const App = () => {
       var url = apiRoot + '/portalgroups?partnerid=' + sessionStorage.getItem('partnerID')
       //console.log(url)
       const portalGroupsResult = await axios(url, auth);
+      console.log(portalGroupsResult.data)
       appStateRef.current.setGroups(portalGroupsResult.data);
     }
     fetchData();
