@@ -35,6 +35,8 @@ export const App = () => {
       //console.log(url)
       const portalGroupsResult = await axios(url, auth);
       console.log(portalGroupsResult.data)
+      
+      appStateRef.current.setGroupID(portalGroupsResult.data[0].groupID);
       appStateRef.current.setGroups(portalGroupsResult.data);
     }
     fetchData();
@@ -59,6 +61,8 @@ export const App = () => {
       // </div>
       // <div style={{boxSizing:'border-box',height:'43px',width:'100%',background:'#337ab7',padding:'20px'}}></div>
 
+      console.log(appState.groupID)
+      
   return (
     <div style={{display:'flex',flexDirection:'column',height:'100%',width:'100%',overflow:'hidden'}}>
 

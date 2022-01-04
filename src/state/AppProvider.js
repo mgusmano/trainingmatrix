@@ -19,7 +19,7 @@ export const AppProvider = (props) => {
   }
 
   const initialState = {
-    groupID: 34751, //34751, //34707,
+    groupID: 0, //34751, //34751, //34707,
     operators: null,
     skills: null,
     certifications: null,
