@@ -29901,8 +29901,8 @@
 	    }
 	  };
 	  const initialState = {
-	    groupID: 34751,
-	    //34751, //34707,
+	    groupID: 0,
+	    //34751, //34751, //34707,
 	    operators: null,
 	    skills: null,
 	    certifications: null,
@@ -29947,7 +29947,13 @@
 	      color: 'black',
 	      fontSize: '20px'
 	    }
-	  }, "TRAINING MATRIX")), /*#__PURE__*/React$1.createElement("div", {
+	  }, "TRAINING MATRIX"), /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      margin: '12px 10px 7px 5px',
+	      color: 'black',
+	      fontSize: '12px'
+	    }
+	  }, "Document No. 4F-016")), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      display: 'flex',
 	      flexDirection: 'row'
@@ -29971,7 +29977,7 @@
 	    return /*#__PURE__*/React$1.createElement("option", {
 	      key: i,
 	      value: group.groupID
-	    }, group.groupID, "-", group.groupName);
+	    }, group.groupName, " (", group.groupMembersCount, ")");
 	  })), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      margin: '7px 0 7px 30px',
@@ -30022,7 +30028,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2021-12-16-a")));
+	  }, "v2022-01-12-a")));
 	};
 
 	const SET_PARTNERID = 'SET_PARTNERID';
@@ -41547,9 +41553,11 @@
 
 	  var link = `https://skillnetformsapp.azurewebsites.net/?operatorID=${operatorID}`;
 	  var formText = 'Freshman Training Form';
+	  var checkmark = false;
 
 	  if (matrixState.cellData.freshmanTrainingCompleted === 1) {
-	    var formText = 'Freshman Training Form (Completed)';
+	    formText = 'Freshman Training Form (Completed)';
+	    checkmark = true; //'&#10004;'
 	  }
 
 	  console.log(matrixState.cellData);
@@ -41561,11 +41569,11 @@
 	      fontSize: '12px',
 	      padding: '0px',
 	      width: '100%',
-	      xheight: '500px',
 	      background: 'gainsboro'
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
+	      margin: '5px 0 0 5px',
 	      width: '50px',
 	      textDecoration: 'underline',
 	      cursor: 'pointer'
@@ -41586,7 +41594,12 @@
 	      height: '400px',
 	      borderBottom: '4px solid black'
 	    }
-	  }, show && /*#__PURE__*/React$1.createElement(React$1.Fragment, null, /*#__PURE__*/React$1.createElement("img", {
+	  }, show === true && /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      display: 'flex',
+	      flexDirection: 'row'
+	    }
+	  }, /*#__PURE__*/React$1.createElement("img", {
 	    alt: "pic",
 	    src: img,
 	    style: {
@@ -41598,7 +41611,11 @@
 	    }
 	  }), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      marginTop: '2px'
+	      margin: '10px 0 0 10px'
+	    }
+	  }, /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      fontSize: '12px'
 	    }
 	  }, matrixState.cellData.operatorName), /*#__PURE__*/React$1.createElement("div", {
 	    style: {
@@ -41608,7 +41625,11 @@
 	    style: {
 	      fontSize: '12px'
 	    }
-	  }, matrixState.cellData.plantName, " - ", matrixState.cellData.location)), show !== null && /*#__PURE__*/React$1.createElement("div", {
+	  }, matrixState.cellData.plantName), /*#__PURE__*/React$1.createElement("div", {
+	    style: {
+	      fontSize: '12px'
+	    }
+	  }, matrixState.cellData.location))), show === true && /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      margin: '5px 0 0 0',
 	      fontSize: '12px'
@@ -41617,7 +41638,7 @@
 	    target: "_blank",
 	    rel: "noreferrer",
 	    href: link
-	  }, formText, " "))));
+	  }, formText, " "), " ", checkmark === true && /*#__PURE__*/React$1.createElement("span", null, "\u2714"))));
 	});
 
 	const Main = () => {
@@ -44327,7 +44348,7 @@
 	    }
 	  }, /*#__PURE__*/React$1.createElement("div", {
 	    style: {
-	      height: '200px',
+	      height: '150px',
 	      display: matrixState.topDialog
 	    }
 	  }, matrixState.top), /*#__PURE__*/React$1.createElement("div", {
@@ -44399,6 +44420,8 @@
 	      var url = apiRoot + '/portalgroups?partnerid=' + sessionStorage.getItem('partnerID'); //console.log(url)
 
 	      const portalGroupsResult = await axios(url, auth);
+	      console.log(portalGroupsResult.data);
+	      appStateRef.current.setGroupID(portalGroupsResult.data[0].groupID);
 	      appStateRef.current.setGroups(portalGroupsResult.data);
 	    }
 
@@ -44424,6 +44447,7 @@
 	  // </div>
 	  // <div style={{boxSizing:'border-box',height:'43px',width:'100%',background:'#337ab7',padding:'20px'}}></div>
 
+	  console.log(appState.groupID);
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      display: 'flex',

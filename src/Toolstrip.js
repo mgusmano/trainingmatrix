@@ -16,6 +16,9 @@ export const Toolstrip = () => {
         <div style={{margin:'5px 10px 7px 10px',color:'black',fontSize:'20px'}}>
           TRAINING MATRIX
         </div>
+        <div style={{margin:'12px 10px 7px 5px',color:'black',fontSize:'12px'}}>
+          Document No. 4F-016
+        </div>
       </div>
       <div style={{display:'flex',flexDirection:'row'}}>
         <div style={{margin:'7px 0 7px 1px',color:'black',fontSize:'12px'}}>group:</div>
@@ -35,7 +38,7 @@ export const Toolstrip = () => {
       </div>
       <div style={{display:'flex',flexDirection:'row'}}>
         <div style={{margin:'7px 0 7px 1px',width:'110px',fontSize:'12px',textDecoration:'underline',cursor: 'pointer'}} onClick={()=>{ appState.setLegend(!appState.legend)}}>Toggle Legend</div>
-        <div style={{margin:'7px 0 7px 10px',color:'black',fontSize:'12px'}}>v2022-01-04-a</div>
+        <div style={{margin:'7px 0 7px 10px',color:'black',fontSize:'12px'}}>v2022-01-12-a</div>
       </div>
     </div>
   )
