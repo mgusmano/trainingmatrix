@@ -16,6 +16,8 @@ export const Row1Col2 = (props) => {
   const {row1,col2,fontsize,bandX} = matrixState.dimensions;
 
   const clickOperatorCell = (e,colid,rowid,type,data,col) => {
+    console.log('clickOperatorCell')
+    console.log(data)
     //data.picture=""
     data.operator = {}
     data.operator.picture = ""

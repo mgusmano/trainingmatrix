@@ -124,7 +124,7 @@ export const setAll = async (dispatch, payload) => {
       operators: operators2Result.data,
       certifications: certifications2Result.data
     }
-    console.log(r)
+    //console.log(r)
     return r
   }
 
@@ -284,6 +284,7 @@ export const setAll = async (dispatch, payload) => {
   }
 
   const doBySkill = (operators, skills, certifications) => {
+    //console.log(skills)
     var bySkill = []
     skills.map((skill,s) => {
       var o = {}
@@ -293,6 +294,7 @@ export const setAll = async (dispatch, payload) => {
       const filteredcertifications = certifications.filter(item => item.skillID === skill.skillID);
       filteredcertifications.map((fc,i) => {
         var operator  = operators.find(item => item.operatorID === fc.operatorID);
+        //console.log(operator)
         o.data[i] = {};
         o.data[i].certificationID = fc.id
         o.data[i].operator = operator
@@ -304,11 +306,13 @@ export const setAll = async (dispatch, payload) => {
       bySkill.push(o)
       return null
     })
+    //console.log(bySkill)
     return bySkill
   }
 
   const doByOperator = (operators, skills, certifications) => {
     var byOperator = []
+    //console.log(operators)
     operators.map((operator,o) => {
       o = operator
       o.meta = operator

@@ -41,6 +41,8 @@ export const Row2Col2 = (props) => {
   }
 
   const clickMainCell = (e,colid,rowid,type,data,col,r,c) => {
+    console.log('clickMainCell')
+    console.log(data)
     data.row = r;
     data.col = c;
     //props.cellClicked(data)
@@ -53,8 +55,7 @@ export const Row2Col2 = (props) => {
     data.plantName = data.operator.plantName
     data.title = data.operator.title
     data.location = data.operator.location
-
-
+    data.freshmanTrainingCompleted = data.operator.freshmanTrainingCompleted
 
     matrixState.setCellData(data)
     matrixState.showMainDialog('block')
@@ -85,6 +86,7 @@ export const Row2Col2 = (props) => {
     )
   }
 
+  console.log(data)
   return (
     <div style={{width:(col2)+'px',maxWidth:(col2)+'px',height:(row2Orig)+'px',maxHeight:(row2Orig)+'px',overflow:'hidden'}} onScroll={onScroll} >
       <div width={(col2)+'px'} height={(row2)+'px'}>

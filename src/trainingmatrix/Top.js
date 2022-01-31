@@ -3,7 +3,7 @@ import { useMatrixState } from './state/MatrixProvider';
 
 export const Top = React.memo(() => {
   const matrixState = useMatrixState();
-console.log(matrixState.cellData)
+//console.log(matrixState.cellData)
   var img = '' + matrixState.cellData.picture + ''
   var show = true;
   if (matrixState.skillDialog === 'block' && matrixState.mainDialog === 'none') {
@@ -22,12 +22,14 @@ console.log(matrixState.cellData)
 
   var formText = 'Freshman Training Form';
   var checkmark = false;
+  console.log(matrixState.cellData)
+  console.log(matrixState.cellData.freshmanTrainingCompleted)
   if (matrixState.cellData.freshmanTrainingCompleted === 1) {
     formText = 'Freshman Training Form (Completed)';
     checkmark = true //'&#10004;'
   }
 
-  console.log(matrixState.cellData)
+  //console.log(matrixState.cellData)
 
   return (
     <div style={{boxSizing:'border-box',display:'flex',flexDirection:'column',fontSize:'12px',padding:'0px',width:'100%',background:'gainsboro'}}>
