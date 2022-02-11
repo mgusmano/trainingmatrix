@@ -30028,7 +30028,7 @@
 	      color: 'black',
 	      fontSize: '12px'
 	    }
-	  }, "v2022-01-12-a")));
+	  }, "v2022-01-31-a")));
 	};
 
 	const SET_PARTNERID = 'SET_PARTNERID';
@@ -32011,8 +32011,8 @@
 	      skills: skills2Result.data,
 	      operators: operators2Result.data,
 	      certifications: certifications2Result.data
-	    };
-	    console.log(r);
+	    }; //console.log(r)
+
 	    return r;
 	  };
 
@@ -32180,6 +32180,7 @@
 	  };
 
 	  const doBySkill = (operators, skills, certifications) => {
+	    //console.log(skills)
 	    var bySkill = [];
 	    skills.map((skill, s) => {
 	      var o = {};
@@ -32188,7 +32189,8 @@
 	      o.data = [];
 	      const filteredcertifications = certifications.filter(item => item.skillID === skill.skillID);
 	      filteredcertifications.map((fc, i) => {
-	        var operator = operators.find(item => item.operatorID === fc.operatorID);
+	        var operator = operators.find(item => item.operatorID === fc.operatorID); //console.log(operator)
+
 	        o.data[i] = {};
 	        o.data[i].certificationID = fc.id;
 	        o.data[i].operator = operator;
@@ -32199,12 +32201,14 @@
 	      });
 	      bySkill.push(o);
 	      return null;
-	    });
+	    }); //console.log(bySkill)
+
 	    return bySkill;
 	  };
 
 	  const doByOperator = (operators, skills, certifications) => {
-	    var byOperator = [];
+	    var byOperator = []; //console.log(operators)
+
 	    operators.map((operator, o) => {
 	      o = operator;
 	      o.meta = operator;
@@ -41534,8 +41538,8 @@
 	});
 
 	const Top = /*#__PURE__*/React$1.memo(() => {
-	  const matrixState = useMatrixState();
-	  console.log(matrixState.cellData);
+	  const matrixState = useMatrixState(); //console.log(matrixState.cellData)
+
 	  var img = '' + matrixState.cellData.picture + '';
 	  var show = true;
 
@@ -41554,13 +41558,15 @@
 	  var link = `https://skillnetformsapp.azurewebsites.net/?operatorID=${operatorID}`;
 	  var formText = 'Freshman Training Form';
 	  var checkmark = false;
+	  console.log(matrixState.cellData);
+	  console.log(matrixState.cellData.freshmanTrainingCompleted);
 
 	  if (matrixState.cellData.freshmanTrainingCompleted === 1) {
 	    formText = 'Freshman Training Form (Completed)';
 	    checkmark = true; //'&#10004;'
-	  }
+	  } //console.log(matrixState.cellData)
 
-	  console.log(matrixState.cellData);
+
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      boxSizing: 'border-box',
@@ -43044,27 +43050,7 @@
 	      }
 	    }), renderCellFunction !== undefined && renderCellFunction(props.params, c, col, r, row, null, data[c], clickCellFunction));
 	  })));
-	}); // export const TotalLinesRight = React.memo(({data, xTranslateStart, yTranslateStart, bandX, bandY}) => {
-	//   return (
-	//     <g transform={"translate(" + (xTranslateStart + 20) + "," + yTranslateStart + ")"} className="totalsright">
-	//     {
-	//       data.map((row,r) => {
-	//         //console.log(row)
-	//         return (
-	//           row.map((col,c) => {
-	//             //console.log(r,c,col.v)
-	//             return (
-	//               <text stroke="black" x={((bandX/2)*(c+1))} y={((bandY/2)*(r+1))} class="small">{col.v}</text>
-	//             )
-	//           })
-	//         )
-	//       })
-	//     }
-	//     </g>
-	//   )
-	// })
-	//            <text stroke="black" x={(bandX*c)+10} y={(bandY*r)+40} class="small">{col.v}</text>
-	//            <rect className="totalright" key={(r*10)+c} padding="5px" fill="purple" x={(60*c)} y={(60*r)} width={bandX} height={bandY} />
+	});
 
 	const Row1Col2 = props => {
 	  const {
@@ -43080,7 +43066,9 @@
 	  } = matrixState.dimensions;
 
 	  const clickOperatorCell = (e, colid, rowid, type, data, col) => {
-	    //data.picture=""
+	    console.log('clickOperatorCell');
+	    console.log(data); //data.picture=""
+
 	    data.operator = {};
 	    data.operator.picture = "";
 	    data.skill = {};
@@ -43768,6 +43756,8 @@
 	  };
 
 	  const clickMainCell = (e, colid, rowid, type, data, col, r, c) => {
+	    console.log('clickMainCell');
+	    console.log(data);
 	    data.row = r;
 	    data.col = c; //props.cellClicked(data)
 
@@ -43780,6 +43770,7 @@
 	    data.plantName = data.operator.plantName;
 	    data.title = data.operator.title;
 	    data.location = data.operator.location;
+	    data.freshmanTrainingCompleted = data.operator.freshmanTrainingCompleted;
 	    matrixState.setCellData(data);
 	    matrixState.showMainDialog('block');
 	    matrixState.showSkillDialog('none');
@@ -43818,6 +43809,7 @@
 	    }));
 	  };
 
+	  console.log(data);
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      width: col2 + 'px',
@@ -44419,8 +44411,8 @@
 
 	      var url = apiRoot + '/portalgroups?partnerid=' + sessionStorage.getItem('partnerID'); //console.log(url)
 
-	      const portalGroupsResult = await axios(url, auth);
-	      console.log(portalGroupsResult.data);
+	      const portalGroupsResult = await axios(url, auth); //console.log(portalGroupsResult.data)
+
 	      appStateRef.current.setGroupID(portalGroupsResult.data[0].groupID);
 	      appStateRef.current.setGroups(portalGroupsResult.data);
 	    }
@@ -44446,8 +44438,8 @@
 	  //   SkillNet Header
 	  // </div>
 	  // <div style={{boxSizing:'border-box',height:'43px',width:'100%',background:'#337ab7',padding:'20px'}}></div>
+	  //console.log(appState.groupID)
 
-	  console.log(appState.groupID);
 	  return /*#__PURE__*/React$1.createElement("div", {
 	    style: {
 	      display: 'flex',
@@ -44600,9 +44592,9 @@
 
 	const Index = () => /*#__PURE__*/React$1.createElement(AppProvider, null, /*#__PURE__*/React$1.createElement(App, null));
 
-	customElements.define('training-matrix', reactToWebComponent(Index, React$1, ReactDOM)); //sessionStorage.setItem('userID',12345)
-	//sessionStorage.setItem('partnerID',448)
-	//ReactDOM.render(<AppProvider><App/></AppProvider>,document.getElementById('root'));
+	customElements.define('training-matrix', reactToWebComponent(Index, React$1, ReactDOM)); // sessionStorage.setItem('userID',12345)
+	// sessionStorage.setItem('partnerID',448)
+	// ReactDOM.render(<AppProvider><App/></AppProvider>,document.getElementById('root'));
 
 })();
 //# sourceMappingURL=bundle.js.map
