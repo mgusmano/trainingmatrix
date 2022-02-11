@@ -41,7 +41,7 @@ export const Toolstrip = () => {
         <div
           style={{margin:'7px 0 7px 10px',color:'black',fontSize:'12px'}}
         >
-            v2022-02-11-b
+            v2022-02-11-c
         </div>
       </div>
     </div>

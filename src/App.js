@@ -9,6 +9,7 @@ export const App = () => {
   const appState = useAppState();
   const appStateRef = useRef(appState);
   const [token, setToken] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     //setToken(getParameterByName('token'));
@@ -32,12 +33,16 @@ export const App = () => {
       // console.log(tokenResult)
 
       var url = apiRoot + '/portalgroups?partnerid=' + sessionStorage.getItem('partnerID')
-      console.log(url)
+      console.log(sessionStorage.getItem('partnerID'))
       const portalGroupsResult = await axios(url, auth);
-      //console.log(portalGroupsResult.data)
-      
-      appStateRef.current.setGroupID(portalGroupsResult.data[0].groupID);
-      appStateRef.current.setGroups(portalGroupsResult.data);
+
+      if (portalGroupsResult.data.length === 0) {
+        setError('No Groups')
+      }
+      else {
+        appStateRef.current.setGroupID(portalGroupsResult.data[0].groupID);
+        appStateRef.current.setGroups(portalGroupsResult.data);
+      }
     }
     fetchData();
 
@@ -76,10 +81,13 @@ export const App = () => {
       }
       {token !== null &&
 <>
-        {appState.groups === null &&
+        {error !== null &&
+          <div style={{marginTop:'90px',marginLeft:'60px',fontSize:'45px'}}>{error}</div>
+        }
+        {appState.groups === null && error === null &&
           <div style={{marginTop:'90px',marginLeft:'60px',fontSize:'45px'}}>Matrix is Loading...</div>
         }
-        {appState.groups !== null &&
+        {appState.groups !== null && error === null &&
         <TrainingMatrix
           multiplier={appState.multiplier}
           showLegend={appState.legend}

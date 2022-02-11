@@ -9,5 +9,5 @@ import './index.css'
 // customElements.define('training-matrix', reactToWebComponent(Index, React, ReactDOM));
 
 sessionStorage.setItem('userID',12345)
-sessionStorage.setItem('partnerID',434)
+sessionStorage.setItem('partnerID',434) //448 toshiba, 434 is temp dummy
 ReactDOM.render(<AppProvider><App/></AppProvider>,document.getElementById('root'));
