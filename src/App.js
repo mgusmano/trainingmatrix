@@ -32,7 +32,7 @@ export const App = () => {
       // console.log(tokenResult)
 
       var url = apiRoot + '/portalgroups?partnerid=' + sessionStorage.getItem('partnerID')
-      //console.log(url)
+      console.log(url)
       const portalGroupsResult = await axios(url, auth);
       //console.log(portalGroupsResult.data)
       
